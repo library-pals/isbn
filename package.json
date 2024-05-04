@@ -46,11 +46,7 @@
     "axios": "^1.6.8"
   },
   "bugs": {
-    "url": "https://github.com/palmerabollo/node-isbn/issues"
+    "url": "https://github.com/library-pals/isbn/issues"
   },
-  "homepage": "https://github.com/palmerabollo/node-isbn#readme",
-  "directories": {
-    "example": "examples",
-    "test": "test"
-  }
+  "homepage": "https://github.com/library-pals/isbn#readme"
 }
