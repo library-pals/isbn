@@ -1,6 +1,6 @@
 {
   "name": "@library-pals/isbn",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "Find books by ISBN",
   "main": "src/index.js",
   "type": "module",
@@ -8,7 +8,7 @@
     "node": ">=20.0.0"
   },
   "bin": {
-    "isbn": "./src/cli.js"
+    "isbn": "src/cli.js"
   },
   "scripts": {
     "lint": "eslint .",
