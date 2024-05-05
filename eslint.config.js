@@ -11,7 +11,7 @@ export default [
     languageOptions: {
       globals: {
         ...globals.node,
-        ...globals.mocha,
+        ...globals.jest,
       },
     },
     plugins: {
@@ -33,5 +33,8 @@ export default [
         },
       ],
     },
+  },
+  {
+    ignores: ["coverage/*"],
   },
 ];

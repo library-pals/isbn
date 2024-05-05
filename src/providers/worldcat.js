@@ -16,21 +16,23 @@ export async function resolveWorldcat(isbn, options) {
   const requestOptions = {
     ...defaultOptions,
     ...options,
-    url: `${WORLDCAT_API_BASE}${WORLDCAT_API_BOOK}/${isbn}?method=getMetadata&fl=*&format=json`,
   };
+  const url = `${WORLDCAT_API_BASE}${WORLDCAT_API_BOOK}/${isbn}?method=getMetadata&fl=*&format=json`;
 
-  const { status, data } = await axios.request(requestOptions);
-  if (status !== 200) {
-    throw new Error(
-      `Wrong response code: ${status}. Response data: ${JSON.stringify(data)}`
-    );
+  try {
+    const response = await axios.get(url, requestOptions);
+    if (response.status !== 200) {
+      throw new Error(`Wrong response code: ${response.status}`);
+    }
+    const books = response.data;
+    if (books.stat !== "ok") {
+      throw new Error(`No books found with ISBN: ${isbn}`);
+    }
+    const [book] = books.list;
+    return standardize(book);
+  } catch (error) {
+    throw new Error(error.message);
   }
-  const books = data;
-  if (books.stat !== "ok") {
-    throw new Error(`No books found with ISBN: ${isbn}`);
-  }
-  const [book] = books.list;
-  return standardize(book);
 }
 
 const LANGUAGE_MAP = {
@@ -44,7 +46,7 @@ const LANGUAGE_MAP = {
  * @param {object} book - The book object to be standardized.
  * @returns {object} - The standardized book object.
  */
-function standardize(book) {
+export function standardize(book) {
   const standardBook = {
     title: book.title,
     publishedDate: book.year,

@@ -16,21 +16,25 @@ export async function resolveGoogle(isbn, options) {
   const requestOptions = {
     ...defaultOptions,
     ...options,
-    url: `${GOOGLE_BOOKS_API_BASE}${GOOGLE_BOOKS_API_BOOK}?q=isbn:${isbn}`,
   };
+  const url = `${GOOGLE_BOOKS_API_BASE}${GOOGLE_BOOKS_API_BOOK}?q=isbn:${isbn}`;
 
-  const { status, data } = await axios.request(requestOptions);
-  if (status !== 200) {
-    throw new Error(`wrong response code: ${status}`);
+  try {
+    const response = await axios.get(url, requestOptions);
+    if (response.status !== 200) {
+      throw new Error(`Wrong response code: ${response.status}`);
+    }
+    const books = response.data;
+    if (!books.totalItems) {
+      throw new Error(`No books found with isbn: ${isbn}`);
+    }
+    // In very rare circumstances books.items[0] is undefined (see #2)
+    if (!books.items || books.items.length === 0) {
+      throw new Error(`No volume info found for book with isbn: ${isbn}`);
+    }
+    const book = books.items[0].volumeInfo;
+    return book;
+  } catch (error) {
+    throw new Error(error.message);
   }
-  const books = data;
-  if (!books.totalItems) {
-    throw new Error(`no books found with isbn: ${isbn}`);
-  }
-  // In very rare circumstances books.items[0] is undefined (see #2)
-  if (!books.items || books.items.length === 0) {
-    throw new Error(`no volume info found for book with isbn: ${isbn}`);
-  }
-  const book = books.items[0].volumeInfo;
-  return book;
 }
