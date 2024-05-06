@@ -2,11 +2,13 @@ import globals from "globals";
 import js from "@eslint/js";
 import jsdoc from "eslint-plugin-jsdoc";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
+import jest from "eslint-plugin-jest";
 
 export default [
   js.configs.recommended,
   jsdoc.configs["flat/recommended"],
   eslintPluginUnicorn.configs["flat/recommended"],
+  jest.configs["flat/recommended"],
   {
     languageOptions: {
       globals: {

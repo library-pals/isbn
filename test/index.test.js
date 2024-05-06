@@ -251,31 +251,25 @@ describe("ISBN Resolver API", () => {
         }
       });
 
-      try {
-        await isbn.resolve(MOCK_ISBN);
-      } catch (error) {
-        expect(error).toMatchInlineSnapshot(`[Error: All providers failed.]`);
-      }
+      await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
+        `[Error: All providers failed.]`
+      );
     });
 
     it("should return an error if external endpoints are not reachable", async () => {
       axios.get.mockRejectedValue(new Error("Network Error"));
 
-      try {
-        await isbn.resolve(MOCK_ISBN);
-      } catch (error) {
-        expect(error).toMatchInlineSnapshot(`[Error: All providers failed.]`);
-      }
+      await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
+        `[Error: All providers failed.]`
+      );
     });
 
     it("should return an error if external endpoints return a HTTP error", async () => {
       axios.get.mockRejectedValue({ status: 500 });
 
-      try {
-        await isbn.resolve(MOCK_ISBN);
-      } catch (error) {
-        expect(error).toMatchInlineSnapshot(`[Error: All providers failed.]`);
-      }
+      await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
+        `[Error: All providers failed.]`
+      );
     });
 
     it("should invoke providers in order specified", async () => {
