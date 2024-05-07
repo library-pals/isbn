@@ -10,16 +10,12 @@ const GOOGLE_BOOKS_API_BOOK = `/books/v1/volumes?q=isbn:${MOCK_ISBN}`;
 const OPENLIBRARY_API_BASE = "https://openlibrary.org";
 const OPENLIBRARY_API_BOOK = `/api/books?bibkeys=ISBN:${MOCK_ISBN}&format=json&jscmd=details`;
 
-const WORLDCAT_API_BASE = "http://xisbn.worldcat.org";
-const WORLDCAT_API_BOOK = `/webservices/xid/isbn/${MOCK_ISBN}?method=getMetadata&fl=*&format=json`;
-
 const ISBNDB_API_BASE = "https://api2.isbndb.com";
 const ISBNDB_API_BOOK = `/book/${MOCK_ISBN}`;
 
 const DEFAULT_PROVIDER_ORDER = [
   isbn.PROVIDER_NAMES.GOOGLE,
   isbn.PROVIDER_NAMES.OPENLIBRARY,
-  isbn.PROVIDER_NAMES.WORLDCAT,
   isbn.PROVIDER_NAMES.ISBNDB,
 ];
 
@@ -94,53 +90,6 @@ describe("ISBN Resolver API", () => {
       assert.equal(book.language, "en");
     });
 
-    it("should resolve a valid ISBN with Worldcat", async () => {
-      const mockResponseGoogle = {
-        kind: "books#volumes",
-        totalItems: 0,
-      };
-
-      const mockResponseOpenLibrary = {};
-
-      const mockResponseWorldcat = {
-        stat: "ok",
-        list: [
-          {
-            url: ["http://www.worldcat.org/oclc/249645389?referer=xid"],
-            publisher: "Turtle Bay Books",
-            form: ["BC", "DA"],
-            lccn: ["2004049981"],
-            lang: "eng",
-            city: "Redmond, Wash.",
-            author: "Steve McConnell.",
-            ed: "2. ed.",
-            year: "1992",
-            isbn: ["9780374104092"],
-            title: "Book Title",
-            oclcnum: ["249645389", "301075365", "427465443"],
-          },
-        ],
-      };
-
-      nock(GOOGLE_BOOKS_API_BASE)
-        .get(GOOGLE_BOOKS_API_BOOK)
-        .reply(200, JSON.stringify(mockResponseGoogle));
-
-      nock(OPENLIBRARY_API_BASE)
-        .get(OPENLIBRARY_API_BOOK)
-        .reply(200, JSON.stringify(mockResponseOpenLibrary));
-
-      nock(WORLDCAT_API_BASE)
-        .get(WORLDCAT_API_BOOK)
-        .reply(200, JSON.stringify(mockResponseWorldcat));
-
-      const book = await isbn.resolve(MOCK_ISBN);
-      assert.equal(book.title, "Book Title");
-      assert.equal(book.publisher, "Turtle Bay Books");
-      assert.equal(book.publishedDate, "1992");
-      assert.equal(book.language, "en");
-    });
-
     it("should resolve a valid ISBN with ISBNdb", async () => {
       const mockResponseGoogle = {
         kind: "books#volumes",
@@ -148,8 +97,6 @@ describe("ISBN Resolver API", () => {
       };
 
       const mockResponseOpenLibrary = {};
-
-      const mockResponseWorldcat = { stat: "invalidId" };
 
       const mockResponseIsbnDb = {
         book: {
@@ -176,10 +123,6 @@ describe("ISBN Resolver API", () => {
         .get(OPENLIBRARY_API_BOOK)
         .reply(200, JSON.stringify(mockResponseOpenLibrary));
 
-      nock(WORLDCAT_API_BASE)
-        .get(WORLDCAT_API_BOOK)
-        .reply(200, JSON.stringify(mockResponseWorldcat));
-
       nock(ISBNDB_API_BASE)
         .get(ISBNDB_API_BOOK)
         .reply(200, JSON.stringify(mockResponseIsbnDb));
@@ -198,8 +141,6 @@ describe("ISBN Resolver API", () => {
 
       const mockResponseOpenLibrary = {};
 
-      const mockResponseWorldcat = { stat: "invalidId" };
-
       nock(GOOGLE_BOOKS_API_BASE)
         .get(GOOGLE_BOOKS_API_BOOK)
         .reply(200, JSON.stringify(mockResponseGoogle));
@@ -207,10 +148,6 @@ describe("ISBN Resolver API", () => {
       nock(OPENLIBRARY_API_BASE)
         .get(OPENLIBRARY_API_BOOK)
         .reply(200, JSON.stringify(mockResponseOpenLibrary));
-
-      nock(WORLDCAT_API_BASE)
-        .get(WORLDCAT_API_BOOK)
-        .reply(200, JSON.stringify(mockResponseWorldcat));
 
       try {
         await isbn.resolve(MOCK_ISBN);
@@ -234,8 +171,6 @@ describe("ISBN Resolver API", () => {
 
       nock(OPENLIBRARY_API_BASE).get(OPENLIBRARY_API_BOOK).reply(500);
 
-      nock(WORLDCAT_API_BASE).get(WORLDCAT_API_BOOK).reply(500);
-
       try {
         await isbn.resolve(MOCK_ISBN);
       } catch (error) {
@@ -251,11 +186,6 @@ describe("ISBN Resolver API", () => {
 
       nock(OPENLIBRARY_API_BASE)
         .get(OPENLIBRARY_API_BOOK)
-        .delay(10_000)
-        .reply(200, JSON.stringify({}));
-
-      nock(WORLDCAT_API_BASE)
-        .get(WORLDCAT_API_BOOK)
         .delay(10_000)
         .reply(200, JSON.stringify({}));
 
@@ -422,58 +352,6 @@ describe("ISBN Resolver API", () => {
         .catch(done);
     });
 
-    it("should resolve a valid ISBN with Worldcat", (done) => {
-      const mockResponseGoogle = {
-        kind: "books#volumes",
-        totalItems: 0,
-      };
-
-      const mockResponseOpenLibrary = {};
-
-      const mockResponseWorldcat = {
-        stat: "ok",
-        list: [
-          {
-            url: ["http://www.worldcat.org/oclc/249645389?referer=xid"],
-            publisher: "Turtle Bay Books",
-            form: ["BC", "DA"],
-            lccn: ["2004049981"],
-            lang: "eng",
-            city: "Redmond, Wash.",
-            author: "Steve McConnell.",
-            ed: "2. ed.",
-            year: "1992",
-            isbn: ["9780374104092"],
-            title: "Book Title",
-            oclcnum: ["249645389", "301075365", "427465443"],
-          },
-        ],
-      };
-
-      nock(GOOGLE_BOOKS_API_BASE)
-        .get(GOOGLE_BOOKS_API_BOOK)
-        .reply(200, JSON.stringify(mockResponseGoogle));
-
-      nock(OPENLIBRARY_API_BASE)
-        .get(OPENLIBRARY_API_BOOK)
-        .reply(200, JSON.stringify(mockResponseOpenLibrary));
-
-      nock(WORLDCAT_API_BASE)
-        .get(WORLDCAT_API_BOOK)
-        .reply(200, JSON.stringify(mockResponseWorldcat));
-
-      isbn
-        .resolve(MOCK_ISBN)
-        .then(({ title, publisher, publishedDate, language }) => {
-          assert.equal(title, "Book Title");
-          assert.equal(publisher, "Turtle Bay Books");
-          assert.equal(publishedDate, "1992");
-          assert.equal(language, "en");
-          done();
-        })
-        .catch(done);
-    });
-
     it("should resolve a valid ISBN with ISBNdb", (done) => {
       const mockResponseGoogle = {
         kind: "books#volumes",
@@ -481,8 +359,6 @@ describe("ISBN Resolver API", () => {
       };
 
       const mockResponseOpenLibrary = {};
-
-      const mockResponseWorldcat = { stat: "invalidId" };
 
       const mockResponseIsbnDb = {
         book: {
@@ -509,10 +385,6 @@ describe("ISBN Resolver API", () => {
         .get(OPENLIBRARY_API_BOOK)
         .reply(200, JSON.stringify(mockResponseOpenLibrary));
 
-      nock(WORLDCAT_API_BASE)
-        .get(WORLDCAT_API_BOOK)
-        .reply(200, JSON.stringify(mockResponseWorldcat));
-
       nock(ISBNDB_API_BASE)
         .get(ISBNDB_API_BOOK)
         .reply(200, JSON.stringify(mockResponseIsbnDb));
@@ -536,8 +408,6 @@ describe("ISBN Resolver API", () => {
 
       const mockResponseOpenLibrary = {};
 
-      const mockResponseWorldcat = { stat: "invalidId" };
-
       nock(GOOGLE_BOOKS_API_BASE)
         .get(GOOGLE_BOOKS_API_BOOK)
         .reply(200, JSON.stringify(mockResponseGoogle));
@@ -545,10 +415,6 @@ describe("ISBN Resolver API", () => {
       nock(OPENLIBRARY_API_BASE)
         .get(OPENLIBRARY_API_BOOK)
         .reply(200, JSON.stringify(mockResponseOpenLibrary));
-
-      nock(WORLDCAT_API_BASE)
-        .get(WORLDCAT_API_BOOK)
-        .reply(200, JSON.stringify(mockResponseWorldcat));
 
       isbn
         .resolve(MOCK_ISBN)
@@ -580,8 +446,6 @@ describe("ISBN Resolver API", () => {
 
       nock(OPENLIBRARY_API_BASE).get(OPENLIBRARY_API_BOOK).reply(500);
 
-      nock(WORLDCAT_API_BASE).get(WORLDCAT_API_BOOK).reply(500);
-
       isbn
         .resolve(MOCK_ISBN)
         .then(() => {
@@ -601,11 +465,6 @@ describe("ISBN Resolver API", () => {
 
       nock(OPENLIBRARY_API_BASE)
         .get(OPENLIBRARY_API_BOOK)
-        .delay(10_000)
-        .reply(200, JSON.stringify({}));
-
-      nock(WORLDCAT_API_BASE)
-        .get(WORLDCAT_API_BOOK)
         .delay(10_000)
         .reply(200, JSON.stringify({}));
 
@@ -648,7 +507,6 @@ describe("ISBN Resolver API", () => {
         .resolve(MOCK_ISBN)
         .then((book) => {
           // Assert order: OpenLib (err) -> Google (success)
-          // Notice worldcat is not called!
           assert.deepEqual(book, mockResponseGoogle.items[0].volumeInfo);
           done();
         });
