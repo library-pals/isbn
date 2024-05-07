@@ -16,21 +16,24 @@ export async function resolveIsbnDb(isbn, options) {
   const requestOptions = {
     ...defaultOptions,
     ...options,
-    url: `${ISBNDB_API_BASE}${ISBNDB_API_BOOK}/${isbn}`,
     headers: { Authorization: process.env.ISBNDB_API_KEY || "" },
   };
 
-  const { status, data } = await axios.request(requestOptions);
-  if (status !== 200) {
-    throw new Error(
-      `Wrong response code: ${status}. Response data: ${JSON.stringify(data)}`
-    );
+  const url = `${ISBNDB_API_BASE}${ISBNDB_API_BOOK}/${isbn}`;
+
+  try {
+    const response = await axios.get(url, requestOptions);
+    if (response.status !== 200) {
+      throw new Error(`Wrong response code: ${response.status}`);
+    }
+    const books = response.data;
+    if (!books.book) {
+      throw new Error(`No books found with ISBN: ${isbn}`);
+    }
+    return standardize(books.book);
+  } catch (error) {
+    throw new Error(error.message);
   }
-  const books = data;
-  if (!books.book) {
-    throw new Error(`No books found with ISBN: ${isbn}`);
-  }
-  return standardize(books.book);
 }
 
 /**

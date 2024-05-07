@@ -16,21 +16,23 @@ export async function resolveOpenLibrary(isbn, options) {
   const requestOptions = {
     ...defaultOptions,
     ...options,
-    url: `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_BOOK}?bibkeys=ISBN:${isbn}&format=json&jscmd=details`,
   };
+  const url = `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_BOOK}?bibkeys=ISBN:${isbn}&format=json&jscmd=details`;
 
-  const { status, data } = await axios.request(requestOptions);
-  if (status !== 200) {
-    throw new Error(
-      `Wrong response code: ${status}. Response data: ${JSON.stringify(data)}`
-    );
+  try {
+    const response = await axios.get(url, requestOptions);
+    if (response.status !== 200) {
+      throw new Error(`Wrong response code: ${response.status}`);
+    }
+    const books = response.data;
+    const book = books[`ISBN:${isbn}`];
+    if (!book) {
+      throw new Error(`No books found with ISBN: ${isbn}`);
+    }
+    return standardize(book);
+  } catch (error) {
+    throw new Error(error.message);
   }
-  const books = data;
-  const book = books[`ISBN:${isbn}`];
-  if (!book) {
-    throw new Error(`No books found with ISBN: ${isbn}`);
-  }
-  return standardize(book);
 }
 
 const LANGUAGE_MAP = {
@@ -44,7 +46,7 @@ const LANGUAGE_MAP = {
  * @param {object} book - The book object to be standardized.
  * @returns {object} - The standardized book object.
  */
-function standardize(book) {
+export function standardize(book) {
   const standardBook = {
     title: book.details.title,
     publishedDate: book.details.publish_date,

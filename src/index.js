@@ -4,10 +4,6 @@ import {
   PROVIDER_RESOLVERS,
 } from "./provider-resolvers.js";
 
-/**
- * Represents an ISBN (International Standard Book Number) utility class.
- * Provides methods for configuring providers, retrieving book information, and resolving ISBNs.
- */
 class Isbn {
   constructor() {
     this.PROVIDER_NAMES = PROVIDER_NAMES;
