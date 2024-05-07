@@ -7,6 +7,10 @@ jest.mock("axios");
 describe("resolveIsbnDb", () => {
   const isbn = "1234567890";
 
+  beforeEach(() => {
+    process.env.ISBNDB_API_KEY = "key-1234";
+  });
+
   it("should resolve book information successfully", async () => {
     const mockResponse = {
       book: {
@@ -72,6 +76,20 @@ describe("resolveIsbnDb", () => {
 
     await expect(resolveIsbnDb(isbn, {})).rejects.toThrow(
       "Wrong response code: 404"
+    );
+  });
+
+  it("should throw an error if no token", async () => {
+    process.env.ISBNDB_API_KEY = "";
+    const mockResponse = {};
+
+    axios.get = jest.fn().mockResolvedValue({
+      status: 200,
+      data: mockResponse,
+    });
+
+    await expect(resolveIsbnDb(isbn, {})).rejects.toThrow(
+      `ISBNdb requires an API key`
     );
   });
 });

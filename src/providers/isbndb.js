@@ -13,10 +13,14 @@ import {
  * @throws {Error} - If the response code is not 200 or if no books are found with the given ISBN.
  */
 export async function resolveIsbnDb(isbn, options) {
+  if (!process.env.ISBNDB_API_KEY) {
+    throw new Error(`ISBNdb requires an API key`);
+  }
+
   const requestOptions = {
     ...defaultOptions,
     ...options,
-    headers: { Authorization: process.env.ISBNDB_API_KEY || "" },
+    headers: { Authorization: process.env.ISBNDB_API_KEY },
   };
 
   const url = `${ISBNDB_API_BASE}${ISBNDB_API_BOOK}/${isbn}`;

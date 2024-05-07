@@ -16,6 +16,8 @@ const DEFAULT_PROVIDER_ORDER = [
   isbn.PROVIDER_NAMES.ISBNDB,
 ];
 
+process.env.ISBNDB_API_KEY = "key-1234";
+
 describe("ISBN Resolver API", () => {
   describe("using async", () => {
     it("should resolve a valid ISBN with Google", async () => {
@@ -23,6 +25,7 @@ describe("ISBN Resolver API", () => {
         totalItems: 1,
         items: [
           {
+            id: "11223344000",
             volumeInfo: {
               title: "Code Complete",
               authors: ["Steve McConnell"],
@@ -37,10 +40,15 @@ describe("ISBN Resolver API", () => {
       });
 
       const book = await isbn.resolve(MOCK_ISBN);
-      expect(book).toEqual({
-        authors: ["Steve McConnell"],
-        title: "Code Complete",
-      });
+      expect(book).toMatchInlineSnapshot(`
+        {
+          "authors": [
+            "Steve McConnell",
+          ],
+          "thumbnail": "https://books.google.com/books?id=11223344000&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
+          "title": "Code Complete",
+        }
+      `);
     });
 
     it("should resolve a valid ISBN with Open Library", async () => {
@@ -87,24 +95,30 @@ describe("ISBN Resolver API", () => {
       });
 
       const book = await isbn.resolve(MOCK_ISBN);
-      expect(book).toEqual({
-        authors: ["Michael Caine"],
-        categories: [],
-        description: "an autobiography",
-        imageLinks: {
-          smallThumbnail: "https://covers.openlibrary.org/b/id/6739180-S.jpg",
-          thumbnail: "https://covers.openlibrary.org/b/id/6739180-S.jpg",
-        },
-        industryIdentifiers: [],
-        infoLink: "https://openlibrary.org/books/OL1743093M/Book",
-        language: "en",
-        pageCount: 521,
-        previewLink: "https://archive.org/details/whatsitallabouta00cain",
-        printType: "BOOK",
-        publishedDate: "1992",
-        publisher: "Turtle Bay Books",
-        title: "Book Title",
-      });
+      expect(book).toMatchInlineSnapshot(
+        `
+          {
+            "authors": [
+              "Michael Caine",
+            ],
+            "categories": [],
+            "description": "an autobiography",
+            "imageLinks": {
+              "smallThumbnail": "https://covers.openlibrary.org/b/id/6739180-S.jpg",
+              "thumbnail": "https://covers.openlibrary.org/b/id/6739180-S.jpg",
+            },
+            "industryIdentifiers": [],
+            "infoLink": "https://openlibrary.org/books/OL1743093M/Book",
+            "language": "en",
+            "pageCount": 521,
+            "previewLink": "https://archive.org/details/whatsitallabouta00cain",
+            "printType": "BOOK",
+            "publishedDate": "1992",
+            "publisher": "Turtle Bay Books",
+            "title": "Book Title",
+          }
+        `
+      );
     });
 
     it("should resolve a valid ISBN with ISBNdb", async () => {
@@ -146,23 +160,31 @@ describe("ISBN Resolver API", () => {
       });
 
       const book = await isbn.resolve(MOCK_ISBN);
-      expect(book).toEqual({
-        authors: ["Aswin Pranam"],
-        categories: undefined,
-        description: undefined,
-        imageLinks: {
-          smallThumbnail:
-            "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
-          thumbnail: "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
-        },
-        industryIdentifiers: ["1484233026", "9781484233023"],
-        language: undefined,
-        pageCount: 174,
-        printType: "BOOK",
-        publishedDate: "1992-12-13",
-        publisher: "Turtle Bay Books",
-        title: "Book Title",
-      });
+      expect(book).toMatchInlineSnapshot(
+        `
+          {
+            "authors": [
+              "Aswin Pranam",
+            ],
+            "categories": undefined,
+            "description": undefined,
+            "imageLinks": {
+              "smallThumbnail": "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
+              "thumbnail": "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
+            },
+            "industryIdentifiers": [
+              "1484233026",
+              "9781484233023",
+            ],
+            "language": undefined,
+            "pageCount": 174,
+            "printType": "BOOK",
+            "publishedDate": "1992-12-13",
+            "publisher": "Turtle Bay Books",
+            "title": "Book Title",
+          }
+        `
+      );
     });
 
     it("should return an error if no book is found", async () => {
@@ -173,6 +195,8 @@ describe("ISBN Resolver API", () => {
 
       const mockResponseOpenLibrary = {};
 
+      const mockResponseIsbnDb = {};
+
       axios.get.mockImplementation((url) => {
         if (url.includes(GOOGLE_BOOKS_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseGoogle });
@@ -181,27 +205,38 @@ describe("ISBN Resolver API", () => {
             status: 200,
             data: mockResponseOpenLibrary,
           });
+        } else if (url.includes(ISBNDB_API_BASE)) {
+          return Promise.resolve({
+            status: 200,
+            data: mockResponseIsbnDb,
+          });
         }
       });
 
-      await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed.]`
-      );
+      await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(`
+[Error: All providers failed
+google: No books found with isbn: isbn
+openlibrary: No books found with ISBN: isbn
+isbndb: No books found with ISBN: isbn]
+`);
     });
 
     it("should return an error if external endpoints are not reachable", async () => {
       axios.get.mockRejectedValue(new Error("Network Error"));
 
-      await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed.]`
-      );
+      await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(`
+[Error: All providers failed
+google: Network Error
+openlibrary: Network Error
+isbndb: Network Error]
+`);
     });
 
     it("should return an error if external endpoints return a HTTP error", async () => {
       axios.get.mockRejectedValue({ status: 500 });
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed.]`
+        `[Error: All providers failed]`
       );
     });
 
@@ -210,6 +245,7 @@ describe("ISBN Resolver API", () => {
         totalItems: 1,
         items: [
           {
+            id: "11223344000",
             volumeInfo: {
               title: "Code Complete",
               authors: ["Steve McConnell"],
@@ -234,7 +270,18 @@ describe("ISBN Resolver API", () => {
       const book = await isbn
         .provider([isbn.PROVIDER_NAMES.OPENLIBRARY, isbn.PROVIDER_NAMES.GOOGLE])
         .resolve(MOCK_ISBN);
-      expect(book).toEqual(mockResponseGoogle.items[0].volumeInfo);
+      expect(book).toMatchInlineSnapshot(
+        mockResponseGoogle.items[0].volumeInfo,
+        `
+{
+  "authors": [
+    "Steve McConnell",
+  ],
+  "thumbnail": "https://books.google.com/books?id=11223344000&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
+  "title": "Code Complete",
+}
+`
+      );
     });
 
     it("should reset providers after completion", async () => {
@@ -242,6 +289,7 @@ describe("ISBN Resolver API", () => {
         totalItems: 1,
         items: [
           {
+            id: "11223344000",
             volumeInfo: {
               title: "Code Complete",
               authors: ["Steve McConnell"],
@@ -254,7 +302,16 @@ describe("ISBN Resolver API", () => {
 
       await isbn.provider([isbn.PROVIDER_NAMES.GOOGLE]).resolve(MOCK_ISBN);
 
-      expect(isbn._providers).toEqual(DEFAULT_PROVIDER_ORDER);
+      expect(isbn._providers).toMatchInlineSnapshot(
+        DEFAULT_PROVIDER_ORDER,
+        `
+[
+  "google",
+  "openlibrary",
+  "isbndb",
+]
+`
+      );
     });
 
     it("should override default options", async function () {
@@ -262,6 +319,7 @@ describe("ISBN Resolver API", () => {
         totalItems: 1,
         items: [
           {
+            id: "11223344000",
             volumeInfo: {
               title: "Code Complete",
               authors: ["Steve McConnell"],
@@ -280,7 +338,18 @@ describe("ISBN Resolver API", () => {
       );
 
       const book = await isbn.resolve(MOCK_ISBN, { timeout: 15_000 });
-      expect(book).toEqual(mockResponseGoogle.items[0].volumeInfo);
+      expect(book).toMatchInlineSnapshot(
+        mockResponseGoogle.items[0].volumeInfo,
+        `
+{
+  "authors": [
+    "Steve McConnell",
+  ],
+  "thumbnail": "https://books.google.com/books?id=11223344000&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
+  "title": "Code Complete",
+}
+`
+      );
     }, 20_000);
   });
 });
@@ -289,7 +358,16 @@ describe("ISBN Provider API", () => {
   it("should use default providers if providers array is empty", () => {
     const expectedProviders = isbn._providers;
     isbn.provider([]);
-    expect(isbn._providers).toEqual(expectedProviders);
+    expect(isbn._providers).toMatchInlineSnapshot(
+      expectedProviders,
+      `
+[
+  "google",
+  "openlibrary",
+  "isbndb",
+]
+`
+    );
   });
 
   it("should return an error if providers is not an array", () => {
@@ -298,7 +376,16 @@ describe("ISBN Provider API", () => {
     expect(() => {
       isbn.provider("string-that-must-not-work");
     }).toThrow();
-    expect(isbn._providers).toEqual(expectedProviders);
+    expect(isbn._providers).toMatchInlineSnapshot(
+      expectedProviders,
+      `
+[
+  "google",
+  "openlibrary",
+  "isbndb",
+]
+`
+    );
   });
 
   it("should return an error if invalid providers in list", () => {
@@ -307,7 +394,16 @@ describe("ISBN Provider API", () => {
     expect(() => {
       isbn.provider(["gibberish", "wow", "sogood"]);
     }).toThrow();
-    expect(isbn._providers).toEqual(expectedProviders);
+    expect(isbn._providers).toMatchInlineSnapshot(
+      expectedProviders,
+      `
+[
+  "google",
+  "openlibrary",
+  "isbndb",
+]
+`
+    );
   });
 
   it("should remove duplicates", () => {
@@ -318,7 +414,14 @@ describe("ISBN Provider API", () => {
     const expected = [isbn.PROVIDER_NAMES.OPENLIBRARY];
 
     isbn.provider(providers);
-    expect(isbn._providers).toEqual(expected);
+    expect(isbn._providers).toMatchInlineSnapshot(
+      expected,
+      `
+[
+  "openlibrary",
+]
+`
+    );
   });
 
   it("should set providers as expected", () => {
@@ -328,7 +431,15 @@ describe("ISBN Provider API", () => {
     ];
 
     isbn.provider(providers);
-    expect(isbn._providers).toEqual(providers);
+    expect(isbn._providers).toMatchInlineSnapshot(
+      providers,
+      `
+[
+  "openlibrary",
+  "google",
+]
+`
+    );
   });
 
   it("should return instance after setting provider", () => {

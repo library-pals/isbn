@@ -56,15 +56,20 @@ class Isbn {
    * @throws {Error} If none of the providers are able to retrieve the book information.
    */
   async _getBookInfo(providers, isbn, options) {
+    const messages = [];
     for (const provider of providers) {
       try {
         return await PROVIDER_RESOLVERS[provider](isbn, options);
-      } catch {
-        // console.debug(`Unable to reach ${provider}. Trying the next one...`);
+      } catch (error) {
+        if (error.message) messages.push(`${provider}: ${error.message}`);
       }
     }
     // If none of the providers worked, we throw an error.
-    throw new Error("All providers failed.");
+    throw new Error(
+      `All providers failed${
+        messages.length > 0 ? `\n${messages.join("\n")}` : ""
+      }`
+    );
   }
 
   /**
