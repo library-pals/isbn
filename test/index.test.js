@@ -8,13 +8,11 @@ jest.mock("axios");
 const MOCK_ISBN = "isbn";
 const GOOGLE_BOOKS_API_BASE = "https://www.googleapis.com";
 const OPENLIBRARY_API_BASE = "https://openlibrary.org";
-const WORLDCAT_API_BASE = "http://xisbn.worldcat.org";
 const ISBNDB_API_BASE = "https://api2.isbndb.com";
 
 const DEFAULT_PROVIDER_ORDER = [
   isbn.PROVIDER_NAMES.GOOGLE,
   isbn.PROVIDER_NAMES.OPENLIBRARY,
-  isbn.PROVIDER_NAMES.WORLDCAT,
   isbn.PROVIDER_NAMES.ISBNDB,
 ];
 
@@ -109,63 +107,6 @@ describe("ISBN Resolver API", () => {
       });
     });
 
-    it("should resolve a valid ISBN with Worldcat", async () => {
-      const mockResponseGoogle = {
-        kind: "books#volumes",
-        totalItems: 0,
-      };
-
-      const mockResponseOpenLibrary = {};
-
-      const mockResponseWorldcat = {
-        stat: "ok",
-        list: [
-          {
-            url: ["http://www.worldcat.org/oclc/249645389?referer=xid"],
-            publisher: "Turtle Bay Books",
-            form: ["BC", "DA"],
-            lccn: ["2004049981"],
-            lang: "eng",
-            city: "Redmond, Wash.",
-            author: "Steve McConnell.",
-            ed: "2. ed.",
-            year: "1992",
-            isbn: ["9780374104092"],
-            title: "Book Title",
-            oclcnum: ["249645389", "301075365", "427465443"],
-          },
-        ],
-      };
-
-      axios.get.mockImplementation((url) => {
-        if (url.includes(GOOGLE_BOOKS_API_BASE)) {
-          return Promise.resolve({ status: 200, data: mockResponseGoogle });
-        } else if (url.includes(OPENLIBRARY_API_BASE)) {
-          return Promise.resolve({
-            status: 200,
-            data: mockResponseOpenLibrary,
-          });
-        } else if (url.includes(WORLDCAT_API_BASE)) {
-          return Promise.resolve({ status: 200, data: mockResponseWorldcat });
-        }
-      });
-
-      const book = await isbn.resolve(MOCK_ISBN);
-      expect(book).toEqual({
-        authors: ["Steve McConnell."],
-        categories: [],
-        description: null,
-        imageLinks: {},
-        industryIdentifiers: [],
-        language: "en",
-        pageCount: null,
-        printType: "BOOK",
-        publishedDate: "1992",
-        publisher: "Turtle Bay Books",
-        title: "Book Title",
-      });
-    });
-
     it("should resolve a valid ISBN with ISBNdb", async () => {
       const mockResponseGoogle = {
         kind: "books#volumes",
@@ -173,8 +114,6 @@ describe("ISBN Resolver API", () => {
       };
 
       const mockResponseOpenLibrary = {};
-
-      const mockResponseWorldcat = { stat: "invalidId" };
 
       const mockResponseIsbnDb = {
         book: {
@@ -201,8 +140,6 @@ describe("ISBN Resolver API", () => {
             status: 200,
             data: mockResponseOpenLibrary,
           });
-        } else if (url.includes(WORLDCAT_API_BASE)) {
-          return Promise.resolve({ status: 200, data: mockResponseWorldcat });
         } else if (url.includes(ISBNDB_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseIsbnDb });
         }
@@ -236,8 +173,6 @@ describe("ISBN Resolver API", () => {
 
       const mockResponseOpenLibrary = {};
 
-      const mockResponseWorldcat = { stat: "invalidId" };
-
       axios.get.mockImplementation((url) => {
         if (url.includes(GOOGLE_BOOKS_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseGoogle });
@@ -246,8 +181,6 @@ describe("ISBN Resolver API", () => {
             status: 200,
             data: mockResponseOpenLibrary,
           });
-        } else if (url.includes(WORLDCAT_API_BASE)) {
-          return Promise.resolve({ status: 200, data: mockResponseWorldcat });
         }
       });
 
