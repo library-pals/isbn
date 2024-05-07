@@ -3,7 +3,7 @@ import isbn from "../src/index.js";
 const input = process.argv.slice(2)[0] || "9780374104092";
 
 // Set the providers you want to use
-isbn.provider(["openlibrary", "worldcat"]);
+isbn.provider(["openlibrary"]);
 
 // Get book info using the providers
 try {
