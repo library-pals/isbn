@@ -5,7 +5,7 @@ import { jest } from "@jest/globals";
 
 jest.mock("axios");
 
-const MOCK_ISBN = "isbn";
+const MOCK_ISBN = "9780374104092";
 const GOOGLE_BOOKS_API_BASE = "https://www.googleapis.com";
 const OPENLIBRARY_API_BASE = "https://openlibrary.org";
 const ISBNDB_API_BASE = "https://api2.isbndb.com";
@@ -15,6 +15,8 @@ const DEFAULT_PROVIDER_ORDER = [
   isbn.PROVIDER_NAMES.OPENLIBRARY,
   isbn.PROVIDER_NAMES.ISBNDB,
 ];
+
+import openLibraryMock from "./fixtures/open-library-9780374104092.json";
 
 process.env.ISBNDB_API_KEY = "key-1234";
 
@@ -64,31 +66,7 @@ describe("ISBN Resolver API", () => {
         totalItems: 0,
       };
 
-      const mockResponseOpenLibrary = {};
-      mockResponseOpenLibrary[`ISBN:${MOCK_ISBN}`] = {
-        info_url: "https://openlibrary.org/books/OL1743093M/Book",
-        preview_url: "https://archive.org/details/whatsitallabouta00cain",
-        thumbnail_url: "https://covers.openlibrary.org/b/id/6739180-S.jpg",
-        details: {
-          number_of_pages: 521,
-          subtitle: "an autobiography",
-          title: "Book Title",
-          languages: [
-            {
-              key: "/languages/eng",
-            },
-          ],
-          publishers: ["Turtle Bay Books"],
-          authors: [
-            {
-              name: "Michael Caine",
-              key: "/authors/OL840869A",
-            },
-          ],
-          publish_date: "1992",
-        },
-        preview: "borrow",
-      };
+      const mockResponseOpenLibrary = openLibraryMock;
 
       axios.get.mockImplementation((url) => {
         if (url.includes(GOOGLE_BOOKS_API_BASE)) {
@@ -103,21 +81,68 @@ describe("ISBN Resolver API", () => {
 
       const book = await isbn.resolve(MOCK_ISBN);
       expect(book).toMatchInlineSnapshot(`
-        {
-          "authors": [
-            "Michael Caine",
-          ],
-          "categories": [],
-          "description": "an autobiography",
-          "link": "https://openlibrary.org/books/OL1743093M/Book",
-          "pageCount": 521,
-          "printType": "BOOK",
-          "publishedDate": "1992",
-          "publisher": "Turtle Bay Books",
-          "thumbnail": "https://covers.openlibrary.org/b/id/6739180-S.jpg",
-          "title": "Book Title",
-        }
-      `);
+{
+  "authors": [
+    "Jeff VanderMeer",
+  ],
+  "categories": [
+    "Nebula Award Winner",
+    "award:nebula_award=novel",
+    "award:nebula_award=2015",
+    "Discoveries in geography",
+    "Fiction",
+    "Scientists",
+    "Science-Fiction",
+    "Suspense fiction",
+    "Paranormal fiction",
+    "Women scientists",
+    "Science fiction",
+    "Fantasy fiction",
+    "Mystery fiction",
+    "Adventure fiction",
+    "Exploration",
+    "Amerikanisches Englisch",
+    "Fiction, science fiction, action & adventure",
+    "Fiction, suspense",
+    "Action & Adventure",
+    "Dystopian",
+    "Fantasy",
+    "Extrasensory perception",
+    "Literary",
+    "Suspense",
+    "Thrillers",
+    "General",
+    "Pollution",
+    "horror",
+    "body horror",
+    "alien invasion",
+    "nyt:trade-fiction-paperback=2018-03-18",
+    "New York Times bestseller",
+    "Explorers",
+    "Secrecy",
+    "Scientific expeditions",
+    "Psychic ability",
+    "Fiction, thrillers, suspense",
+    "Discoveries in geography--fiction",
+    "Scientists--fiction",
+    "Women scientists--fiction",
+    "Ps3572.a4284 a84 2014",
+    "813/.54",
+  ],
+  "description": undefined,
+  "link": "https://openlibrary.org/books/OL31444108M/Annihilation",
+  "pageCount": 208,
+  "printType": "BOOK",
+  "publishedDate": "2014",
+  "publisher": "Farrar, Straus and Giroux",
+  "thumbnail": {
+    "large": "https://covers.openlibrary.org/b/id/10520611-L.jpg",
+    "medium": "https://covers.openlibrary.org/b/id/10520611-M.jpg",
+    "small": "https://covers.openlibrary.org/b/id/10520611-S.jpg",
+  },
+  "title": "Annihilation",
+}
+`);
     });
 
     it("should resolve a valid ISBN with ISBNdb", async () => {
@@ -205,9 +230,9 @@ describe("ISBN Resolver API", () => {
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(`
 [Error: All providers failed
-google: No books found with isbn: isbn
-openlibrary: No books found with ISBN: isbn
-isbndb: No books found with ISBN: isbn]
+google: No books found with isbn: 9780374104092
+openlibrary: No books found with ISBN: 9780374104092
+isbndb: No books found with ISBN: 9780374104092]
 `);
     });
 

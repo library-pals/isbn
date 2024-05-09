@@ -22,7 +22,7 @@ export async function resolveOpenLibrary(isbn, options) {
     ...defaultOptions,
     ...options,
   };
-  const url = `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_BOOK}?bibkeys=ISBN:${isbn}&format=json&jscmd=details`;
+  const url = `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_BOOK}?bibkeys=ISBN:${isbn}&format=json&jscmd=data`;
 
   try {
     const response = await axios.get(url, requestOptions);
@@ -41,18 +41,60 @@ export async function resolveOpenLibrary(isbn, options) {
 }
 
 /**
+ * @typedef {object} Identifier
+ * @property {Array<string>} isbn_13
+ * @property {Array<string>} openlibrary
+ */
+
+/**
+ * @typedef {object} Publisher
+ * @property {string} name
+ */
+
+/**
+ * @typedef {object} Subject
+ * @property {string} name
+ * @property {string} url
+ */
+
+/**
+ * @typedef {object} Excerpt
+ * @property {string} text
+ * @property {string} comment
+ */
+
+/**
+ * @typedef {object} Cover
+ * @property {string} small
+ * @property {string} medium
+ * @property {string} large
+ */
+
+/**
+ * @typedef {object} Author
+ * @property {string} url
+ * @property {string} name
+ */
+
+/**
+ * @typedef {object} BookDetails
+ * @property {string} url
+ * @property {string} key
+ * @property {string} title
+ * @property {Array<Author>} authors
+ * @property {number} number_of_pages
+ * @property {string} weight
+ * @property {Identifier} identifiers
+ * @property {Array<Publisher>} publishers
+ * @property {string} publish_date
+ * @property {Array<Subject>} subjects
+ * @property {Array<Excerpt>} excerpts
+ * @property {Cover} cover
+ */
+
+/**
  * @typedef {object} OpenLibraryBook
- * @property {object} details - The details of the book.
- * @property {string} details.title - The title of the book.
- * @property {string} details.publish_date - The publish date of the book.
- * @property {Array<{name: string}>} details.authors - The authors of the book.
- * @property {string} details.subtitle - The subtitle of the book.
- * @property {number} details.number_of_pages - The number of pages in the book.
- * @property {Array<string>} details.publishers - The publishers of the book.
- * @property {Array<{key: string}>} details.languages - The languages of the book.
- * @property {string} thumbnail_url - The URL of the book's thumbnail.
- * @property {string} preview_url - The URL of the book's preview.
- * @property {string} info_url - The URL of the book's information.
+ * @property {BookDetails} ISBN:9780374104092
  */
 
 /**
@@ -62,18 +104,18 @@ export async function resolveOpenLibrary(isbn, options) {
  */
 export function standardize(book) {
   const standardBook = {
-    title: book.details.title,
-    publishedDate: book.details.publish_date,
-    authors: book.details.authors
-      ? book.details.authors.map(({ name }) => name)
-      : [],
-    description: book.details.subtitle,
-    pageCount: book.details.number_of_pages,
+    title: book.title,
+    publishedDate: book.publish_date,
+    authors: book.authors ? book.authors.map(({ name }) => name) : [],
+    description: book.subtitle,
+    pageCount: book.number_of_pages,
     printType: "BOOK",
-    categories: [],
-    thumbnail: book.thumbnail_url,
-    link: book.info_url,
-    publisher: book.details.publishers ? book.details.publishers[0] : "",
+    categories: book.subjects.map(({ name }) => name),
+    thumbnail: book.cover,
+    link: book.url,
+    publisher: book.publishers
+      ? book.publishers.map((publisher) => publisher.name).join(", ")
+      : "",
   };
 
   return standardBook;

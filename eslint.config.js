@@ -23,6 +23,7 @@ export default [
       "jsdoc/require-description": "error",
       "jsdoc/check-values": "error",
       "unicorn/no-null": "off",
+      "unicorn/template-indent": "off",
       "unicorn/prevent-abbreviations": [
         "error",
         {
