@@ -8,3 +8,4 @@ jest.config.js
 .github
 coverage
 .gitattributes
+tsconfig.json
