@@ -4,7 +4,34 @@ import {
   PROVIDER_RESOLVERS,
 } from "./provider-resolvers.js";
 
+/**
+ * @typedef {object} Book
+ * @property {string} title - The long title of the book.
+ * @property {string} publishedDate - The published date of the book.
+ * @property {string[]} authors - The authors of the book.
+ * @property {string} description - The overview of the book.
+ * @property {string[]} industryIdentifiers - The industry identifiers of the book, including ISBN, ISBN13, and Dewey Decimal.
+ * @property {number} pageCount - The number of pages in the book.
+ * @property {string} printType - The print type of the book. Always "BOOK" for this context.
+ * @property {string[]} categories - The subjects or categories of the book.
+ * @property {object} imageLinks - The image links of the book.
+ * @property {string} imageLinks.smallThumbnail - The small thumbnail image link of the book.
+ * @property {string} imageLinks.thumbnail - The thumbnail image link of the book.
+ * @property {string} publisher - The publisher of the book.
+ * @property {string} language - The language of the book.
+ */
+
+/**
+ * @typedef {import('./provider-resolvers.js').Providers} Providers
+ * @typedef {import('axios').AxiosRequestConfig} AxiosRequestConfig
+ */
+
 class Isbn {
+  /**
+   * @type {Providers}
+   */
+  _providers = [];
+
   constructor() {
     this.PROVIDER_NAMES = PROVIDER_NAMES;
 
@@ -49,10 +76,10 @@ class Isbn {
 
   /**
    * Retrieves book information from a list of providers using the given ISBN.
-   * @param {Array<string>} providers - The list of providers to retrieve book information from.
+   * @param {Providers} providers - The list of providers to retrieve book information from.
    * @param {string} isbn - The ISBN of the book.
-   * @param {object} options - Additional options for retrieving book information.
-   * @returns {Promise<object>} A promise that resolves to the book information.
+   * @param {AxiosRequestConfig} options - Additional options for retrieving book information.
+   * @returns {Promise<Book>} A promise that resolves to the book information.
    * @throws {Error} If none of the providers are able to retrieve the book information.
    */
   async _getBookInfo(providers, isbn, options) {
@@ -70,8 +97,8 @@ class Isbn {
   /**
    * Resolves the book information for the given ISBN.
    * @param {string} isbn - The ISBN of the book.
-   * @param {object} options - The options for the request.
-   * @returns {Promise<object>} - A Promise that resolves to the book information.
+   * @param {AxiosRequestConfig} options - The options for the request.
+   * @returns {Promise<Book>} - A Promise that resolves to the book information.
    * @throws {Error} - If an error occurs while resolving the book information.
    */
   async resolve(isbn, options = {}) {

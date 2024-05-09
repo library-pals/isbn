@@ -2,10 +2,17 @@ import { resolveGoogle } from "./providers/google.js";
 import { resolveOpenLibrary } from "./providers/open-library.js";
 import { resolveIsbnDb } from "./providers/isbndb.js";
 
+/**
+ * @typedef {string[]} Providers
+ * @typedef {import('axios').AxiosRequestConfig} AxiosRequestConfig
+ */
+
+/**
+ * Default options for the provider resolvers.
+ * @type {AxiosRequestConfig}
+ * @property {number} timeout - The timeout value in milliseconds.
+ */
 export const defaultOptions = {
-  poll: {
-    maxSockets: 500,
-  },
   timeout: 5000,
 };
 
@@ -22,6 +29,11 @@ export const PROVIDER_NAMES = {
   OPENLIBRARY: "openlibrary",
   ISBNDB: "isbndb",
 };
+
+/**
+ * Default providers for resolving ISBN information.
+ * @type {Providers}
+ */
 export const DEFAULT_PROVIDERS = [
   PROVIDER_NAMES.GOOGLE,
   PROVIDER_NAMES.OPENLIBRARY,

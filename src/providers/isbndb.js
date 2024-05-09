@@ -6,10 +6,15 @@ import {
 } from "../provider-resolvers.js";
 
 /**
+ * @typedef {import('../index.js').Book} Book
+ * @typedef {import('axios').AxiosRequestConfig} AxiosRequestConfig
+ */
+
+/**
  * Resolves the ISBN using the ISBNdb API.
  * @param {string} isbn - The ISBN to resolve.
- * @param {object} options - Additional options for the request.
- * @returns {Promise<object>} - A promise that resolves to the standardized book data.
+ * @param {AxiosRequestConfig} options - Additional options for the request.
+ * @returns {Promise<Book>} - A promise that resolves to the standardized book data.
  * @throws {Error} - If the response code is not 200 or if no books are found with the given ISBN.
  */
 export async function resolveIsbnDb(isbn, options) {
@@ -37,9 +42,25 @@ export async function resolveIsbnDb(isbn, options) {
 }
 
 /**
+ * @typedef {object} IsbnDbBook
+ * @property {string} title_long - The long title of the book.
+ * @property {string} date_published - The published date of the book.
+ * @property {string[]} authors - The authors of the book.
+ * @property {string} overview - The overview of the book.
+ * @property {string} isbn - The ISBN of the book.
+ * @property {string} isbn13 - The ISBN13 of the book.
+ * @property {string} dewey_decimal - The Dewey Decimal classification of the book.
+ * @property {number} pages - The number of pages in the book.
+ * @property {string[]} subjects - The subjects or categories of the book.
+ * @property {string} image - The image link of the book.
+ * @property {string} publisher - The publisher of the book.
+ * @property {string} language - The language of the book.
+ */
+
+/**
  * Standardizes a book object by transforming its properties into a consistent format.
- * @param {object} book - The book object to be standardized.
- * @returns {object} - The standardized book object.
+ * @param {IsbnDbBook} book - The book object to be standardized.
+ * @returns {Book} - The standardized book object.
  */
 function standardize(book) {
   return {
