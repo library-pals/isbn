@@ -17,24 +17,14 @@ const DEFAULT_PROVIDER_ORDER = [
 ];
 
 import openLibraryMock from "./fixtures/open-library-9780374104092.json";
+import googleMock from "./fixtures/google-9780374104092.json";
 
 process.env.ISBNDB_API_KEY = "key-1234";
 
 describe("ISBN Resolver API", () => {
   describe("using async", () => {
     it("should resolve a valid ISBN with Google", async () => {
-      const mockResponseGoogle = {
-        totalItems: 1,
-        items: [
-          {
-            id: "11223344000",
-            volumeInfo: {
-              title: "Code Complete",
-              authors: ["Steve McConnell"],
-            },
-          },
-        ],
-      };
+      const mockResponseGoogle = googleMock;
 
       axios.get = jest.fn().mockResolvedValue({
         status: 200,
@@ -43,21 +33,21 @@ describe("ISBN Resolver API", () => {
 
       const book = await isbn.resolve(MOCK_ISBN);
       expect(book).toMatchInlineSnapshot(`
-        {
-          "authors": [
-            "Steve McConnell",
-          ],
-          "categories": undefined,
-          "description": undefined,
-          "link": undefined,
-          "pageCount": undefined,
-          "printType": undefined,
-          "publishedDate": undefined,
-          "publisher": undefined,
-          "thumbnail": "https://books.google.com/books?id=11223344000&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
-          "title": "Code Complete",
-        }
-      `);
+{
+  "authors": [
+    "Jeff VanderMeer",
+  ],
+  "categories": undefined,
+  "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
+  "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
+  "pageCount": undefined,
+  "printType": undefined,
+  "publishedDate": "2014-02-04",
+  "publisher": "Macmillan",
+  "thumbnail": "https://books.google.com/books?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
+  "title": "Annihilation",
+}
+`);
     });
 
     it("should resolve a valid ISBN with Open Library", async () => {
@@ -256,18 +246,7 @@ isbndb: Network Error]
     });
 
     it("should invoke providers in order specified", async () => {
-      const mockResponseGoogle = {
-        totalItems: 1,
-        items: [
-          {
-            id: "11223344000",
-            volumeInfo: {
-              title: "Code Complete",
-              authors: ["Steve McConnell"],
-            },
-          },
-        ],
-      };
+      const mockResponseGoogle = googleMock;
 
       const mockResponseOpenLibrary = {};
 
@@ -285,40 +264,26 @@ isbndb: Network Error]
       const book = await isbn
         .provider([isbn.PROVIDER_NAMES.OPENLIBRARY, isbn.PROVIDER_NAMES.GOOGLE])
         .resolve(MOCK_ISBN);
-      expect(book).toMatchInlineSnapshot(
-        mockResponseGoogle.items[0].volumeInfo,
-        `
+      expect(book).toMatchInlineSnapshot(`
 {
   "authors": [
-    "Steve McConnell",
+    "Jeff VanderMeer",
   ],
   "categories": undefined,
-  "description": undefined,
-  "link": undefined,
+  "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
+  "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
   "pageCount": undefined,
   "printType": undefined,
-  "publishedDate": undefined,
-  "publisher": undefined,
-  "thumbnail": "https://books.google.com/books?id=11223344000&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
-  "title": "Code Complete",
+  "publishedDate": "2014-02-04",
+  "publisher": "Macmillan",
+  "thumbnail": "https://books.google.com/books?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
+  "title": "Annihilation",
 }
-`
-      );
+`);
     });
 
     it("should reset providers after completion", async () => {
-      const mockResponseGoogle = {
-        totalItems: 1,
-        items: [
-          {
-            id: "11223344000",
-            volumeInfo: {
-              title: "Code Complete",
-              authors: ["Steve McConnell"],
-            },
-          },
-        ],
-      };
+      const mockResponseGoogle = googleMock;
 
       axios.get.mockResolvedValue({ status: 200, data: mockResponseGoogle });
 
@@ -337,18 +302,7 @@ isbndb: Network Error]
     });
 
     it("should override default options", async function () {
-      const mockResponseGoogle = {
-        totalItems: 1,
-        items: [
-          {
-            id: "11223344000",
-            volumeInfo: {
-              title: "Code Complete",
-              authors: ["Steve McConnell"],
-            },
-          },
-        ],
-      };
+      const mockResponseGoogle = googleMock;
 
       axios.get.mockImplementation(
         () =>
@@ -360,25 +314,22 @@ isbndb: Network Error]
       );
 
       const book = await isbn.resolve(MOCK_ISBN, { timeout: 15_000 });
-      expect(book).toMatchInlineSnapshot(
-        mockResponseGoogle.items[0].volumeInfo,
-        `
+      expect(book).toMatchInlineSnapshot(`
 {
   "authors": [
-    "Steve McConnell",
+    "Jeff VanderMeer",
   ],
   "categories": undefined,
-  "description": undefined,
-  "link": undefined,
+  "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
+  "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
   "pageCount": undefined,
   "printType": undefined,
-  "publishedDate": undefined,
-  "publisher": undefined,
-  "thumbnail": "https://books.google.com/books?id=11223344000&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
-  "title": "Code Complete",
+  "publishedDate": "2014-02-04",
+  "publisher": "Macmillan",
+  "thumbnail": "https://books.google.com/books?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
+  "title": "Annihilation",
 }
-`
-      );
+`);
     }, 20_000);
   });
 });
