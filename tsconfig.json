@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "customConditions": ["development"],
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "exactOptionalPropertyTypes": true,
+    "lib": ["es2022"],
+    "module": "node16",
+    "strict": true,
+    "target": "es2022",
+    "useUnknownInCatchVariables": false
+  },
+  "include": ["src/*.js"],
+  "exclude": ["src/*.d.ts"]
+}

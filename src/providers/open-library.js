@@ -6,10 +6,15 @@ import {
 } from "../provider-resolvers.js";
 
 /**
+ * @typedef {import('../index.js').Book} Book
+ * @typedef {import('axios').AxiosRequestConfig} AxiosRequestConfig
+ */
+
+/**
  * Resolves a book from the Open Library API using the provided ISBN.
  * @param {string} isbn - The ISBN of the book.
- * @param {object} options - Additional options for the request.
- * @returns {Promise<object>} A promise that resolves to the standardized book object.
+ * @param {AxiosRequestConfig} options - Additional options for the request.
+ * @returns {Promise<Book>} A promise that resolves to the standardized book object.
  * @throws {Error} If the response code is not 200 or if no books are found with the provided ISBN.
  */
 export async function resolveOpenLibrary(isbn, options) {
@@ -35,16 +40,25 @@ export async function resolveOpenLibrary(isbn, options) {
   }
 }
 
-const LANGUAGE_MAP = {
-  "/languages/eng": "en",
-  "/languages/spa": "es",
-  "/languages/fre": "fr",
-};
+/**
+ * @typedef {object} OpenLibraryBook
+ * @property {object} details - The details of the book.
+ * @property {string} details.title - The title of the book.
+ * @property {string} details.publish_date - The publish date of the book.
+ * @property {Array<{name: string}>} details.authors - The authors of the book.
+ * @property {string} details.subtitle - The subtitle of the book.
+ * @property {number} details.number_of_pages - The number of pages in the book.
+ * @property {Array<string>} details.publishers - The publishers of the book.
+ * @property {Array<{key: string}>} details.languages - The languages of the book.
+ * @property {string} thumbnail_url - The URL of the book's thumbnail.
+ * @property {string} preview_url - The URL of the book's preview.
+ * @property {string} info_url - The URL of the book's information.
+ */
 
 /**
  * Standardizes a book object by extracting relevant information from the provided book object.
- * @param {object} book - The book object to be standardized.
- * @returns {object} - The standardized book object.
+ * @param {OpenLibraryBook} book - The book object to be standardized.
+ * @returns {Book} - The standardized book object.
  */
 export function standardize(book) {
   const standardBook = {
@@ -66,7 +80,11 @@ export function standardize(book) {
     infoLink: book.info_url,
     publisher: book.details.publishers ? book.details.publishers[0] : "",
     language: book.details.languages
-      ? LANGUAGE_MAP[book.details.languages[0].key] || "unknown"
+      ? {
+          "/languages/eng": "en",
+          "/languages/spa": "es",
+          "/languages/fre": "fr",
+        }[book.details.languages[0].key] || "unknown"
       : "unknown",
   };
 
