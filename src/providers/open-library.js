@@ -41,60 +41,19 @@ export async function resolveOpenLibrary(isbn, options) {
 }
 
 /**
- * @typedef {object} Identifier
- * @property {Array<string>} isbn_13
- * @property {Array<string>} openlibrary
- */
-
-/**
- * @typedef {object} Publisher
- * @property {string} name
- */
-
-/**
- * @typedef {object} Subject
- * @property {string} name
- * @property {string} url
- */
-
-/**
- * @typedef {object} Excerpt
- * @property {string} text
- * @property {string} comment
- */
-
-/**
- * @typedef {object} Cover
- * @property {string} small
- * @property {string} medium
- * @property {string} large
- */
-
-/**
- * @typedef {object} Author
- * @property {string} url
- * @property {string} name
- */
-
-/**
- * @typedef {object} BookDetails
- * @property {string} url
- * @property {string} key
- * @property {string} title
- * @property {Array<Author>} authors
- * @property {number} number_of_pages
- * @property {string} weight
- * @property {Identifier} identifiers
- * @property {Array<Publisher>} publishers
- * @property {string} publish_date
- * @property {Array<Subject>} subjects
- * @property {Array<Excerpt>} excerpts
- * @property {Cover} cover
- */
-
-/**
  * @typedef {object} OpenLibraryBook
- * @property {BookDetails} ISBN:9780374104092
+ * @property {string} url - The URL of the book.
+ * @property {string} key - The key of the book.
+ * @property {string} title - The title of the book.
+ * @property {Array<{name: string, url: string}>} authors - The authors of the book.
+ * @property {number} number_of_pages - The number of pages in the book.
+ * @property {string} weight - The weight of the book.
+ * @property {Identifier} identifiers - The identifiers of the book.
+ * @property {Array<{name: string}>} publishers - The publishers of the book.
+ * @property {string} publish_date - The publish date of the book.
+ * @property {Array<{name: string, url: string}>} subjects - The subjects of the book.
+ * @property {Array<{text: string, comment: string}>} excerpts - The excerpts of the book.
+ * @property {{large: string, medium: string; small: string;}} cover - The cover of the book.
  */
 
 /**
@@ -106,16 +65,14 @@ export function standardize(book) {
   const standardBook = {
     title: book.title,
     publishedDate: book.publish_date,
-    authors: book.authors ? book.authors.map(({ name }) => name) : [],
-    description: book.subtitle,
+    authors: book.authors?.map(({ name }) => name),
+    //description: book.subtitle,
     pageCount: book.number_of_pages,
     printType: "BOOK",
     categories: book.subjects.map(({ name }) => name),
     thumbnail: book.cover.large,
     link: book.url,
-    publisher: book.publishers
-      ? book.publishers.map((publisher) => publisher.name).join(", ")
-      : "",
+    publisher: book.publishers?.map((publisher) => publisher.name).join(", "),
   };
 
   return standardBook;

@@ -73,7 +73,6 @@ describe("e2e", () => {
     "Ps3572.a4284 a84 2014",
     "813/.54",
   ],
-  "description": undefined,
   "link": "https://openlibrary.org/books/OL31444108M/Annihilation",
   "pageCount": 208,
   "printType": "BOOK",
