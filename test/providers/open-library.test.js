@@ -35,22 +35,21 @@ describe("resolveOpenLibrary", () => {
 
     const book = await resolveOpenLibrary(isbn, {});
     expect(book).toMatchInlineSnapshot(`
-      {
-        "authors": [
-          "Test Author",
-        ],
-        "categories": [],
-        "description": "Test subtitle",
-        "industryIdentifiers": [],
-        "link": "http://example.com/info",
-        "pageCount": 123,
-        "printType": "BOOK",
-        "publishedDate": "2022-01-01",
-        "publisher": "Test Publisher",
-        "thumbnail": "http://example.com/test.jpg",
-        "title": "Test Book",
-      }
-    `);
+{
+  "authors": [
+    "Test Author",
+  ],
+  "categories": [],
+  "description": "Test subtitle",
+  "link": "http://example.com/info",
+  "pageCount": 123,
+  "printType": "BOOK",
+  "publishedDate": "2022-01-01",
+  "publisher": "Test Publisher",
+  "thumbnail": "http://example.com/test.jpg",
+  "title": "Test Book",
+}
+`);
   });
 
   it("should throw an error if no books are found", async () => {
@@ -95,21 +94,20 @@ describe("resolveOpenLibrary", () => {
     };
 
     expect(standardize(book)).toMatchInlineSnapshot(`
-      {
-        "authors": [
-          "Test Author",
-        ],
-        "categories": [],
-        "description": "Test Subtitle",
-        "industryIdentifiers": [],
-        "link": "http://example.com/info",
-        "pageCount": 200,
-        "printType": "BOOK",
-        "publishedDate": "2022",
-        "publisher": "Test Publisher",
-        "thumbnail": "http://example.com/thumbnail.jpg",
-        "title": "Test Book",
-      }
-    `);
+{
+  "authors": [
+    "Test Author",
+  ],
+  "categories": [],
+  "description": "Test Subtitle",
+  "link": "http://example.com/info",
+  "pageCount": 200,
+  "printType": "BOOK",
+  "publishedDate": "2022",
+  "publisher": "Test Publisher",
+  "thumbnail": "http://example.com/thumbnail.jpg",
+  "title": "Test Book",
+}
+`);
   });
 });

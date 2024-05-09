@@ -68,7 +68,6 @@ export function standardize(book) {
       ? book.details.authors.map(({ name }) => name)
       : [],
     description: book.details.subtitle,
-    industryIdentifiers: [],
     pageCount: book.details.number_of_pages,
     printType: "BOOK",
     categories: [],

@@ -29,7 +29,6 @@ describe("e2e", () => {
   "authors": [],
   "categories": [],
   "description": undefined,
-  "industryIdentifiers": [],
   "link": "https://openlibrary.org/books/OL31444108M/Annihilation",
   "pageCount": 208,
   "printType": "BOOK",
