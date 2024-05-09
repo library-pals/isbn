@@ -79,11 +79,7 @@ describe("e2e", () => {
   "printType": "BOOK",
   "publishedDate": "2014",
   "publisher": "Farrar, Straus and Giroux",
-  "thumbnail": {
-    "large": "https://covers.openlibrary.org/b/id/10520611-L.jpg",
-    "medium": "https://covers.openlibrary.org/b/id/10520611-M.jpg",
-    "small": "https://covers.openlibrary.org/b/id/10520611-S.jpg",
-  },
+  "thumbnail": "https://covers.openlibrary.org/b/id/10520611-L.jpg",
   "title": "Annihilation",
 }
 `);

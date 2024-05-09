@@ -111,7 +111,7 @@ export function standardize(book) {
     pageCount: book.number_of_pages,
     printType: "BOOK",
     categories: book.subjects.map(({ name }) => name),
-    thumbnail: book.cover,
+    thumbnail: book.cover.large,
     link: book.url,
     publisher: book.publishers
       ? book.publishers.map((publisher) => publisher.name).join(", ")
