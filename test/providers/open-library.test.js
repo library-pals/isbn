@@ -34,24 +34,23 @@ describe("resolveOpenLibrary", () => {
     });
 
     const book = await resolveOpenLibrary(isbn, {});
-    expect(book).toEqual({
-      authors: ["Test Author"],
-      categories: [],
-      description: "Test subtitle",
-      imageLinks: {
-        smallThumbnail: "http://example.com/test.jpg",
-        thumbnail: "http://example.com/test.jpg",
-      },
-      industryIdentifiers: [],
-      infoLink: "http://example.com/info",
-      language: "en",
-      pageCount: 123,
-      previewLink: "http://example.com/preview",
-      printType: "BOOK",
-      publishedDate: "2022-01-01",
-      publisher: "Test Publisher",
-      title: "Test Book",
-    });
+    expect(book).toMatchInlineSnapshot(`
+      {
+        "authors": [
+          "Test Author",
+        ],
+        "categories": [],
+        "description": "Test subtitle",
+        "industryIdentifiers": [],
+        "link": "http://example.com/info",
+        "pageCount": 123,
+        "printType": "BOOK",
+        "publishedDate": "2022-01-01",
+        "publisher": "Test Publisher",
+        "thumbnail": "http://example.com/test.jpg",
+        "title": "Test Book",
+      }
+    `);
   });
 
   it("should throw an error if no books are found", async () => {
@@ -95,61 +94,22 @@ describe("resolveOpenLibrary", () => {
       info_url: "http://example.com/info",
     };
 
-    const expectedStandardBook = {
-      title: "Test Book",
-      publishedDate: "2022",
-      authors: ["Test Author"],
-      description: "Test Subtitle",
-      industryIdentifiers: [],
-      pageCount: 200,
-      printType: "BOOK",
-      categories: [],
-      imageLinks: {
-        smallThumbnail: "http://example.com/thumbnail.jpg",
-        thumbnail: "http://example.com/thumbnail.jpg",
-      },
-      previewLink: "http://example.com/preview",
-      infoLink: "http://example.com/info",
-      publisher: "Test Publisher",
-      language: "unknown",
-    };
-
-    expect(standardize(book)).toEqual(expectedStandardBook);
-  });
-
-  it("should handle unknown language", () => {
-    const book = {
-      details: {
-        title: "Test Book",
-        publish_date: "2022",
-        subtitle: "Test Subtitle",
-        number_of_pages: 200,
-        languages: [{ key: "/languages/unknown" }],
-      },
-      thumbnail_url: "http://example.com/thumbnail.jpg",
-      preview_url: "http://example.com/preview",
-      info_url: "http://example.com/info",
-    };
-
-    const expectedStandardBook = {
-      title: "Test Book",
-      publishedDate: "2022",
-      authors: [],
-      description: "Test Subtitle",
-      industryIdentifiers: [],
-      pageCount: 200,
-      printType: "BOOK",
-      categories: [],
-      imageLinks: {
-        smallThumbnail: "http://example.com/thumbnail.jpg",
-        thumbnail: "http://example.com/thumbnail.jpg",
-      },
-      previewLink: "http://example.com/preview",
-      infoLink: "http://example.com/info",
-      publisher: "",
-      language: "unknown",
-    };
-
-    expect(standardize(book)).toEqual(expectedStandardBook);
+    expect(standardize(book)).toMatchInlineSnapshot(`
+      {
+        "authors": [
+          "Test Author",
+        ],
+        "categories": [],
+        "description": "Test Subtitle",
+        "industryIdentifiers": [],
+        "link": "http://example.com/info",
+        "pageCount": 200,
+        "printType": "BOOK",
+        "publishedDate": "2022",
+        "publisher": "Test Publisher",
+        "thumbnail": "http://example.com/thumbnail.jpg",
+        "title": "Test Book",
+      }
+    `);
   });
 });

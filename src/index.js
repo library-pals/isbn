@@ -10,15 +10,12 @@ import {
  * @property {string} publishedDate - The published date of the book.
  * @property {string[]} authors - The authors of the book.
  * @property {string} description - The overview of the book.
- * @property {string[]} industryIdentifiers - The industry identifiers of the book, including ISBN, ISBN13, and Dewey Decimal.
  * @property {number} pageCount - The number of pages in the book.
  * @property {string} printType - The print type of the book. Always "BOOK" for this context.
  * @property {string[]} categories - The subjects or categories of the book.
- * @property {object} imageLinks - The image links of the book.
- * @property {string} imageLinks.smallThumbnail - The small thumbnail image link of the book.
- * @property {string} imageLinks.thumbnail - The thumbnail image link of the book.
+ * @property {string} thumbnail - The thumbnail image link of the book.
  * @property {string} publisher - The publisher of the book.
- * @property {string} language - The language of the book.
+ * @property {string} link - The link of the book.
  */
 
 /**

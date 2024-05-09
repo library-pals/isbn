@@ -29,18 +29,13 @@ describe("e2e", () => {
   "authors": [],
   "categories": [],
   "description": undefined,
-  "imageLinks": {
-    "smallThumbnail": "https://covers.openlibrary.org/b/id/10520611-S.jpg",
-    "thumbnail": "https://covers.openlibrary.org/b/id/10520611-S.jpg",
-  },
   "industryIdentifiers": [],
-  "infoLink": "https://openlibrary.org/books/OL31444108M/Annihilation",
-  "language": "en",
+  "link": "https://openlibrary.org/books/OL31444108M/Annihilation",
   "pageCount": 208,
-  "previewLink": "https://openlibrary.org/books/OL31444108M/Annihilation",
   "printType": "BOOK",
   "publishedDate": "2014",
   "publisher": "Farrar, Straus and Giroux",
+  "thumbnail": "https://covers.openlibrary.org/b/id/10520611-S.jpg",
   "title": "Annihilation",
 }
 `);

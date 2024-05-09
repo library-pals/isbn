@@ -72,20 +72,9 @@ export function standardize(book) {
     pageCount: book.details.number_of_pages,
     printType: "BOOK",
     categories: [],
-    imageLinks: {
-      smallThumbnail: book.thumbnail_url,
-      thumbnail: book.thumbnail_url,
-    },
-    previewLink: book.preview_url,
-    infoLink: book.info_url,
+    thumbnail: book.thumbnail_url,
+    link: book.info_url,
     publisher: book.details.publishers ? book.details.publishers[0] : "",
-    language: book.details.languages
-      ? {
-          "/languages/eng": "en",
-          "/languages/spa": "es",
-          "/languages/fre": "fr",
-        }[book.details.languages[0].key] || "unknown"
-      : "unknown",
   };
 
   return standardBook;

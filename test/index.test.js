@@ -45,6 +45,13 @@ describe("ISBN Resolver API", () => {
           "authors": [
             "Steve McConnell",
           ],
+          "categories": undefined,
+          "description": undefined,
+          "link": undefined,
+          "pageCount": undefined,
+          "printType": undefined,
+          "publishedDate": undefined,
+          "publisher": undefined,
           "thumbnail": "https://books.google.com/books?id=11223344000&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
           "title": "Code Complete",
         }
@@ -95,30 +102,23 @@ describe("ISBN Resolver API", () => {
       });
 
       const book = await isbn.resolve(MOCK_ISBN);
-      expect(book).toMatchInlineSnapshot(
-        `
-          {
-            "authors": [
-              "Michael Caine",
-            ],
-            "categories": [],
-            "description": "an autobiography",
-            "imageLinks": {
-              "smallThumbnail": "https://covers.openlibrary.org/b/id/6739180-S.jpg",
-              "thumbnail": "https://covers.openlibrary.org/b/id/6739180-S.jpg",
-            },
-            "industryIdentifiers": [],
-            "infoLink": "https://openlibrary.org/books/OL1743093M/Book",
-            "language": "en",
-            "pageCount": 521,
-            "previewLink": "https://archive.org/details/whatsitallabouta00cain",
-            "printType": "BOOK",
-            "publishedDate": "1992",
-            "publisher": "Turtle Bay Books",
-            "title": "Book Title",
-          }
-        `
-      );
+      expect(book).toMatchInlineSnapshot(`
+        {
+          "authors": [
+            "Michael Caine",
+          ],
+          "categories": [],
+          "description": "an autobiography",
+          "industryIdentifiers": [],
+          "link": "https://openlibrary.org/books/OL1743093M/Book",
+          "pageCount": 521,
+          "printType": "BOOK",
+          "publishedDate": "1992",
+          "publisher": "Turtle Bay Books",
+          "thumbnail": "https://covers.openlibrary.org/b/id/6739180-S.jpg",
+          "title": "Book Title",
+        }
+      `);
     });
 
     it("should resolve a valid ISBN with ISBNdb", async () => {
@@ -160,31 +160,22 @@ describe("ISBN Resolver API", () => {
       });
 
       const book = await isbn.resolve(MOCK_ISBN);
-      expect(book).toMatchInlineSnapshot(
-        `
-          {
-            "authors": [
-              "Aswin Pranam",
-            ],
-            "categories": undefined,
-            "description": undefined,
-            "imageLinks": {
-              "smallThumbnail": "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
-              "thumbnail": "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
-            },
-            "industryIdentifiers": [
-              "1484233026",
-              "9781484233023",
-            ],
-            "language": undefined,
-            "pageCount": 174,
-            "printType": "BOOK",
-            "publishedDate": "1992-12-13",
-            "publisher": "Turtle Bay Books",
-            "title": "Book Title",
-          }
-        `
-      );
+      expect(book).toMatchInlineSnapshot(`
+        {
+          "authors": [
+            "Aswin Pranam",
+          ],
+          "categories": undefined,
+          "description": undefined,
+          "link": "",
+          "pageCount": 174,
+          "printType": "BOOK",
+          "publishedDate": "1992-12-13",
+          "publisher": "Turtle Bay Books",
+          "thumbnail": "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
+          "title": "Book Title",
+        }
+      `);
     });
 
     it("should return an error if no book is found", async () => {
@@ -277,6 +268,13 @@ isbndb: Network Error]
   "authors": [
     "Steve McConnell",
   ],
+  "categories": undefined,
+  "description": undefined,
+  "link": undefined,
+  "pageCount": undefined,
+  "printType": undefined,
+  "publishedDate": undefined,
+  "publisher": undefined,
   "thumbnail": "https://books.google.com/books?id=11223344000&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
   "title": "Code Complete",
 }
@@ -345,6 +343,13 @@ isbndb: Network Error]
   "authors": [
     "Steve McConnell",
   ],
+  "categories": undefined,
+  "description": undefined,
+  "link": undefined,
+  "pageCount": undefined,
+  "printType": undefined,
+  "publishedDate": undefined,
+  "publisher": undefined,
   "thumbnail": "https://books.google.com/books?id=11223344000&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
   "title": "Code Complete",
 }

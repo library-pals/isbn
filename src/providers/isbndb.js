@@ -72,17 +72,11 @@ function standardize(book) {
     publishedDate: book.date_published,
     authors: book.authors,
     description: book.overview,
-    industryIdentifiers: [book.isbn, book.isbn13, book.dewey_decimal].filter(
-      Boolean
-    ),
     pageCount: book.pages,
     printType: "BOOK",
     categories: book.subjects,
-    imageLinks: {
-      smallThumbnail: book.image,
-      thumbnail: book.image,
-    },
+    thumbnail: book.image,
     publisher: book.publisher,
-    language: book.language,
+    link: "",
   };
 }
