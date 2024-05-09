@@ -109,7 +109,6 @@ describe("ISBN Resolver API", () => {
           ],
           "categories": [],
           "description": "an autobiography",
-          "industryIdentifiers": [],
           "link": "https://openlibrary.org/books/OL1743093M/Book",
           "pageCount": 521,
           "printType": "BOOK",
