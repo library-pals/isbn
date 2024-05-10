@@ -22,16 +22,16 @@ export async function resolveOpenLibrary(isbn, options) {
     ...defaultOptions,
     ...options,
   };
-  const url = `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_BOOK}?bibkeys=ISBN:${isbn}&format=json&jscmd=data`;
+  // https://openlibrary.org/isbn/9780140328721.json
+  const url = `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_BOOK}${isbn}.json`;
 
   try {
     const response = await axios.get(url, requestOptions);
     if (response.status !== 200) {
       throw new Error(`Wrong response code: ${response.status}`);
     }
-    const books = response.data;
-    const book = books[`ISBN:${isbn}`];
-    if (!book) {
+    const book = response.data;
+    if (!book || Object.keys(book).length === 0) {
       throw new Error(`No books found with ISBN: ${isbn}`);
     }
     return standardize(book);
@@ -65,14 +65,13 @@ export function standardize(book) {
   const standardBook = {
     title: book.title,
     publishedDate: book.publish_date,
-    authors: book.authors?.map(({ name }) => name),
+    authors: book.authors,
     //description: book.subtitle,
     pageCount: book.number_of_pages,
     printType: "BOOK",
-    categories: book.subjects.map(({ name }) => name),
-    thumbnail: book.cover.large,
+    categories: book.subjects, //.map(({ name }) => name),
+    thumbnail: `https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`,
     link: book.url,
-    publisher: book.publishers?.map((publisher) => publisher.name).join(", "),
   };
 
   return standardBook;

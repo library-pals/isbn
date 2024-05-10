@@ -20,7 +20,7 @@ export const GOOGLE_BOOKS_API_BASE = "https://www.googleapis.com";
 export const GOOGLE_BOOKS_API_BOOK = "/books/v1/volumes";
 
 export const OPENLIBRARY_API_BASE = "https://openlibrary.org";
-export const OPENLIBRARY_API_BOOK = "/api/books";
+export const OPENLIBRARY_API_BOOK = "/isbn";
 
 export const ISBNDB_API_BASE = "https://api2.isbndb.com";
 export const ISBNDB_API_BOOK = "/book";
