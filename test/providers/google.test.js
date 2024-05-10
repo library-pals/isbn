@@ -55,7 +55,7 @@ describe("resolveGoogle", () => {
     });
 
     await expect(resolveGoogle(isbn, {})).rejects.toThrow(
-      `No books found with isbn: ${isbn}`
+      `No books found with isbn: ${isbn}`,
     );
   });
 
@@ -71,7 +71,7 @@ describe("resolveGoogle", () => {
     });
 
     await expect(resolveGoogle(isbn, {})).rejects.toThrow(
-      `Wrong response code: 404`
+      `Wrong response code: 404`,
     );
   });
 
@@ -87,7 +87,7 @@ describe("resolveGoogle", () => {
     });
 
     await expect(resolveGoogle(isbn, {})).rejects.toThrow(
-      `No volume info found for book with isbn: ${isbn}`
+      `No volume info found for book with isbn: ${isbn}`,
     );
   });
 });

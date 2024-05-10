@@ -195,7 +195,7 @@ isbndb: Network Error]
       axios.get.mockRejectedValue({ status: 500 });
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed]`
+        `[Error: All providers failed]`,
       );
     });
 
@@ -252,7 +252,7 @@ isbndb: Network Error]
   "openlibrary",
   "isbndb",
 ]
-`
+`,
       );
     });
 
@@ -265,7 +265,7 @@ isbndb: Network Error]
             setTimeout(() => {
               resolve({ status: 200, data: mockResponseGoogle });
             }, 10_000);
-          })
+          }),
       );
 
       const book = await isbn.resolve(MOCK_ISBN, { timeout: 15_000 });
@@ -302,7 +302,7 @@ describe("ISBN Provider API", () => {
   "openlibrary",
   "isbndb",
 ]
-`
+`,
     );
   });
 
@@ -320,7 +320,7 @@ describe("ISBN Provider API", () => {
   "openlibrary",
   "isbndb",
 ]
-`
+`,
     );
   });
 
@@ -338,7 +338,7 @@ describe("ISBN Provider API", () => {
   "openlibrary",
   "isbndb",
 ]
-`
+`,
     );
   });
 
@@ -356,7 +356,7 @@ describe("ISBN Provider API", () => {
 [
   "openlibrary",
 ]
-`
+`,
     );
   });
 
@@ -374,7 +374,7 @@ describe("ISBN Provider API", () => {
   "openlibrary",
   "google",
 ]
-`
+`,
     );
   });
 

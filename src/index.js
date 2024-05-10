@@ -58,11 +58,11 @@ class Isbn {
     }
 
     const unsupportedProviders = providers.filter(
-      (p) => !DEFAULT_PROVIDERS.includes(p)
+      (p) => !DEFAULT_PROVIDERS.includes(p),
     );
     if (unsupportedProviders.length > 0) {
       throw new Error(
-        `Unsupported providers: ${unsupportedProviders.join(", ")}`
+        `Unsupported providers: ${unsupportedProviders.join(", ")}`,
       );
     }
 

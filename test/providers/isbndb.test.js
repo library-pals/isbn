@@ -63,7 +63,7 @@ describe("resolveIsbnDb", () => {
     });
 
     await expect(resolveIsbnDb(isbn, {})).rejects.toThrow(
-      `No books found with ISBN: ${isbn}`
+      `No books found with ISBN: ${isbn}`,
     );
   });
 
@@ -76,7 +76,7 @@ describe("resolveIsbnDb", () => {
     });
 
     await expect(resolveIsbnDb(isbn, {})).rejects.toThrow(
-      "Wrong response code: 404"
+      "Wrong response code: 404",
     );
   });
 
