@@ -130,21 +130,20 @@ describe("ISBN Resolver API", () => {
 
       const book = await isbn.resolve(MOCK_ISBN);
       expect(book).toMatchInlineSnapshot(`
-        {
-          "authors": [
-            "Aswin Pranam",
-          ],
-          "categories": undefined,
-          "description": undefined,
-          "link": "",
-          "pageCount": 174,
-          "printType": "BOOK",
-          "publishedDate": "1992-12-13",
-          "publisher": "Turtle Bay Books",
-          "thumbnail": "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
-          "title": "Book Title",
-        }
-      `);
+{
+  "authors": [
+    "Aswin Pranam",
+  ],
+  "categories": undefined,
+  "description": undefined,
+  "isbn": "9780374104092",
+  "link": "",
+  "pageCount": 174,
+  "printType": "BOOK",
+  "thumbnail": "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
+  "title": "Book Title",
+}
+`);
     });
 
     it("should return an error if no book is found", async () => {

@@ -36,23 +36,22 @@ describe("resolveIsbnDb", () => {
 
     const book = await resolveIsbnDb(isbn, {});
     expect(book).toMatchInlineSnapshot(`
-      {
-        "authors": [
-          "Test Author",
-        ],
-        "categories": [
-          "Test subject",
-        ],
-        "description": "Test overview",
-        "link": "",
-        "pageCount": 123,
-        "printType": "BOOK",
-        "publishedDate": "2022-01-01",
-        "publisher": "Test Publisher",
-        "thumbnail": "http://example.com/test.jpg",
-        "title": "Test Book",
-      }
-    `);
+{
+  "authors": [
+    "Test Author",
+  ],
+  "categories": [
+    "Test subject",
+  ],
+  "description": "Test overview",
+  "isbn": "1234567890",
+  "link": "",
+  "pageCount": 123,
+  "printType": "BOOK",
+  "thumbnail": "http://example.com/test.jpg",
+  "title": "Test Book",
+}
+`);
   });
 
   it("should throw an error if no books are found", async () => {

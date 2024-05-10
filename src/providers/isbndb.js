@@ -39,7 +39,7 @@ export async function resolveIsbnDb(isbn, options) {
     if (!books.book) {
       throw new Error(`No books found with ISBN: ${isbn}`);
     }
-    return standardize(books.book);
+    return standardize(books.book, isbn);
   } catch (error) {
     throw new Error(error.message);
   }
@@ -64,19 +64,19 @@ export async function resolveIsbnDb(isbn, options) {
 /**
  * Standardizes a book object by transforming its properties into a consistent format.
  * @param {IsbnDbBook} book - The book object to be standardized.
+ * @param {string} isbn - The book's ISBN.
  * @returns {Book} - The standardized book object.
  */
-function standardize(book) {
+function standardize(book, isbn) {
   return {
     title: book.title_long,
-    publishedDate: book.date_published,
     authors: book.authors,
     description: book.overview,
     pageCount: book.pages,
     printType: "BOOK",
     categories: book.subjects,
     thumbnail: book.image,
-    publisher: book.publisher,
     link: "",
+    isbn,
   };
 }
