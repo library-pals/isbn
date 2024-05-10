@@ -1,6 +1,14 @@
-import { resolveOpenLibrary } from "../../src/providers/open-library.js";
+import {
+  resolveOpenLibrary,
+  getAuthors,
+  getWorks,
+} from "../../src/providers/open-library.js";
 import axios from "axios";
 import { jest } from "@jest/globals";
+
+import openLibraryMock from "../fixtures/open-library-isbn-9780374104092.json";
+import openLibraryWorksMock from "../fixtures/open-library-works-OL45804W.json";
+import openLibraryAuthorsMock from "../fixtures/open-library-authors-OL34184A.json";
 
 jest.mock("axios");
 
@@ -8,110 +16,105 @@ describe("resolveOpenLibrary", () => {
   const isbn = "9780374104092";
 
   it("should resolve book information successfully", async () => {
-    const mockResponse = {
-      identifiers: {
-        goodreads: ["1507552"],
-        librarything: ["6446"],
-      },
-      title: "Fantastic Mr. Fox",
-      authors: [
-        {
-          key: "/authors/OL34184A",
-        },
-      ],
-      publish_date: "October 1, 1988",
-      publishers: ["Puffin"],
-      covers: [8_739_161],
-      contributions: ["Tony Ross (Illustrator)"],
-      languages: [
-        {
-          key: "/languages/eng",
-        },
-      ],
-      source_records: [
-        "promise:bwb_daily_pallets_2021-05-13:KP-140-654",
-        "ia:fantasticmrfox00dahl_834",
-        "marc:marc_openlibraries_sanfranciscopubliclibrary/sfpl_chq_2018_12_24_run02.mrc:85081404:4525",
-        "amazon:0140328726",
-        "bwb:9780140328721",
-        "promise:bwb_daily_pallets_2021-04-19:KP-128-107",
-        "promise:bwb_daily_pallets_2020-04-30:O6-BTK-941",
-      ],
-      local_id: [
-        "urn:bwbsku:KP-140-654",
-        "urn:sfpl:31223064402481",
-        "urn:sfpl:31223117624784",
-        "urn:sfpl:31223113969183",
-        "urn:sfpl:31223117624800",
-        "urn:sfpl:31223113969225",
-        "urn:sfpl:31223106484539",
-        "urn:sfpl:31223117624792",
-        "urn:sfpl:31223117624818",
-        "urn:sfpl:31223117624768",
-        "urn:sfpl:31223117624743",
-        "urn:sfpl:31223113969209",
-        "urn:sfpl:31223117624750",
-        "urn:sfpl:31223117624727",
-        "urn:sfpl:31223117624776",
-        "urn:sfpl:31223117624719",
-        "urn:sfpl:31223117624735",
-        "urn:sfpl:31223113969241",
-        "urn:bwbsku:KP-128-107",
-        "urn:bwbsku:O6-BTK-941",
-      ],
-      type: {
-        key: "/type/edition",
-      },
-      first_sentence: {
-        type: "/type/text",
-        value: "Down in the valley there were three farms.",
-      },
-      key: "/books/OL7353617M",
-      number_of_pages: 96,
-      works: [
-        {
-          key: "/works/OL45804W",
-        },
-      ],
-      classifications: {},
-      ocaid: "fantasticmrfoxpu00roal",
-      isbn_10: ["0140328726"],
-      isbn_13: ["9780140328721"],
-      latest_revision: 26,
-      revision: 26,
-      created: {
-        type: "/type/datetime",
-        value: "2008-04-29T13:35:46.876380",
-      },
-      last_modified: {
-        type: "/type/datetime",
-        value: "2023-09-05T03:42:15.650938",
-      },
-    };
+    const mockResponse = openLibraryMock;
 
-    axios.get = jest.fn().mockResolvedValue({
-      status: 200,
-      data: mockResponse,
+    axios.get = jest.fn().mockImplementation((url) => {
+      if (url.includes("/isbn")) {
+        return Promise.resolve({ status: 200, data: mockResponse });
+      } else if (url.includes("/works")) {
+        return Promise.resolve({
+          status: 200,
+          data: openLibraryWorksMock,
+        });
+      } else if (url.includes("/authors")) {
+        return Promise.resolve({
+          status: 200,
+          data: openLibraryAuthorsMock,
+        });
+      }
     });
 
     const book = await resolveOpenLibrary(isbn, {});
     expect(book).toMatchInlineSnapshot(`
-{
-  "authors": [
-    {
-      "key": "/authors/OL34184A",
-    },
-  ],
-  "categories": undefined,
-  "description": "",
-  "isbn": "9780374104092",
-  "link": undefined,
-  "pageCount": 96,
-  "printType": "BOOK",
-  "thumbnail": "https://covers.openlibrary.org/b/id/8739161-L.jpg",
-  "title": "Fantastic Mr. Fox",
-}
-`);
+      {
+        "authors": [
+          "Roald Dahl",
+        ],
+        "categories": [
+          "Animals",
+          "Hunger",
+          "Open Library Staff Picks",
+          "Juvenile fiction",
+          "Children's stories, English",
+          "Foxes",
+          "Fiction",
+          "Zorros",
+          "Ficción juvenil",
+          "Tunnels",
+          "Interviews",
+          "Farmers",
+          "Children's stories",
+          "Rats",
+          "Welsh Authors",
+          "English Authors",
+          "Thieves",
+          "Tricksters",
+          "Badgers",
+          "Children's fiction",
+          "Foxes, fiction",
+          "Underground",
+          "Renards",
+          "Romans, nouvelles, etc. pour la jeunesse",
+          "Children's literature",
+          "Plays",
+          "Children's plays",
+          "Children's stories, Welsh",
+          "Agriculteurs",
+          "Fantasy fiction",
+          "Children's plays, English",
+        ],
+        "description": "The main character of Fantastic Mr. Fox is an extremely clever anthropomorphized fox named Mr. Fox. He lives with his wife and four little foxes. In order to feed his family, he steals food from the cruel, brutish farmers named Boggis, Bunce, and Bean every night.
+
+      Finally tired of being constantly outwitted by Mr. Fox, the farmers attempt to capture and kill him. The foxes escape in time by burrowing deep into the ground. The farmers decide to wait outside the hole for the foxes to emerge. Unable to leave the hole and steal food, Mr. Fox and his family begin to starve. Mr. Fox devises a plan to steal food from the farmers by tunneling into the ground and borrowing into the farmer's houses.
+
+      Aided by a friendly Badger, the animals bring the stolen food back and Mrs. Fox prepares a great celebratory banquet attended by the other starving animals and their families. Mr. Fox invites all the animals to live with him underground and says that he will provide food for them daily thanks to his underground passages. All the animals live happily and safely, while the farmers remain waiting outside in vain for Mr. Fox to show up.",
+        "isbn": "9780374104092",
+        "link": "https://openlibrary.org/books/OL7353617M",
+        "pageCount": 96,
+        "printType": "BOOK",
+        "thumbnail": "https://covers.openlibrary.org/b/id/8739161-L.jpg",
+        "title": "Fantastic Mr. Fox",
+      }
+    `);
+  });
+
+  it("should resolve book information successfully when missing data", async () => {
+    const mockResponse = {
+      title: "Fantastic Mr. Fox",
+      publish_date: "October 1, 1988",
+      covers: [8_739_161],
+      number_of_pages: 96,
+    };
+    axios.get = jest.fn().mockImplementation((url) => {
+      if (url.includes("/isbn")) {
+        return Promise.resolve({ status: 200, data: mockResponse });
+      }
+    });
+
+    const book = await resolveOpenLibrary(isbn, {});
+    expect(book).toMatchInlineSnapshot(`
+      {
+        "authors": [],
+        "categories": [],
+        "description": "",
+        "isbn": "9780374104092",
+        "link": "https://openlibrary.org/isbn/9780374104092",
+        "pageCount": 96,
+        "printType": "BOOK",
+        "thumbnail": "https://covers.openlibrary.org/b/id/8739161-L.jpg",
+        "title": "Fantastic Mr. Fox",
+      }
+    `);
   });
 
   it("should throw an error if no books are found", async () => {
@@ -137,6 +140,125 @@ describe("resolveOpenLibrary", () => {
 
     await expect(resolveOpenLibrary(isbn, {})).rejects.toThrow(
       "Wrong response code: 404",
+    );
+  });
+});
+
+describe("getAuthors", () => {
+  it("should return author names", async () => {
+    const rawAuthors = [{ key: "/authors/OL1A" }, { key: "/authors/OL2A" }];
+
+    axios.get.mockResolvedValueOnce({
+      status: 200,
+      data: { name: "Author 1" },
+    });
+    axios.get.mockResolvedValueOnce({
+      status: 200,
+      data: { name: "Author 2" },
+    });
+
+    const authors = await getAuthors(rawAuthors);
+
+    expect(authors).toEqual(["Author 1", "Author 2"]);
+  });
+
+  it("should return empty", async () => {
+    const rawAuthors = [{ key: "/authors/OL1A" }];
+
+    axios.get.mockResolvedValueOnce({
+      status: 200,
+      data: {},
+    });
+
+    const authors = await getAuthors(rawAuthors);
+
+    expect(authors).toEqual([]);
+  });
+
+  it("should throw an error when the response status is not 200", async () => {
+    const rawAuthors = [{ key: "/authors/OL1A" }];
+
+    axios.get.mockResolvedValueOnce({ status: 404 });
+
+    await expect(getAuthors(rawAuthors)).rejects.toThrow(
+      "Unable to get author /authors/OL1A: 404",
+    );
+  });
+});
+
+describe("getWorks", () => {
+  it("should return works", async () => {
+    const book = {
+      works: [{ key: "/works/OL1A" }],
+    };
+    axios.get.mockResolvedValueOnce({
+      status: 200,
+      data: {
+        description: "Description",
+        subjects: ["subject"],
+        authors: [
+          {
+            author: {
+              key: "/authors/OL34184A",
+            },
+            type: {
+              key: "/type/author_role",
+            },
+          },
+        ],
+      },
+    });
+
+    const works = await getWorks(book);
+
+    expect(works).toEqual({
+      description: "Description",
+      rawAuthors: [{ key: "/authors/OL34184A" }],
+      subjects: ["subject"],
+    });
+  });
+
+  it("should return defaults", async () => {
+    const book = {
+      works: [{ key: "/works/OL1A" }],
+    };
+    axios.get.mockResolvedValueOnce({
+      status: 200,
+      data: {
+        description: "Description",
+      },
+    });
+
+    const works = await getWorks(book);
+
+    expect(works).toEqual({
+      description: "Description",
+      rawAuthors: [],
+      subjects: [],
+    });
+  });
+
+  it("should return empty objects if missing key", async () => {
+    const book = {
+      works: [],
+    };
+
+    const works = await getWorks(book);
+
+    expect(works).toEqual({
+      description: "",
+      rawAuthors: [],
+      subjects: [],
+    });
+  });
+
+  it("should throw an error when the response status is not 200", async () => {
+    const works = [{ key: "/works/OL1A" }];
+
+    axios.get.mockResolvedValueOnce({ status: 404 });
+
+    await expect(getWorks({ works })).rejects.toThrow(
+      "Unable to get /works/OL1A: 404",
     );
   });
 });

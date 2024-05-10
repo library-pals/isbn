@@ -36,22 +36,21 @@ describe("resolveIsbnDb", () => {
 
     const book = await resolveIsbnDb(isbn, {});
     expect(book).toMatchInlineSnapshot(`
-{
-  "authors": [
-    "Test Author",
-  ],
-  "categories": [
-    "Test subject",
-  ],
-  "description": "Test overview",
-  "isbn": "1234567890",
-  "link": "",
-  "pageCount": 123,
-  "printType": "BOOK",
-  "thumbnail": "http://example.com/test.jpg",
-  "title": "Test Book",
-}
-`);
+      {
+        "authors": [
+          "Test Author",
+        ],
+        "categories": [
+          "Test subject",
+        ],
+        "description": "Test overview",
+        "isbn": "1234567890",
+        "pageCount": 123,
+        "printType": "BOOK",
+        "thumbnail": "http://example.com/test.jpg",
+        "title": "Test Book",
+      }
+    `);
   });
 
   it("should throw an error if no books are found", async () => {
@@ -63,7 +62,7 @@ describe("resolveIsbnDb", () => {
     });
 
     await expect(resolveIsbnDb(isbn, {})).rejects.toThrow(
-      `No books found with ISBN: ${isbn}`,
+      `No books found with ISBN: ${isbn}`
     );
   });
 
@@ -76,7 +75,7 @@ describe("resolveIsbnDb", () => {
     });
 
     await expect(resolveIsbnDb(isbn, {})).rejects.toThrow(
-      "Wrong response code: 404",
+      "Wrong response code: 404"
     );
   });
 

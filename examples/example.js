@@ -1,6 +1,8 @@
-import isbn from "../src/index.js";
+import Isbn from "../src/index.js";
 
 const input = process.argv.slice(2)[0] || "9780374104092";
+
+const isbn = new Isbn();
 
 // Set the providers you want to use
 isbn.provider(["openlibrary"]);
