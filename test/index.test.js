@@ -185,7 +185,7 @@ describe("ISBN Resolver API", () => {
       });
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed.]`
+        `[Error: All providers failed.]`,
       );
     });
 
@@ -193,7 +193,7 @@ describe("ISBN Resolver API", () => {
       axios.get.mockRejectedValue(new Error("Network Error"));
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed.]`
+        `[Error: All providers failed.]`,
       );
     });
 
@@ -201,7 +201,7 @@ describe("ISBN Resolver API", () => {
       axios.get.mockRejectedValue({ status: 500 });
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed.]`
+        `[Error: All providers failed.]`,
       );
     });
 
@@ -276,7 +276,7 @@ describe("ISBN Resolver API", () => {
             setTimeout(() => {
               resolve({ status: 200, data: mockResponseGoogle });
             }, 10_000);
-          })
+          }),
       );
 
       const book = await isbn.resolve(MOCK_ISBN, { timeout: 15_000 });

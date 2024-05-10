@@ -69,7 +69,7 @@ function standardize(book) {
     authors: book.authors,
     description: book.overview,
     industryIdentifiers: [book.isbn, book.isbn13, book.dewey_decimal].filter(
-      Boolean
+      Boolean,
     ),
     pageCount: book.pages,
     printType: "BOOK",
