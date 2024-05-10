@@ -34,7 +34,7 @@ export async function resolveOpenLibrary(isbn, options) {
     if (!book || Object.keys(book).length === 0) {
       throw new Error(`No books found with ISBN: ${isbn}`);
     }
-    return standardize(book);
+    return standardize(book, isbn);
   } catch (error) {
     throw new Error(error.message);
   }
@@ -59,9 +59,10 @@ export async function resolveOpenLibrary(isbn, options) {
 /**
  * Standardizes a book object by extracting relevant information from the provided book object.
  * @param {OpenLibraryBook} book - The book object to be standardized.
+ * @param {string} isbn - The book's isbn.
  * @returns {Book} - The standardized book object.
  */
-export function standardize(book) {
+export function standardize(book, isbn) {
   const standardBook = {
     title: book.title,
     authors: book.authors,
@@ -71,6 +72,7 @@ export function standardize(book) {
     categories: book.subjects,
     thumbnail: `https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`,
     link: book.url,
+    isbn,
   };
 
   return standardBook;

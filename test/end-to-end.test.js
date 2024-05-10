@@ -11,6 +11,7 @@ describe("e2e", () => {
     "Fiction",
   ],
   "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
+  "isbn": "9780374104092",
   "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
   "pageCount": 209,
   "printType": "BOOK",

@@ -2,6 +2,10 @@ declare const _default: Isbn;
 export default _default;
 export type Book = {
     /**
+     * - The ISBN of the book.
+     */
+    isbn: string;
+    /**
      * - The long title of the book.
      */
     title: string;
@@ -38,6 +42,7 @@ export type Providers = import('./provider-resolvers.js').Providers;
 export type AxiosRequestConfig = import('axios').AxiosRequestConfig;
 /**
  * @typedef {object} Book
+ * @property {string} isbn - The ISBN of the book.
  * @property {string} title - The long title of the book.
  * @property {string[]} authors - The authors of the book.
  * @property {string} description - The overview of the book.

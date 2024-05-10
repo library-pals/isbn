@@ -104,6 +104,7 @@ describe("resolveOpenLibrary", () => {
   ],
   "categories": undefined,
   "description": "",
+  "isbn": "9780374104092",
   "link": undefined,
   "pageCount": 96,
   "printType": "BOOK",

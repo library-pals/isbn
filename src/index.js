@@ -6,6 +6,7 @@ import {
 
 /**
  * @typedef {object} Book
+ * @property {string} isbn - The ISBN of the book.
  * @property {string} title - The long title of the book.
  * @property {string[]} authors - The authors of the book.
  * @property {string} description - The overview of the book.

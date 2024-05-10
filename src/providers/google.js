@@ -38,7 +38,7 @@ export async function resolveGoogle(isbn, options) {
       throw new Error(`No volume info found for book with isbn: ${isbn}`);
     }
     const book = books.items[0];
-    return standardize(book.volumeInfo, book.id);
+    return standardize(book.volumeInfo, book.id, isbn);
   } catch (error) {
     throw new Error(error.message);
   }
@@ -77,9 +77,10 @@ export async function resolveGoogle(isbn, options) {
  * Standardizes a book object by extracting relevant information from the provided book object.
  * @param {GoogleBook} book - The book object to be standardized.
  * @param {string} id - The book's id.
+ * @param {string} isbn - The book's ISBN.
  * @returns {Book} - The standardized book object.
  */
-export function standardize(book, id) {
+export function standardize(book, id, isbn) {
   const standardBook = {
     title: book.title,
     authors: book.authors,
@@ -89,6 +90,7 @@ export function standardize(book, id) {
     categories: book.categories,
     thumbnail: `https://books.google.com/books?id=${id}&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api`,
     link: book.canonicalVolumeLink,
+    isbn,
   };
 
   return standardBook;

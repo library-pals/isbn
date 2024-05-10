@@ -34,6 +34,7 @@ describe("resolveGoogle", () => {
   ],
   "categories": undefined,
   "description": undefined,
+  "isbn": "1234567890",
   "link": undefined,
   "pageCount": undefined,
   "printType": undefined,
