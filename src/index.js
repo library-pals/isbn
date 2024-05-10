@@ -7,14 +7,12 @@ import {
 /**
  * @typedef {object} Book
  * @property {string} title - The long title of the book.
- * @property {string} publishedDate - The published date of the book.
  * @property {string[]} authors - The authors of the book.
  * @property {string} description - The overview of the book.
  * @property {number} pageCount - The number of pages in the book.
  * @property {string} printType - The print type of the book. Always "BOOK" for this context.
  * @property {string[]} categories - The subjects or categories of the book.
  * @property {string} thumbnail - The thumbnail image link of the book.
- * @property {string} publisher - The publisher of the book.
  * @property {string} link - The link of the book.
  */
 

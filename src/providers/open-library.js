@@ -64,12 +64,11 @@ export async function resolveOpenLibrary(isbn, options) {
 export function standardize(book) {
   const standardBook = {
     title: book.title,
-    publishedDate: book.publish_date,
     authors: book.authors,
-    //description: book.subtitle,
+    description: "",
     pageCount: book.number_of_pages,
     printType: "BOOK",
-    categories: book.subjects, //.map(({ name }) => name),
+    categories: book.subjects,
     thumbnail: `https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`,
     link: book.url,
   };

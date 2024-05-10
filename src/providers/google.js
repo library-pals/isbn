@@ -82,7 +82,6 @@ export async function resolveGoogle(isbn, options) {
 export function standardize(book, id) {
   const standardBook = {
     title: book.title,
-    publishedDate: book.publishedDate,
     authors: book.authors,
     description: book.description,
     pageCount: book.pageCount,
@@ -90,7 +89,6 @@ export function standardize(book, id) {
     categories: book.categories,
     thumbnail: `https://books.google.com/books?id=${id}&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api`,
     link: book.canonicalVolumeLink,
-    publisher: book.publisher,
   };
 
   return standardBook;

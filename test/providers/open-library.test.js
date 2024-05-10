@@ -103,10 +103,10 @@ describe("resolveOpenLibrary", () => {
     },
   ],
   "categories": undefined,
+  "description": "",
   "link": undefined,
   "pageCount": 96,
   "printType": "BOOK",
-  "publishedDate": "October 1, 1988",
   "thumbnail": "https://covers.openlibrary.org/b/id/8739161-L.jpg",
   "title": "Fantastic Mr. Fox",
 }

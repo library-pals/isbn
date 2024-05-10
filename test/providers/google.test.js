@@ -28,21 +28,19 @@ describe("resolveGoogle", () => {
 
     const book = await resolveGoogle(isbn, {});
     expect(book).toMatchInlineSnapshot(`
-      {
-        "authors": [
-          "Test Author",
-        ],
-        "categories": undefined,
-        "description": undefined,
-        "link": undefined,
-        "pageCount": undefined,
-        "printType": undefined,
-        "publishedDate": undefined,
-        "publisher": undefined,
-        "thumbnail": "https://books.google.com/books?id=11223344000&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
-        "title": "Test Book",
-      }
-    `);
+{
+  "authors": [
+    "Test Author",
+  ],
+  "categories": undefined,
+  "description": undefined,
+  "link": undefined,
+  "pageCount": undefined,
+  "printType": undefined,
+  "thumbnail": "https://books.google.com/books?id=11223344000&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
+  "title": "Test Book",
+}
+`);
   });
 
   it("should throw an error if no books are found", async () => {
