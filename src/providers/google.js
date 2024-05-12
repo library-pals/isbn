@@ -37,9 +37,61 @@ export async function resolveGoogle(isbn, options) {
     if (!books.items || books.items.length === 0) {
       throw new Error(`No volume info found for book with isbn: ${isbn}`);
     }
-    const book = books.items[0].volumeInfo;
-    return book;
+    const book = books.items[0];
+    return standardize(book.volumeInfo, book.id, isbn);
   } catch (error) {
     throw new Error(error.message);
   }
+}
+
+/**
+ * @typedef {object} GoogleBook
+ * @property {string} title - The title of the book.
+ * @property {string} subtitle - The subtitle of the book.
+ * @property {string[]} authors - The authors of the book.
+ * @property {string} publisher - The publisher of the book.
+ * @property {string} publishedDate - The published date of the book.
+ * @property {string} description - The description of the book.
+ * @property {object[]} industryIdentifiers - The industry identifiers of the book.
+ * @property {object} readingModes - The reading modes of the book.
+ * @property {number} pageCount - The number of pages in the book.
+ * @property {string} printType - The print type of the book.
+ * @property {string[]} categories - The categories of the book.
+ * @property {number} averageRating - The average rating of the book.
+ * @property {number} ratingsCount - The ratings count of the book.
+ * @property {string} maturityRating - The maturity rating of the book.
+ * @property {boolean} allowAnonLogging - The allow anon logging of the book.
+ * @property {string} contentVersion - The content version of the book.
+ * @property {object} panelizationSummary - The panelization summary of the book.
+ * @property {object} imageLinks - The image links of the book.
+ * @property {string} language - The language of the book.
+ * @property {string} previewLink - The preview link of the book.
+ * @property {string} infoLink - The info link of the book.
+ * @property {string} canonicalVolumeLink - The canonical volume link of the book.
+ * @property {object} saleInfo - The sale info of the book.
+ * @property {object} accessInfo - The access info of the book.
+ * @property {object} searchInfo - The search info of the book.
+ */
+
+/**
+ * Standardizes a book object by extracting relevant information from the provided book object.
+ * @param {GoogleBook} book - The book object to be standardized.
+ * @param {string} id - The book's id.
+ * @param {string} isbn - The book's ISBN.
+ * @returns {Book} - The standardized book object.
+ */
+export function standardize(book, id, isbn) {
+  const standardBook = {
+    title: book.title,
+    authors: book.authors,
+    description: book.description,
+    pageCount: book.pageCount,
+    printType: book.printType,
+    categories: book.categories,
+    thumbnail: `https://books.google.com/books?id=${id}&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api`,
+    link: book.canonicalVolumeLink,
+    isbn,
+  };
+
+  return standardBook;
 }

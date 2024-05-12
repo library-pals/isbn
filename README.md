@@ -24,9 +24,10 @@ Supports Node.js versions 20.x and greater.
 ## Examples
 
 ```javascript
-import isbn from "@library-pals/isbn";
+import Isbn from "@library-pals/isbn";
 
 try {
+  const isbn = new Isbn();
   const book = await isbn.resolve("9780374104092");
   console.log("Book found %j", book);
 } catch (err) {
@@ -37,9 +38,10 @@ try {
 ### Setting a timeout
 
 ```javascript
-import isbn from "@library-pals/isbn";
+import Isbn from "@library-pals/isbn";
 
 try {
+  const isbn = new Isbn();
   const book = await isbn.resolve("9780374104092", { timeout: 15000 });
   console.log("Book found %j", book);
 } catch (err) {
@@ -55,37 +57,15 @@ information.
 
 ```json
 {
+  "isbn": 9780374104092,
   "title": "Annihilation",
-  "subtitle": "A Novel",
   "authors": ["Jeff VanderMeer"],
-  "publisher": "Macmillan",
-  "publishedDate": "2014-02-04",
   "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
-  "industryIdentifiers": [
-    { "type": "ISBN_13", "identifier": "9780374104092" },
-    { "type": "ISBN_10", "identifier": "0374104093" }
-  ],
-  "readingModes": { "text": false, "image": false },
   "pageCount": 209,
   "printType": "BOOK",
   "categories": ["Fiction"],
-  "averageRating": 5,
-  "ratingsCount": 1,
-  "maturityRating": "NOT_MATURE",
-  "allowAnonLogging": false,
-  "contentVersion": "0.5.1.0.preview.0",
-  "panelizationSummary": {
-    "containsEpubBubbles": false,
-    "containsImageBubbles": false
-  },
-  "imageLinks": {
-    "smallThumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
-    "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
-  },
-  "language": "en",
-  "previewLink": "http://books.google.com/books?id=2cl7AgAAQBAJ&printsec=frontcover&dq=isbn:9780374104092&hl=&cd=1&source=gbs_api",
-  "infoLink": "http://books.google.com/books?id=2cl7AgAAQBAJ&dq=isbn:9780374104092&hl=&source=gbs_api",
-  "canonicalVolumeLink": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ"
+  "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+  "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ"
 }
 ```
 
@@ -95,12 +75,12 @@ You can optionally specify the providers that you want to use, in the order you
 need them to be invoked.
 
 ```javascript
-import isbn from "@library-pals/isbn";
-
-// This request will search first in the Open Library API and then in the Google Books API
-isbn.provider(["openlibrary", "google"]);
+import Isbn from "@library-pals/isbn";
 
 try {
+  const isbn = new Isbn();
+  // This request will search first in the Open Library API and then in the Google Books API
+  isbn.provider(["openlibrary", "google"]);
   const book = await isbn.resolve("9780374104092");
   console.log("Book isbn:" + input + " found %j", book);
 } catch (err) {
@@ -109,12 +89,12 @@ try {
 ```
 
 ```javascript
-import isbn from "@library-pals/isbn";
-
-// This request will search ONLY in the Google Books API
-isbn.provider( "google"]);
+import Isbn from "@library-pals/isbn";
 
 try {
+  const isbn = new Isbn();
+  // This request will search ONLY in the Google Books API
+  isbn.provider( "google"]);
   const book = await isbn.resolve("9780374104092");
   console.log("Book isbn:" + input + " found %j", book);
 } catch (err) {
@@ -126,12 +106,13 @@ If you do not like using strings to specify the providers, you could grab the
 providers from `isbn.PROVIDER_NAMES` constant that the library provides!
 
 ```javascript
-import isbn from "@library-pals/isbn";
-
-// This request will search ONLY in the Google Books API
-isbn.provider([isbn.PROVIDER_NAMES.GOOGLE]);
+import Isbn from "@library-pals/isbn";
 
 try {
+  const isbn = new Isbn();
+  // This request will search ONLY in the Google Books API
+  isbn.provider([isbn.PROVIDER_NAMES.GOOGLE]);
+
   const book = await isbn.resolve("9780374104092");
   console.log("Book isbn:" + input + " found %j", book);
 } catch (err) {

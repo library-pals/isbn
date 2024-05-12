@@ -1,0 +1,78 @@
+{
+  "kind": "books#volumes",
+  "totalItems": 1,
+  "items": [
+    {
+      "kind": "books#volume",
+      "id": "2cl7AgAAQBAJ",
+      "etag": "DXU3ZJ7lSDs",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/2cl7AgAAQBAJ",
+      "volumeInfo": {
+        "title": "Annihilation",
+        "subtitle": "A Novel",
+        "authors": ["Jeff VanderMeer"],
+        "publisher": "Macmillan",
+        "publishedDate": "2014-02-04",
+        "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_13",
+            "identifier": "9780374104092"
+          },
+          {
+            "type": "ISBN_10",
+            "identifier": "0374104093"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 209,
+        "printType": "BOOK",
+        "categories": ["Fiction"],
+        "averageRating": 5,
+        "ratingsCount": 1,
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.5.1.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.com/books?id=2cl7AgAAQBAJ&printsec=frontcover&dq=isbn:9780374104092&hl=&cd=1&source=gbs_api",
+        "infoLink": "http://books.google.com/books?id=2cl7AgAAQBAJ&dq=isbn:9780374104092&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ"
+      },
+      "saleInfo": {
+        "country": "US",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "US",
+        "viewability": "PARTIAL",
+        "embeddable": true,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=2cl7AgAAQBAJ&hl=&source=gbs_api",
+        "accessViewStatus": "SAMPLE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "Area X has claimed the lives of members of eleven expeditions."
+      }
+    }
+  ]
+}

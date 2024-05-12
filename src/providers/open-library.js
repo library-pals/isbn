@@ -22,71 +22,183 @@ export async function resolveOpenLibrary(isbn, options) {
     ...defaultOptions,
     ...options,
   };
-  const url = `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_BOOK}?bibkeys=ISBN:${isbn}&format=json&jscmd=details`;
+  const url = `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_BOOK}/${isbn}.json`;
 
   try {
     const response = await axios.get(url, requestOptions);
     if (response.status !== 200) {
       throw new Error(`Wrong response code: ${response.status}`);
     }
-    const books = response.data;
-    const book = books[`ISBN:${isbn}`];
-    if (!book) {
+    const book = response.data;
+    if (!book || Object.keys(book).length === 0) {
       throw new Error(`No books found with ISBN: ${isbn}`);
     }
-    return standardize(book);
+    return await standardize(book, isbn);
   } catch (error) {
     throw new Error(error.message);
   }
 }
 
 /**
+ * @typedef {object} Author
+ * @property {string} key - The key of the author.
+ */
+
+/**
+ * @typedef {object} Language
+ * @property {string} key - The key of the language.
+ */
+
+/**
+ * @typedef {object} Type
+ * @property {string} key - The key of the type.
+ */
+
+/**
+ * @typedef {object} FirstSentence
+ * @property {string} type - The type of the first sentence.
+ * @property {string} value - The value of the first sentence.
+ */
+
+/**
+ * @typedef {object} Work
+ * @property {string} key - The key of the work.
+ */
+
+/**
+ * @typedef {object} DateTime
+ * @property {string} type - The type of the datetime.
+ * @property {string} value - The value of the datetime.
+ */
+
+/**
  * @typedef {object} OpenLibraryBook
- * @property {object} details - The details of the book.
- * @property {string} details.title - The title of the book.
- * @property {string} details.publish_date - The publish date of the book.
- * @property {Array<{name: string}>} details.authors - The authors of the book.
- * @property {string} details.subtitle - The subtitle of the book.
- * @property {number} details.number_of_pages - The number of pages in the book.
- * @property {Array<string>} details.publishers - The publishers of the book.
- * @property {Array<{key: string}>} details.languages - The languages of the book.
- * @property {string} thumbnail_url - The URL of the book's thumbnail.
- * @property {string} preview_url - The URL of the book's preview.
- * @property {string} info_url - The URL of the book's information.
+ * @property {object} identifiers - The identifiers of the book.
+ * @property {string} title - The title of the book.
+ * @property {Author[]} authors - The authors of the book.
+ * @property {string} publish_date - The publish date of the book.
+ * @property {string[]} publishers - The publishers of the book.
+ * @property {number[]} covers - The covers of the book.
+ * @property {string[]} contributions - The contributions to the book.
+ * @property {Language[]} languages - The languages of the book.
+ * @property {string[]} source_records - The source records of the book.
+ * @property {string[]} local_id - The local IDs of the book.
+ * @property {Type} type - The type of the book.
+ * @property {FirstSentence} first_sentence - The first sentence of the book.
+ * @property {string} key - The key of the book.
+ * @property {number} number_of_pages - The number of pages in the book.
+ * @property {Work[]} works - The works related to the book.
+ * @property {object} classifications - The classifications of the book.
+ * @property {string} ocaid - The Open Content Alliance ID of the book.
+ * @property {string[]} isbn_10 - The ISBN-10 of the book.
+ * @property {string[]} isbn_13 - The ISBN-13 of the book.
+ * @property {number} latest_revision - The latest revision of the book.
+ * @property {number} revision - The revision of the book.
+ * @property {DateTime} created - The creation datetime of the book.
+ * @property {DateTime} last_modified - The last modified datetime of the book.
  */
 
 /**
  * Standardizes a book object by extracting relevant information from the provided book object.
  * @param {OpenLibraryBook} book - The book object to be standardized.
- * @returns {Book} - The standardized book object.
+ * @param {string} isbn - The book's isbn.
+ * @returns {Promise<Book>} - The standardized book object.
  */
-export function standardize(book) {
+export async function standardize(book, isbn) {
+  const { description, subjects, rawAuthors } = await getWorks(book);
+  const authors = await getAuthors(rawAuthors);
   const standardBook = {
-    title: book.details.title,
-    publishedDate: book.details.publish_date,
-    authors: book.details.authors
-      ? book.details.authors.map(({ name }) => name)
-      : [],
-    description: book.details.subtitle,
-    industryIdentifiers: [],
-    pageCount: book.details.number_of_pages,
+    title: book.title,
+    authors,
+    description,
+    pageCount: book.number_of_pages,
     printType: "BOOK",
-    categories: [],
-    imageLinks: {
-      smallThumbnail: book.thumbnail_url,
-      thumbnail: book.thumbnail_url,
-    },
-    previewLink: book.preview_url,
-    infoLink: book.info_url,
-    publisher: book.details.publishers ? book.details.publishers[0] : "",
-    language: book.details.languages
-      ? {
-          "/languages/eng": "en",
-          "/languages/spa": "es",
-          "/languages/fre": "fr",
-        }[book.details.languages[0].key] || "unknown"
-      : "unknown",
+    categories: subjects,
+    thumbnail: `https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`,
+    link: book.key
+      ? `${OPENLIBRARY_API_BASE}${book.key}`
+      : `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_BOOK}/${isbn}`,
+    isbn,
   };
 
   return standardBook;
+}
+
+/**
+ * Retrieves the author names from OpenLibrary.
+ * @param {{key: string}[]} rawAuthors - List of author keys.
+ * @returns {Promise<string[]>} - List of author names.
+ */
+export async function getAuthors(rawAuthors) {
+  const promises = rawAuthors
+    .filter((author) => author && author.key)
+    .map((author) =>
+      axios
+        .get(`https://openlibrary.org/${author.key}.json`)
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error(
+              `Unable to get author ${author.key}: ${response.status}`,
+            );
+          }
+          return response.data && response.data.name;
+        }),
+    );
+
+  try {
+    return await Promise.all(promises);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+/**
+ * @typedef {object} OpenLibraryResponse
+ * @property {string} description - The description of the book.
+ * @property {string[]} subjects - The subjects of the book.
+ * @property {{author: {key: string}}[]} authors - The authors of the book.
+ */
+
+/**
+ * Retrieves the description of the book from OpenLibrary.
+ * @param {OpenLibraryBook} book - The book object from OpenLibrary.
+ * @returns {Promise<{description: string, subjects: string[], rawAuthors: {key: string}[]}>} - Description of the book.
+ */
+export async function getWorks(book) {
+  const defaultResponse = {
+    description: "",
+    subjects: [],
+    rawAuthors: [],
+  };
+
+  if (!book.works) {
+    return defaultResponse;
+  }
+
+  const [work] = book.works;
+
+  if (!work || !work.key) {
+    return defaultResponse;
+  }
+
+  try {
+    const response = await axios.get(
+      `https://openlibrary.org/${work.key}.json`,
+    );
+
+    if (response.status !== 200) {
+      throw new Error(`Unable to get ${work.key}: ${response.status}`);
+    }
+
+    /** @type {OpenLibraryResponse} */
+    const data = response.data;
+
+    return {
+      description: data.description || "",
+      subjects: data.subjects || [],
+      rawAuthors: data.authors?.map((a) => a.author) || [],
+    };
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }

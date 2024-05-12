@@ -1,35 +1,33 @@
-import isbn from "../src/index.js";
+import Isbn from "../src/index.js";
 import axios from "axios";
 
 import { jest } from "@jest/globals";
 
 jest.mock("axios");
 
-const MOCK_ISBN = "isbn";
+const MOCK_ISBN = "9780374104092";
 const GOOGLE_BOOKS_API_BASE = "https://www.googleapis.com";
 const OPENLIBRARY_API_BASE = "https://openlibrary.org";
 const ISBNDB_API_BASE = "https://api2.isbndb.com";
 
-const DEFAULT_PROVIDER_ORDER = [
-  isbn.PROVIDER_NAMES.GOOGLE,
-  isbn.PROVIDER_NAMES.OPENLIBRARY,
-  isbn.PROVIDER_NAMES.ISBNDB,
-];
+import openLibraryMock from "./fixtures/open-library-isbn-9780374104092.json";
+import googleMock from "./fixtures/google-9780374104092.json";
+
+process.env.ISBNDB_API_KEY = "key-1234";
 
 describe("ISBN Resolver API", () => {
+  let isbn;
+  beforeEach(() => {
+    isbn = new Isbn();
+  });
+
+  afterEach(() => {
+    isbn = null;
+  });
+
   describe("using async", () => {
     it("should resolve a valid ISBN with Google", async () => {
-      const mockResponseGoogle = {
-        totalItems: 1,
-        items: [
-          {
-            volumeInfo: {
-              title: "Code Complete",
-              authors: ["Steve McConnell"],
-            },
-          },
-        ],
-      };
+      const mockResponseGoogle = googleMock;
 
       axios.get = jest.fn().mockResolvedValue({
         status: 200,
@@ -37,10 +35,23 @@ describe("ISBN Resolver API", () => {
       });
 
       const book = await isbn.resolve(MOCK_ISBN);
-      expect(book).toEqual({
-        authors: ["Steve McConnell"],
-        title: "Code Complete",
-      });
+      expect(book).toMatchInlineSnapshot(`
+        {
+          "authors": [
+            "Jeff VanderMeer",
+          ],
+          "categories": [
+            "Fiction",
+          ],
+          "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
+          "isbn": "9780374104092",
+          "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
+          "pageCount": 209,
+          "printType": "BOOK",
+          "thumbnail": "https://books.google.com/books?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
+          "title": "Annihilation",
+        }
+      `);
     });
 
     it("should resolve a valid ISBN with Open Library", async () => {
@@ -49,31 +60,7 @@ describe("ISBN Resolver API", () => {
         totalItems: 0,
       };
 
-      const mockResponseOpenLibrary = {};
-      mockResponseOpenLibrary[`ISBN:${MOCK_ISBN}`] = {
-        info_url: "https://openlibrary.org/books/OL1743093M/Book",
-        preview_url: "https://archive.org/details/whatsitallabouta00cain",
-        thumbnail_url: "https://covers.openlibrary.org/b/id/6739180-S.jpg",
-        details: {
-          number_of_pages: 521,
-          subtitle: "an autobiography",
-          title: "Book Title",
-          languages: [
-            {
-              key: "/languages/eng",
-            },
-          ],
-          publishers: ["Turtle Bay Books"],
-          authors: [
-            {
-              name: "Michael Caine",
-              key: "/authors/OL840869A",
-            },
-          ],
-          publish_date: "1992",
-        },
-        preview: "borrow",
-      };
+      const mockResponseOpenLibrary = openLibraryMock;
 
       axios.get.mockImplementation((url) => {
         if (url.includes(GOOGLE_BOOKS_API_BASE)) {
@@ -87,24 +74,19 @@ describe("ISBN Resolver API", () => {
       });
 
       const book = await isbn.resolve(MOCK_ISBN);
-      expect(book).toEqual({
-        authors: ["Michael Caine"],
-        categories: [],
-        description: "an autobiography",
-        imageLinks: {
-          smallThumbnail: "https://covers.openlibrary.org/b/id/6739180-S.jpg",
-          thumbnail: "https://covers.openlibrary.org/b/id/6739180-S.jpg",
-        },
-        industryIdentifiers: [],
-        infoLink: "https://openlibrary.org/books/OL1743093M/Book",
-        language: "en",
-        pageCount: 521,
-        previewLink: "https://archive.org/details/whatsitallabouta00cain",
-        printType: "BOOK",
-        publishedDate: "1992",
-        publisher: "Turtle Bay Books",
-        title: "Book Title",
-      });
+      expect(book).toMatchInlineSnapshot(`
+        {
+          "authors": [],
+          "categories": [],
+          "description": "",
+          "isbn": "9780374104092",
+          "link": "https://openlibrary.org/books/OL7353617M",
+          "pageCount": 96,
+          "printType": "BOOK",
+          "thumbnail": "https://covers.openlibrary.org/b/id/8739161-L.jpg",
+          "title": "Fantastic Mr. Fox",
+        }
+      `);
     });
 
     it("should resolve a valid ISBN with ISBNdb", async () => {
@@ -146,23 +128,27 @@ describe("ISBN Resolver API", () => {
       });
 
       const book = await isbn.resolve(MOCK_ISBN);
-      expect(book).toEqual({
-        authors: ["Aswin Pranam"],
-        categories: undefined,
-        description: undefined,
-        imageLinks: {
-          smallThumbnail:
-            "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
-          thumbnail: "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
-        },
-        industryIdentifiers: ["1484233026", "9781484233023"],
-        language: undefined,
-        pageCount: 174,
-        printType: "BOOK",
-        publishedDate: "1992-12-13",
-        publisher: "Turtle Bay Books",
-        title: "Book Title",
-      });
+      expect(isbn._providers).toMatchInlineSnapshot(`
+        [
+          "google",
+          "openlibrary",
+          "isbndb",
+        ]
+      `);
+      expect(book).toMatchInlineSnapshot(`
+        {
+          "authors": [
+            "Aswin Pranam",
+          ],
+          "categories": undefined,
+          "description": undefined,
+          "isbn": "9780374104092",
+          "pageCount": 174,
+          "printType": "BOOK",
+          "thumbnail": "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
+          "title": "Book Title",
+        }
+      `);
     });
 
     it("should return an error if no book is found", async () => {
@@ -173,6 +159,8 @@ describe("ISBN Resolver API", () => {
 
       const mockResponseOpenLibrary = {};
 
+      const mockResponseIsbnDb = {};
+
       axios.get.mockImplementation((url) => {
         if (url.includes(GOOGLE_BOOKS_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseGoogle });
@@ -181,42 +169,43 @@ describe("ISBN Resolver API", () => {
             status: 200,
             data: mockResponseOpenLibrary,
           });
+        } else if (url.includes(ISBNDB_API_BASE)) {
+          return Promise.resolve({
+            status: 200,
+            data: mockResponseIsbnDb,
+          });
         }
       });
 
-      await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed.]`,
-      );
+      await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(`
+        [Error: All providers failed
+        google: No books found with isbn: 9780374104092
+        openlibrary: No books found with ISBN: 9780374104092
+        isbndb: No books found with ISBN: 9780374104092]
+      `);
     });
 
     it("should return an error if external endpoints are not reachable", async () => {
       axios.get.mockRejectedValue(new Error("Network Error"));
 
-      await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed.]`,
-      );
+      await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(`
+        [Error: All providers failed
+        google: Network Error
+        openlibrary: Network Error
+        isbndb: Network Error]
+      `);
     });
 
     it("should return an error if external endpoints return a HTTP error", async () => {
       axios.get.mockRejectedValue({ status: 500 });
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed.]`,
+        `[Error: All providers failed]`
       );
     });
 
     it("should invoke providers in order specified", async () => {
-      const mockResponseGoogle = {
-        totalItems: 1,
-        items: [
-          {
-            volumeInfo: {
-              title: "Code Complete",
-              authors: ["Steve McConnell"],
-            },
-          },
-        ],
-      };
+      const mockResponseGoogle = googleMock;
 
       const mockResponseOpenLibrary = {};
 
@@ -234,41 +223,27 @@ describe("ISBN Resolver API", () => {
       const book = await isbn
         .provider([isbn.PROVIDER_NAMES.OPENLIBRARY, isbn.PROVIDER_NAMES.GOOGLE])
         .resolve(MOCK_ISBN);
-      expect(book).toEqual(mockResponseGoogle.items[0].volumeInfo);
-    });
-
-    it("should reset providers after completion", async () => {
-      const mockResponseGoogle = {
-        totalItems: 1,
-        items: [
-          {
-            volumeInfo: {
-              title: "Code Complete",
-              authors: ["Steve McConnell"],
-            },
-          },
-        ],
-      };
-
-      axios.get.mockResolvedValue({ status: 200, data: mockResponseGoogle });
-
-      await isbn.provider([isbn.PROVIDER_NAMES.GOOGLE]).resolve(MOCK_ISBN);
-
-      expect(isbn._providers).toEqual(DEFAULT_PROVIDER_ORDER);
+      expect(book).toMatchInlineSnapshot(`
+        {
+          "authors": [
+            "Jeff VanderMeer",
+          ],
+          "categories": [
+            "Fiction",
+          ],
+          "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
+          "isbn": "9780374104092",
+          "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
+          "pageCount": 209,
+          "printType": "BOOK",
+          "thumbnail": "https://books.google.com/books?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
+          "title": "Annihilation",
+        }
+      `);
     });
 
     it("should override default options", async function () {
-      const mockResponseGoogle = {
-        totalItems: 1,
-        items: [
-          {
-            volumeInfo: {
-              title: "Code Complete",
-              authors: ["Steve McConnell"],
-            },
-          },
-        ],
-      };
+      const mockResponseGoogle = googleMock;
 
       axios.get.mockImplementation(
         () =>
@@ -276,38 +251,76 @@ describe("ISBN Resolver API", () => {
             setTimeout(() => {
               resolve({ status: 200, data: mockResponseGoogle });
             }, 10_000);
-          }),
+          })
       );
 
       const book = await isbn.resolve(MOCK_ISBN, { timeout: 15_000 });
-      expect(book).toEqual(mockResponseGoogle.items[0].volumeInfo);
+      expect(book).toMatchInlineSnapshot(`
+        {
+          "authors": [
+            "Jeff VanderMeer",
+          ],
+          "categories": [
+            "Fiction",
+          ],
+          "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
+          "isbn": "9780374104092",
+          "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
+          "pageCount": 209,
+          "printType": "BOOK",
+          "thumbnail": "https://books.google.com/books?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
+          "title": "Annihilation",
+        }
+      `);
     }, 20_000);
   });
 });
 
 describe("ISBN Provider API", () => {
+  let isbn;
+  beforeEach(() => {
+    isbn = new Isbn();
+  });
+
+  afterEach(() => {
+    isbn = null;
+  });
+
   it("should use default providers if providers array is empty", () => {
-    const expectedProviders = isbn._providers;
     isbn.provider([]);
-    expect(isbn._providers).toEqual(expectedProviders);
+    expect(isbn._providers).toMatchInlineSnapshot(`
+      [
+        "google",
+        "openlibrary",
+        "isbndb",
+      ]
+    `);
   });
 
   it("should return an error if providers is not an array", () => {
-    const expectedProviders = isbn._providers;
-
     expect(() => {
       isbn.provider("string-that-must-not-work");
     }).toThrow();
-    expect(isbn._providers).toEqual(expectedProviders);
+    expect(isbn._providers).toMatchInlineSnapshot(`
+      [
+        "google",
+        "openlibrary",
+        "isbndb",
+      ]
+    `);
   });
 
   it("should return an error if invalid providers in list", () => {
-    const expectedProviders = isbn._providers;
-
     expect(() => {
       isbn.provider(["gibberish", "wow", "sogood"]);
     }).toThrow();
-    expect(isbn._providers).toEqual(expectedProviders);
+    expect(isbn._providers).toMatchInlineSnapshot(`
+      [
+        "google",
+        "openlibrary",
+        "isbndb",
+      ]
+    `);
   });
 
   it("should remove duplicates", () => {
@@ -315,10 +328,13 @@ describe("ISBN Provider API", () => {
       isbn.PROVIDER_NAMES.OPENLIBRARY,
       isbn.PROVIDER_NAMES.OPENLIBRARY,
     ];
-    const expected = [isbn.PROVIDER_NAMES.OPENLIBRARY];
 
     isbn.provider(providers);
-    expect(isbn._providers).toEqual(expected);
+    expect(isbn._providers).toMatchInlineSnapshot(`
+      [
+        "openlibrary",
+      ]
+    `);
   });
 
   it("should set providers as expected", () => {
@@ -328,7 +344,12 @@ describe("ISBN Provider API", () => {
     ];
 
     isbn.provider(providers);
-    expect(isbn._providers).toEqual(providers);
+    expect(isbn._providers).toMatchInlineSnapshot(`
+      [
+        "openlibrary",
+        "google",
+      ]
+    `);
   });
 
   it("should return instance after setting provider", () => {

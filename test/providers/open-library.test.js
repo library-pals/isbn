@@ -1,57 +1,120 @@
 import {
   resolveOpenLibrary,
-  standardize,
+  getAuthors,
+  getWorks,
 } from "../../src/providers/open-library.js";
 import axios from "axios";
 import { jest } from "@jest/globals";
 
+import openLibraryMock from "../fixtures/open-library-isbn-9780374104092.json";
+import openLibraryWorksMock from "../fixtures/open-library-works-OL45804W.json";
+import openLibraryAuthorsMock from "../fixtures/open-library-authors-OL34184A.json";
+
 jest.mock("axios");
 
 describe("resolveOpenLibrary", () => {
-  const isbn = "1234567890";
+  const isbn = "9780374104092";
 
   it("should resolve book information successfully", async () => {
-    const mockResponse = {
-      [`ISBN:${isbn}`]: {
-        details: {
-          title: "Test Book",
-          publish_date: "2022-01-01",
-          authors: [{ name: "Test Author" }],
-          subtitle: "Test subtitle",
-          number_of_pages: 123,
-          publishers: ["Test Publisher"],
-          languages: [{ key: "/languages/eng" }],
-        },
-        thumbnail_url: "http://example.com/test.jpg",
-        preview_url: "http://example.com/preview",
-        info_url: "http://example.com/info",
-      },
-    };
+    const mockResponse = openLibraryMock;
 
-    axios.get = jest.fn().mockResolvedValue({
-      status: 200,
-      data: mockResponse,
+    axios.get = jest.fn().mockImplementation((url) => {
+      if (url.includes("/isbn")) {
+        return Promise.resolve({ status: 200, data: mockResponse });
+      } else if (url.includes("/works")) {
+        return Promise.resolve({
+          status: 200,
+          data: openLibraryWorksMock,
+        });
+      } else if (url.includes("/authors")) {
+        return Promise.resolve({
+          status: 200,
+          data: openLibraryAuthorsMock,
+        });
+      }
     });
 
     const book = await resolveOpenLibrary(isbn, {});
-    expect(book).toEqual({
-      authors: ["Test Author"],
-      categories: [],
-      description: "Test subtitle",
-      imageLinks: {
-        smallThumbnail: "http://example.com/test.jpg",
-        thumbnail: "http://example.com/test.jpg",
-      },
-      industryIdentifiers: [],
-      infoLink: "http://example.com/info",
-      language: "en",
-      pageCount: 123,
-      previewLink: "http://example.com/preview",
-      printType: "BOOK",
-      publishedDate: "2022-01-01",
-      publisher: "Test Publisher",
-      title: "Test Book",
+    expect(book).toMatchInlineSnapshot(`
+      {
+        "authors": [
+          "Roald Dahl",
+        ],
+        "categories": [
+          "Animals",
+          "Hunger",
+          "Open Library Staff Picks",
+          "Juvenile fiction",
+          "Children's stories, English",
+          "Foxes",
+          "Fiction",
+          "Zorros",
+          "Ficción juvenil",
+          "Tunnels",
+          "Interviews",
+          "Farmers",
+          "Children's stories",
+          "Rats",
+          "Welsh Authors",
+          "English Authors",
+          "Thieves",
+          "Tricksters",
+          "Badgers",
+          "Children's fiction",
+          "Foxes, fiction",
+          "Underground",
+          "Renards",
+          "Romans, nouvelles, etc. pour la jeunesse",
+          "Children's literature",
+          "Plays",
+          "Children's plays",
+          "Children's stories, Welsh",
+          "Agriculteurs",
+          "Fantasy fiction",
+          "Children's plays, English",
+        ],
+        "description": "The main character of Fantastic Mr. Fox is an extremely clever anthropomorphized fox named Mr. Fox. He lives with his wife and four little foxes. In order to feed his family, he steals food from the cruel, brutish farmers named Boggis, Bunce, and Bean every night.
+
+      Finally tired of being constantly outwitted by Mr. Fox, the farmers attempt to capture and kill him. The foxes escape in time by burrowing deep into the ground. The farmers decide to wait outside the hole for the foxes to emerge. Unable to leave the hole and steal food, Mr. Fox and his family begin to starve. Mr. Fox devises a plan to steal food from the farmers by tunneling into the ground and borrowing into the farmer's houses.
+
+      Aided by a friendly Badger, the animals bring the stolen food back and Mrs. Fox prepares a great celebratory banquet attended by the other starving animals and their families. Mr. Fox invites all the animals to live with him underground and says that he will provide food for them daily thanks to his underground passages. All the animals live happily and safely, while the farmers remain waiting outside in vain for Mr. Fox to show up.",
+        "isbn": "9780374104092",
+        "link": "https://openlibrary.org/books/OL7353617M",
+        "pageCount": 96,
+        "printType": "BOOK",
+        "thumbnail": "https://covers.openlibrary.org/b/id/8739161-L.jpg",
+        "title": "Fantastic Mr. Fox",
+      }
+    `);
+  });
+
+  it("should resolve book information successfully when missing data", async () => {
+    const mockResponse = {
+      title: "Fantastic Mr. Fox",
+      publish_date: "October 1, 1988",
+      covers: [8_739_161],
+      number_of_pages: 96,
+    };
+    axios.get = jest.fn().mockImplementation((url) => {
+      if (url.includes("/isbn")) {
+        return Promise.resolve({ status: 200, data: mockResponse });
+      }
     });
+
+    const book = await resolveOpenLibrary(isbn, {});
+    expect(book).toMatchInlineSnapshot(`
+      {
+        "authors": [],
+        "categories": [],
+        "description": "",
+        "isbn": "9780374104092",
+        "link": "https://openlibrary.org/isbn/9780374104092",
+        "pageCount": 96,
+        "printType": "BOOK",
+        "thumbnail": "https://covers.openlibrary.org/b/id/8739161-L.jpg",
+        "title": "Fantastic Mr. Fox",
+      }
+    `);
   });
 
   it("should throw an error if no books are found", async () => {
@@ -79,77 +142,123 @@ describe("resolveOpenLibrary", () => {
       "Wrong response code: 404",
     );
   });
+});
 
-  it("should standardize a book object", () => {
-    const book = {
-      details: {
-        title: "Test Book",
-        publish_date: "2022",
-        authors: [{ name: "Test Author" }],
-        subtitle: "Test Subtitle",
-        number_of_pages: 200,
-        publishers: ["Test Publisher"],
-      },
-      thumbnail_url: "http://example.com/thumbnail.jpg",
-      preview_url: "http://example.com/preview",
-      info_url: "http://example.com/info",
-    };
+describe("getAuthors", () => {
+  it("should return author names", async () => {
+    const rawAuthors = [{ key: "/authors/OL1A" }, { key: "/authors/OL2A" }];
 
-    const expectedStandardBook = {
-      title: "Test Book",
-      publishedDate: "2022",
-      authors: ["Test Author"],
-      description: "Test Subtitle",
-      industryIdentifiers: [],
-      pageCount: 200,
-      printType: "BOOK",
-      categories: [],
-      imageLinks: {
-        smallThumbnail: "http://example.com/thumbnail.jpg",
-        thumbnail: "http://example.com/thumbnail.jpg",
-      },
-      previewLink: "http://example.com/preview",
-      infoLink: "http://example.com/info",
-      publisher: "Test Publisher",
-      language: "unknown",
-    };
+    axios.get.mockResolvedValueOnce({
+      status: 200,
+      data: { name: "Author 1" },
+    });
+    axios.get.mockResolvedValueOnce({
+      status: 200,
+      data: { name: "Author 2" },
+    });
 
-    expect(standardize(book)).toEqual(expectedStandardBook);
+    const authors = await getAuthors(rawAuthors);
+
+    expect(authors).toEqual(["Author 1", "Author 2"]);
   });
 
-  it("should handle unknown language", () => {
+  it("should return empty", async () => {
+    const rawAuthors = [{ key: "/authors/OL1A" }];
+
+    axios.get.mockResolvedValueOnce({
+      status: 200,
+      data: {},
+    });
+
+    const authors = await getAuthors(rawAuthors);
+
+    expect(authors).toEqual([]);
+  });
+
+  it("should throw an error when the response status is not 200", async () => {
+    const rawAuthors = [{ key: "/authors/OL1A" }];
+
+    axios.get.mockResolvedValueOnce({ status: 404 });
+
+    await expect(getAuthors(rawAuthors)).rejects.toThrow(
+      "Unable to get author /authors/OL1A: 404",
+    );
+  });
+});
+
+describe("getWorks", () => {
+  it("should return works", async () => {
     const book = {
-      details: {
-        title: "Test Book",
-        publish_date: "2022",
-        subtitle: "Test Subtitle",
-        number_of_pages: 200,
-        languages: [{ key: "/languages/unknown" }],
+      works: [{ key: "/works/OL1A" }],
+    };
+    axios.get.mockResolvedValueOnce({
+      status: 200,
+      data: {
+        description: "Description",
+        subjects: ["subject"],
+        authors: [
+          {
+            author: {
+              key: "/authors/OL34184A",
+            },
+            type: {
+              key: "/type/author_role",
+            },
+          },
+        ],
       },
-      thumbnail_url: "http://example.com/thumbnail.jpg",
-      preview_url: "http://example.com/preview",
-      info_url: "http://example.com/info",
+    });
+
+    const works = await getWorks(book);
+
+    expect(works).toEqual({
+      description: "Description",
+      rawAuthors: [{ key: "/authors/OL34184A" }],
+      subjects: ["subject"],
+    });
+  });
+
+  it("should return defaults", async () => {
+    const book = {
+      works: [{ key: "/works/OL1A" }],
+    };
+    axios.get.mockResolvedValueOnce({
+      status: 200,
+      data: {
+        description: "Description",
+      },
+    });
+
+    const works = await getWorks(book);
+
+    expect(works).toEqual({
+      description: "Description",
+      rawAuthors: [],
+      subjects: [],
+    });
+  });
+
+  it("should return empty objects if missing key", async () => {
+    const book = {
+      works: [],
     };
 
-    const expectedStandardBook = {
-      title: "Test Book",
-      publishedDate: "2022",
-      authors: [],
-      description: "Test Subtitle",
-      industryIdentifiers: [],
-      pageCount: 200,
-      printType: "BOOK",
-      categories: [],
-      imageLinks: {
-        smallThumbnail: "http://example.com/thumbnail.jpg",
-        thumbnail: "http://example.com/thumbnail.jpg",
-      },
-      previewLink: "http://example.com/preview",
-      infoLink: "http://example.com/info",
-      publisher: "",
-      language: "unknown",
-    };
+    const works = await getWorks(book);
 
-    expect(standardize(book)).toEqual(expectedStandardBook);
+    expect(works).toEqual({
+      description: "",
+      rawAuthors: [],
+      subjects: [],
+    });
+  });
+
+  it("should throw an error when the response status is not 200", async () => {
+    const works = [{ key: "/works/OL1A" }];
+
+    axios.get.mockResolvedValueOnce({ status: 404 });
+
+    await expect(getWorks({ works })).rejects.toThrow(
+      "Unable to get /works/OL1A: 404",
+    );
   });
 });
