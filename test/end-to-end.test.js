@@ -28,7 +28,7 @@ describe("End to end", () => {
         "title": "Annihilation",
       }
     `);
-  });
+  }, 10_000);
 
   it("openlibrary", async () => {
     isbn.provider([isbn.PROVIDER_NAMES.OPENLIBRARY]);
@@ -90,7 +90,7 @@ describe("End to end", () => {
         "title": "Annihilation",
       }
     `);
-  });
+  }, 10_000);
 
   it("google", async () => {
     isbn.provider([isbn.PROVIDER_NAMES.GOOGLE]);
@@ -111,5 +111,5 @@ describe("End to end", () => {
         "title": "Annihilation",
       }
     `);
-  });
+  }, 10_000);
 });
