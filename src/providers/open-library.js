@@ -156,7 +156,7 @@ export async function getAuthors(rawAuthors) {
  * @typedef {object} OpenLibraryResponse
  * @property {string} description - The description of the book.
  * @property {string[]} subjects - The subjects of the book.
- * @property {{author: string}[]} authors - The authors of the book.
+ * @property {{author: {key: string}}[]} authors - The authors of the book.
  */
 
 /**
