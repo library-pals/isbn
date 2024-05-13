@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "description": "Find books by ISBN",
   "exports": "./src/index.js",
+  "types": "./src/index.d.ts",
   "type": "module",
   "engines": {
     "node": ">=20.0.0"
