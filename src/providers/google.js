@@ -45,6 +45,16 @@ export async function resolveGoogle(isbn, options) {
 }
 
 /**
+ * @typedef {object} ImageLinks
+ * @property {string} [extraLarge] - extraLarge
+ * @property {string} [large] - large
+ * @property {string} [medium] - medium
+ * @property {string} [small] - small
+ * @property {string} [thumbnail] - thumbnail
+ * @property {string} [smallThumbnail] - smallThumbnail
+ */
+
+/**
  * @typedef {object} GoogleBook
  * @property {string} title - The title of the book.
  * @property {string} subtitle - The subtitle of the book.
@@ -63,7 +73,7 @@ export async function resolveGoogle(isbn, options) {
  * @property {boolean} allowAnonLogging - The allow anon logging of the book.
  * @property {string} contentVersion - The content version of the book.
  * @property {object} panelizationSummary - The panelization summary of the book.
- * @property {object} imageLinks - The image links of the book.
+ * @property {ImageLinks} [imageLinks] - The image links of the book.
  * @property {string} language - The language of the book.
  * @property {string} previewLink - The preview link of the book.
  * @property {string} infoLink - The info link of the book.
@@ -87,7 +97,7 @@ export function standardize(book, isbn) {
     pageCount: book.pageCount,
     printType: book.printType,
     categories: book.categories,
-    thumbnail: getLargestThumbnail(book),
+    thumbnail: getLargestThumbnail(book.imageLinks),
     link: book.canonicalVolumeLink,
     isbn,
   };
@@ -96,11 +106,11 @@ export function standardize(book, isbn) {
 }
 
 /**
- * Returns largest thumbnail size
- * @param {GoogleBook} book - The input book.
- * @returns {string|undefined} - Thumbnail
+ * Get the largest available thumbnail from a book's image links.
+ * @param {ImageLinks} [imageLinks] - The image links object.
+ * @returns {string|undefined} The URL of the largest thumbnail, or undefined if not found.
  */
-function getLargestThumbnail(book) {
+function getLargestThumbnail(imageLinks) {
   const sizes = [
     "extraLarge",
     "large",
@@ -110,11 +120,12 @@ function getLargestThumbnail(book) {
     "smallThumbnail",
   ];
 
+  if (!imageLinks) return;
+
   for (const size of sizes) {
-    if (book.imageLinks && book.imageLinks[size]) {
-      return book.imageLinks[size];
+    if (size in imageLinks) {
+      // @ts-ignore
+      return imageLinks[size];
     }
   }
-
-  return;
 }
