@@ -38,11 +38,21 @@ export async function resolveGoogle(isbn, options) {
       throw new Error(`No volume info found for book with isbn: ${isbn}`);
     }
     const book = books.items[0];
-    return standardize(book.volumeInfo, book.id, isbn);
+    return standardize(book.volumeInfo, isbn);
   } catch (error) {
     throw new Error(error.message);
   }
 }
+
+/**
+ * @typedef {object} ImageLinks
+ * @property {string} [extraLarge] - extraLarge
+ * @property {string} [large] - large
+ * @property {string} [medium] - medium
+ * @property {string} [small] - small
+ * @property {string} [thumbnail] - thumbnail
+ * @property {string} [smallThumbnail] - smallThumbnail
+ */
 
 /**
  * @typedef {object} GoogleBook
@@ -63,7 +73,7 @@ export async function resolveGoogle(isbn, options) {
  * @property {boolean} allowAnonLogging - The allow anon logging of the book.
  * @property {string} contentVersion - The content version of the book.
  * @property {object} panelizationSummary - The panelization summary of the book.
- * @property {object} imageLinks - The image links of the book.
+ * @property {ImageLinks} [imageLinks] - The image links of the book.
  * @property {string} language - The language of the book.
  * @property {string} previewLink - The preview link of the book.
  * @property {string} infoLink - The info link of the book.
@@ -76,11 +86,10 @@ export async function resolveGoogle(isbn, options) {
 /**
  * Standardizes a book object by extracting relevant information from the provided book object.
  * @param {GoogleBook} book - The book object to be standardized.
- * @param {string} id - The book's id.
  * @param {string} isbn - The book's ISBN.
- * @returns {Book} - The standardized book object.
+ * @returns {Book} The standardized book object.
  */
-export function standardize(book, id, isbn) {
+export function standardize(book, isbn) {
   const standardBook = {
     title: book.title,
     authors: book.authors,
@@ -88,10 +97,35 @@ export function standardize(book, id, isbn) {
     pageCount: book.pageCount,
     printType: book.printType,
     categories: book.categories,
-    thumbnail: `https://books.google.com/books?id=${id}&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api`,
+    thumbnail: getLargestThumbnail(book.imageLinks),
     link: book.canonicalVolumeLink,
     isbn,
   };
 
   return standardBook;
+}
+
+/**
+ * Get the largest available thumbnail from a book's image links.
+ * @param {ImageLinks} [imageLinks] - The image links object.
+ * @returns {string|undefined} The URL of the largest thumbnail, or undefined if not found.
+ */
+function getLargestThumbnail(imageLinks) {
+  const sizes = [
+    "extraLarge",
+    "large",
+    "medium",
+    "small",
+    "thumbnail",
+    "smallThumbnail",
+  ];
+
+  if (!imageLinks) return;
+
+  for (const size of sizes) {
+    if (size in imageLinks) {
+      // @ts-ignore
+      return imageLinks[size];
+    }
+  }
 }

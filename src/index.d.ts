@@ -7,7 +7,7 @@
  * @property {number} pageCount - The number of pages in the book.
  * @property {string} printType - The print type of the book. Always "BOOK" for this context.
  * @property {string[]} categories - The subjects or categories of the book.
- * @property {string} thumbnail - The thumbnail image link of the book.
+ * @property {string | undefined} [thumbnail] - The thumbnail image link of the book.
  * @property {string} [link] - The link of the book.
  */
 /**
@@ -73,7 +73,7 @@ export type Book = {
     /**
      * - The thumbnail image link of the book.
      */
-    thumbnail: string;
+    thumbnail?: string | undefined;
     /**
      * - The link of the book.
      */
