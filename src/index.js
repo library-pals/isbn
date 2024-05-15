@@ -14,6 +14,7 @@ import {
  * @property {string} printType - The print type of the book. Always "BOOK" for this context.
  * @property {string[]} categories - The subjects or categories of the book.
  * @property {string} publisher - The publisher of  the book.
+ * @property {string} publishedDate - The date the book was published.
  * @property {string | undefined} [thumbnail] - The thumbnail image link of the book.
  * @property {string} [link] - The link of the book.
  */

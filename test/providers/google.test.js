@@ -38,6 +38,7 @@ describe("resolveGoogle", () => {
         "link": undefined,
         "pageCount": undefined,
         "printType": undefined,
+        "publishedDate": undefined,
         "publisher": undefined,
         "thumbnail": undefined,
         "title": "Test Book",

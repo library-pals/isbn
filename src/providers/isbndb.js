@@ -124,6 +124,7 @@ function standardize(book, isbn) {
     categories: book.subjects,
     thumbnail: book.image,
     publisher: book.publisher,
+    publishedDate: book.date_published,
     isbn,
   };
 }
