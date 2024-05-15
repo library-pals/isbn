@@ -47,6 +47,7 @@ describe("resolveIsbnDb", () => {
         "isbn": "1234567890",
         "pageCount": 123,
         "printType": "BOOK",
+        "publisher": "Test Publisher",
         "thumbnail": "http://example.com/test.jpg",
         "title": "Test Book",
       }

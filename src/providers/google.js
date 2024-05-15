@@ -99,6 +99,7 @@ export function standardize(book, isbn) {
     categories: book.categories,
     thumbnail: getLargestThumbnail(book.imageLinks),
     link: book.canonicalVolumeLink,
+    publisher: book.publisher,
     isbn,
   };
 

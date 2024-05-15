@@ -48,6 +48,7 @@ describe("ISBN Resolver API", () => {
           "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
           "pageCount": 209,
           "printType": "BOOK",
+          "publisher": "Macmillan",
           "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
           "title": "Annihilation",
         }
@@ -83,6 +84,7 @@ describe("ISBN Resolver API", () => {
           "link": "https://openlibrary.org/books/OL7353617M",
           "pageCount": 96,
           "printType": "BOOK",
+          "publisher": "Puffin",
           "thumbnail": "https://covers.openlibrary.org/b/id/8739161-L.jpg",
           "title": "Fantastic Mr. Fox",
         }
@@ -145,6 +147,7 @@ describe("ISBN Resolver API", () => {
           "isbn": "9780374104092",
           "pageCount": 174,
           "printType": "BOOK",
+          "publisher": "Turtle Bay Books",
           "thumbnail": "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
           "title": "Book Title",
         }
@@ -236,6 +239,7 @@ describe("ISBN Resolver API", () => {
           "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
           "pageCount": 209,
           "printType": "BOOK",
+          "publisher": "Macmillan",
           "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
           "title": "Annihilation",
         }
@@ -268,6 +272,7 @@ describe("ISBN Resolver API", () => {
           "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
           "pageCount": 209,
           "printType": "BOOK",
+          "publisher": "Macmillan",
           "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
           "title": "Annihilation",
         }

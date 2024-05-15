@@ -82,6 +82,7 @@ describe("resolveOpenLibrary", () => {
         "link": "https://openlibrary.org/books/OL7353617M",
         "pageCount": 96,
         "printType": "BOOK",
+        "publisher": "Puffin",
         "thumbnail": "https://covers.openlibrary.org/b/id/8739161-L.jpg",
         "title": "Fantastic Mr. Fox",
       }
@@ -111,6 +112,7 @@ describe("resolveOpenLibrary", () => {
         "link": "https://openlibrary.org/isbn/9780374104092",
         "pageCount": 96,
         "printType": "BOOK",
+        "publisher": undefined,
         "thumbnail": "https://covers.openlibrary.org/b/id/8739161-L.jpg",
         "title": "Fantastic Mr. Fox",
       }
