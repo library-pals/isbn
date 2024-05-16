@@ -1,12 +1,14 @@
 /**
  * @typedef {object} Book
  * @property {string} isbn - The ISBN of the book.
- * @property {string} title - The long title of the book.
+ * @property {string} title - The title of the book.
  * @property {string[]} authors - The authors of the book.
  * @property {string} description - The overview of the book.
  * @property {number} pageCount - The number of pages in the book.
- * @property {string} printType - The print type of the book. Always "BOOK" for this context.
+ * @property {string} printType - The print type of the book.
  * @property {string[]} categories - The subjects or categories of the book.
+ * @property {string} publisher - The publisher of the book.
+ * @property {string} publishedDate - The date the book was published.
  * @property {string | undefined} [thumbnail] - The thumbnail image link of the book.
  * @property {string} [link] - The link of the book.
  */
@@ -47,7 +49,7 @@ export type Book = {
      */
     isbn: string;
     /**
-     * - The long title of the book.
+     * - The title of the book.
      */
     title: string;
     /**
@@ -63,13 +65,21 @@ export type Book = {
      */
     pageCount: number;
     /**
-     * - The print type of the book. Always "BOOK" for this context.
+     * - The print type of the book.
      */
     printType: string;
     /**
      * - The subjects or categories of the book.
      */
     categories: string[];
+    /**
+     * - The publisher of the book.
+     */
+    publisher: string;
+    /**
+     * - The date the book was published.
+     */
+    publishedDate: string;
     /**
      * - The thumbnail image link of the book.
      */

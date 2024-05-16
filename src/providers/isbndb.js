@@ -123,6 +123,8 @@ function standardize(book, isbn) {
     printType: "BOOK",
     categories: book.subjects,
     thumbnail: book.image,
+    publisher: book.publisher,
+    publishedDate: book.date_published,
     isbn,
   };
 }

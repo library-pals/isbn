@@ -118,6 +118,8 @@ export async function standardize(book, isbn) {
     link: book.key
       ? `${OPENLIBRARY_API_BASE}${book.key}`
       : `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_BOOK}/${isbn}`,
+    publisher: book.publishers?.join(", "),
+    publishedDate: book.publish_date,
     isbn,
   };
 

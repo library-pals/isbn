@@ -57,7 +57,6 @@ information.
 
 ```json
 {
-  "isbn": 9780374104092,
   "title": "Annihilation",
   "authors": ["Jeff VanderMeer"],
   "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
@@ -65,7 +64,10 @@ information.
   "printType": "BOOK",
   "categories": ["Fiction"],
   "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
-  "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ"
+  "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
+  "publisher": "Macmillan",
+  "publishedDate": "2014-02-04",
+  "isbn": "9780374104092"
 }
 ```
 

@@ -82,6 +82,8 @@ describe("resolveOpenLibrary", () => {
         "link": "https://openlibrary.org/books/OL7353617M",
         "pageCount": 96,
         "printType": "BOOK",
+        "publishedDate": "October 1, 1988",
+        "publisher": "Puffin",
         "thumbnail": "https://covers.openlibrary.org/b/id/8739161-L.jpg",
         "title": "Fantastic Mr. Fox",
       }
@@ -111,6 +113,8 @@ describe("resolveOpenLibrary", () => {
         "link": "https://openlibrary.org/isbn/9780374104092",
         "pageCount": 96,
         "printType": "BOOK",
+        "publishedDate": "October 1, 1988",
+        "publisher": undefined,
         "thumbnail": "https://covers.openlibrary.org/b/id/8739161-L.jpg",
         "title": "Fantastic Mr. Fox",
       }
@@ -126,7 +130,7 @@ describe("resolveOpenLibrary", () => {
     });
 
     await expect(resolveOpenLibrary(isbn, {})).rejects.toThrow(
-      `No books found with ISBN: ${isbn}`,
+      `No books found with ISBN: ${isbn}`
     );
   });
 
@@ -139,7 +143,7 @@ describe("resolveOpenLibrary", () => {
     });
 
     await expect(resolveOpenLibrary(isbn, {})).rejects.toThrow(
-      "Wrong response code: 404",
+      "Wrong response code: 404"
     );
   });
 });
@@ -181,7 +185,7 @@ describe("getAuthors", () => {
     axios.get.mockResolvedValueOnce({ status: 404 });
 
     await expect(getAuthors(rawAuthors)).rejects.toThrow(
-      "Unable to get author /authors/OL1A: 404",
+      "Unable to get author /authors/OL1A: 404"
     );
   });
 });
@@ -258,7 +262,7 @@ describe("getWorks", () => {
     axios.get.mockResolvedValueOnce({ status: 404 });
 
     await expect(getWorks({ works })).rejects.toThrow(
-      "Unable to get /works/OL1A: 404",
+      "Unable to get /works/OL1A: 404"
     );
   });
 });
