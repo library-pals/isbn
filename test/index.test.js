@@ -10,7 +10,7 @@ const GOOGLE_BOOKS_API_BASE = "https://www.googleapis.com";
 const OPENLIBRARY_API_BASE = "https://openlibrary.org";
 const ISBNDB_API_BASE = "https://api2.isbndb.com";
 
-import openLibraryMock from "./fixtures/open-library-isbn-9780374104092.json";
+import openLibraryMock from "./fixtures/open-library-isbn-9780140328721.json";
 import googleMock from "./fixtures/google-9780374104092.json";
 
 process.env.ISBNDB_API_KEY = "key-1234";
@@ -249,6 +249,40 @@ describe("ISBN Resolver API", () => {
         }
       `);
     });
+
+    it("should override default options", async function () {
+      const mockResponseGoogle = googleMock;
+
+      axios.get.mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve({ status: 200, data: mockResponseGoogle });
+            }, 10_000);
+          }),
+      );
+
+      const book = await isbn.resolve(MOCK_ISBN, { timeout: 15_000 });
+      expect(book).toMatchInlineSnapshot(`
+        {
+          "authors": [
+            "Jeff VanderMeer",
+          ],
+          "categories": [
+            "Fiction",
+          ],
+          "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
+          "isbn": "9780374104092",
+          "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
+          "pageCount": 209,
+          "printType": "BOOK",
+          "publishedDate": "2014-02-04",
+          "publisher": "Macmillan",
+          "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "title": "Annihilation",
+        }
+      `);
+    }, 20_000);
   });
 });
 
