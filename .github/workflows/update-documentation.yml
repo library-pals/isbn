@@ -24,6 +24,9 @@ jobs:
       - name: Update docs
         run: node .github/actions/documentation.js
 
+      - name: Run Prettier
+        run: npx prettier --write README.md
+
       - name: Commit files
         run: |
           git pull
