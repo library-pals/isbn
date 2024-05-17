@@ -10,6 +10,7 @@ const config = {
   },
   transform: {},
   prettierPath: "<rootDir>/node_modules/prettier-2/index.js",
+  testPathIgnorePatterns: ["/examples/"],
 };
 
 export default config;
