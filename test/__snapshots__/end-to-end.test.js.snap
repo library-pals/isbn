@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`End to end { name: 'default', providers: [] } Annihilation 1`] = `
+exports[`End to end Annihilation { name: 'default', providers: [] } 1`] = `
 {
   "authors": [
     "Jeff VanderMeer",
@@ -20,45 +20,7 @@ exports[`End to end { name: 'default', providers: [] } Annihilation 1`] = `
 }
 `;
 
-exports[`End to end { name: 'default', providers: [] } Fantastic Mr. Fox 1`] = `
-{
-  "authors": [
-    "Roald Dahl",
-  ],
-  "categories": [
-    "Juvenile Fiction",
-  ],
-  "description": "In this book you will find: Boggis an enormously fat man, a chicken farmer and a mean man. Bunce, a pot bellied dwarf, a duck-and-goose farmer and a nasty man. Bean, a thin man, a turkey-and-apple farmer and a beastly man. Badger, the most respectable and well-behaved animal in the district. Rat, a rude creature and a drunkard, and also a Mrs. Fox and her four children.",
-  "isbn": "9780140328721",
-  "link": "https://books.google.com/books/about/Fantastic_Mr_Fox.html?hl=&id=DlQbmJc5WlQC",
-  "pageCount": 100,
-  "printType": "BOOK",
-  "publishedDate": "1988",
-  "publisher": "Puffin",
-  "thumbnail": "http://books.google.com/books/content?id=DlQbmJc5WlQC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
-  "title": "Fantastic Mr. Fox",
-}
-`;
-
-exports[`End to end { name: 'default', providers: [] } Transcendent Kingdom 1`] = `
-{
-  "authors": [
-    "Yaa Gyasi",
-  ],
-  "categories": undefined,
-  "description": "Yaa Gyasi's stunning follow-up to her acclaimed national bestseller Homegoing is a powerful, raw, intimate, deeply layered novel about a Ghanaian family in Alabama. Gifty is a fifth year candidate in neuroscience at Stanford University's School of Medicine studying reward-seeking behaviour in mice and the neural circuits of depression and addiction. Her brother, Nana, was a gifted high school athlete who died of a heroin overdose after a knee injury left him hooked on OxyContin. Her suicidal mother is living in her bed. Gifty is determined to discover the scientific basis for the suffering she sees all around her. But even as she turns to hard science to unlock the mystery of her family's loss, she finds herself hungering for her childhood faith, and grappling with the evangelical church in which she was raised, whose promise of salvation remains as tantalizing as it is elusive. Transcendent Kingdom is a deeply moving portrait of a family of Ghanaian immigrants ravaged by depression and addiction and grief--a novel about faith, science, religion, love. Exquisitely written and emotionally searing, this is an exceptionally powerful follow-up to Gyasi's phenomenal debut.",
-  "isbn": "9780385695176",
-  "link": "https://books.google.com/books/about/Transcendent_Kingdom.html?hl=&id=gr4pywEACAAJ",
-  "pageCount": 288,
-  "printType": "BOOK",
-  "publishedDate": "2020-09-15",
-  "publisher": "Bond Street Books",
-  "thumbnail": "http://books.google.com/books/content?id=gr4pywEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
-  "title": "Transcendent Kingdom",
-}
-`;
-
-exports[`End to end { name: 'google', providers: [Array] } Annihilation 1`] = `
+exports[`End to end Annihilation { name: 'google', providers: [Array] } 1`] = `
 {
   "authors": [
     "Jeff VanderMeer",
@@ -78,45 +40,7 @@ exports[`End to end { name: 'google', providers: [Array] } Annihilation 1`] = `
 }
 `;
 
-exports[`End to end { name: 'google', providers: [Array] } Fantastic Mr. Fox 1`] = `
-{
-  "authors": [
-    "Roald Dahl",
-  ],
-  "categories": [
-    "Juvenile Fiction",
-  ],
-  "description": "In this book you will find: Boggis an enormously fat man, a chicken farmer and a mean man. Bunce, a pot bellied dwarf, a duck-and-goose farmer and a nasty man. Bean, a thin man, a turkey-and-apple farmer and a beastly man. Badger, the most respectable and well-behaved animal in the district. Rat, a rude creature and a drunkard, and also a Mrs. Fox and her four children.",
-  "isbn": "9780140328721",
-  "link": "https://books.google.com/books/about/Fantastic_Mr_Fox.html?hl=&id=DlQbmJc5WlQC",
-  "pageCount": 100,
-  "printType": "BOOK",
-  "publishedDate": "1988",
-  "publisher": "Puffin",
-  "thumbnail": "http://books.google.com/books/content?id=DlQbmJc5WlQC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
-  "title": "Fantastic Mr. Fox",
-}
-`;
-
-exports[`End to end { name: 'google', providers: [Array] } Transcendent Kingdom 1`] = `
-{
-  "authors": [
-    "Yaa Gyasi",
-  ],
-  "categories": undefined,
-  "description": "Yaa Gyasi's stunning follow-up to her acclaimed national bestseller Homegoing is a powerful, raw, intimate, deeply layered novel about a Ghanaian family in Alabama. Gifty is a fifth year candidate in neuroscience at Stanford University's School of Medicine studying reward-seeking behaviour in mice and the neural circuits of depression and addiction. Her brother, Nana, was a gifted high school athlete who died of a heroin overdose after a knee injury left him hooked on OxyContin. Her suicidal mother is living in her bed. Gifty is determined to discover the scientific basis for the suffering she sees all around her. But even as she turns to hard science to unlock the mystery of her family's loss, she finds herself hungering for her childhood faith, and grappling with the evangelical church in which she was raised, whose promise of salvation remains as tantalizing as it is elusive. Transcendent Kingdom is a deeply moving portrait of a family of Ghanaian immigrants ravaged by depression and addiction and grief--a novel about faith, science, religion, love. Exquisitely written and emotionally searing, this is an exceptionally powerful follow-up to Gyasi's phenomenal debut.",
-  "isbn": "9780385695176",
-  "link": "https://books.google.com/books/about/Transcendent_Kingdom.html?hl=&id=gr4pywEACAAJ",
-  "pageCount": 288,
-  "printType": "BOOK",
-  "publishedDate": "2020-09-15",
-  "publisher": "Bond Street Books",
-  "thumbnail": "http://books.google.com/books/content?id=gr4pywEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
-  "title": "Transcendent Kingdom",
-}
-`;
-
-exports[`End to end { name: 'openlibrary', providers: [Array] } Annihilation 1`] = `
+exports[`End to end Annihilation { name: 'openlibrary', providers: [Array] } 1`] = `
 {
   "authors": [
     "Jeff VanderMeer",
@@ -177,7 +101,47 @@ exports[`End to end { name: 'openlibrary', providers: [Array] } Annihilation 1`]
 }
 `;
 
-exports[`End to end { name: 'openlibrary', providers: [Array] } Fantastic Mr. Fox 1`] = `
+exports[`End to end Fantastic Mr. Fox { name: 'default', providers: [] } 1`] = `
+{
+  "authors": [
+    "Roald Dahl",
+  ],
+  "categories": [
+    "Juvenile Fiction",
+  ],
+  "description": "In this book you will find: Boggis an enormously fat man, a chicken farmer and a mean man. Bunce, a pot bellied dwarf, a duck-and-goose farmer and a nasty man. Bean, a thin man, a turkey-and-apple farmer and a beastly man. Badger, the most respectable and well-behaved animal in the district. Rat, a rude creature and a drunkard, and also a Mrs. Fox and her four children.",
+  "isbn": "9780140328721",
+  "link": "https://books.google.com/books/about/Fantastic_Mr_Fox.html?hl=&id=DlQbmJc5WlQC",
+  "pageCount": 100,
+  "printType": "BOOK",
+  "publishedDate": "1988",
+  "publisher": "Puffin",
+  "thumbnail": "http://books.google.com/books/content?id=DlQbmJc5WlQC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+  "title": "Fantastic Mr. Fox",
+}
+`;
+
+exports[`End to end Fantastic Mr. Fox { name: 'google', providers: [Array] } 1`] = `
+{
+  "authors": [
+    "Roald Dahl",
+  ],
+  "categories": [
+    "Juvenile Fiction",
+  ],
+  "description": "In this book you will find: Boggis an enormously fat man, a chicken farmer and a mean man. Bunce, a pot bellied dwarf, a duck-and-goose farmer and a nasty man. Bean, a thin man, a turkey-and-apple farmer and a beastly man. Badger, the most respectable and well-behaved animal in the district. Rat, a rude creature and a drunkard, and also a Mrs. Fox and her four children.",
+  "isbn": "9780140328721",
+  "link": "https://books.google.com/books/about/Fantastic_Mr_Fox.html?hl=&id=DlQbmJc5WlQC",
+  "pageCount": 100,
+  "printType": "BOOK",
+  "publishedDate": "1988",
+  "publisher": "Puffin",
+  "thumbnail": "http://books.google.com/books/content?id=DlQbmJc5WlQC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+  "title": "Fantastic Mr. Fox",
+}
+`;
+
+exports[`End to end Fantastic Mr. Fox { name: 'openlibrary', providers: [Array] } 1`] = `
 {
   "authors": [
     "Roald Dahl",
@@ -231,7 +195,43 @@ Aided by a friendly Badger, the animals bring the stolen food back and Mrs. Fox 
 }
 `;
 
-exports[`End to end { name: 'openlibrary', providers: [Array] } Transcendent Kingdom 1`] = `
+exports[`End to end Transcendent Kingdom { name: 'default', providers: [] } 1`] = `
+{
+  "authors": [
+    "Yaa Gyasi",
+  ],
+  "categories": undefined,
+  "description": "Yaa Gyasi's stunning follow-up to her acclaimed national bestseller Homegoing is a powerful, raw, intimate, deeply layered novel about a Ghanaian family in Alabama. Gifty is a fifth year candidate in neuroscience at Stanford University's School of Medicine studying reward-seeking behaviour in mice and the neural circuits of depression and addiction. Her brother, Nana, was a gifted high school athlete who died of a heroin overdose after a knee injury left him hooked on OxyContin. Her suicidal mother is living in her bed. Gifty is determined to discover the scientific basis for the suffering she sees all around her. But even as she turns to hard science to unlock the mystery of her family's loss, she finds herself hungering for her childhood faith, and grappling with the evangelical church in which she was raised, whose promise of salvation remains as tantalizing as it is elusive. Transcendent Kingdom is a deeply moving portrait of a family of Ghanaian immigrants ravaged by depression and addiction and grief--a novel about faith, science, religion, love. Exquisitely written and emotionally searing, this is an exceptionally powerful follow-up to Gyasi's phenomenal debut.",
+  "isbn": "9780385695176",
+  "link": "https://books.google.com/books/about/Transcendent_Kingdom.html?hl=&id=gr4pywEACAAJ",
+  "pageCount": 288,
+  "printType": "BOOK",
+  "publishedDate": "2020-09-15",
+  "publisher": "Bond Street Books",
+  "thumbnail": "http://books.google.com/books/content?id=gr4pywEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+  "title": "Transcendent Kingdom",
+}
+`;
+
+exports[`End to end Transcendent Kingdom { name: 'google', providers: [Array] } 1`] = `
+{
+  "authors": [
+    "Yaa Gyasi",
+  ],
+  "categories": undefined,
+  "description": "Yaa Gyasi's stunning follow-up to her acclaimed national bestseller Homegoing is a powerful, raw, intimate, deeply layered novel about a Ghanaian family in Alabama. Gifty is a fifth year candidate in neuroscience at Stanford University's School of Medicine studying reward-seeking behaviour in mice and the neural circuits of depression and addiction. Her brother, Nana, was a gifted high school athlete who died of a heroin overdose after a knee injury left him hooked on OxyContin. Her suicidal mother is living in her bed. Gifty is determined to discover the scientific basis for the suffering she sees all around her. But even as she turns to hard science to unlock the mystery of her family's loss, she finds herself hungering for her childhood faith, and grappling with the evangelical church in which she was raised, whose promise of salvation remains as tantalizing as it is elusive. Transcendent Kingdom is a deeply moving portrait of a family of Ghanaian immigrants ravaged by depression and addiction and grief--a novel about faith, science, religion, love. Exquisitely written and emotionally searing, this is an exceptionally powerful follow-up to Gyasi's phenomenal debut.",
+  "isbn": "9780385695176",
+  "link": "https://books.google.com/books/about/Transcendent_Kingdom.html?hl=&id=gr4pywEACAAJ",
+  "pageCount": 288,
+  "printType": "BOOK",
+  "publishedDate": "2020-09-15",
+  "publisher": "Bond Street Books",
+  "thumbnail": "http://books.google.com/books/content?id=gr4pywEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+  "title": "Transcendent Kingdom",
+}
+`;
+
+exports[`End to end Transcendent Kingdom { name: 'openlibrary', providers: [Array] } 1`] = `
 {
   "authors": [
     "Yaa Gyasi",
