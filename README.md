@@ -62,9 +62,7 @@ information.
 ```json
 {
   "title": "Annihilation",
-  "authors": [
-    "Jeff VanderMeer"
-  ],
+  "authors": ["Jeff VanderMeer"],
   "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
   "pageCount": 209,
   "printType": "BOOK",
@@ -94,9 +92,7 @@ information.
 ```json
 {
   "title": "Annihilation",
-  "authors": [
-    "Jeff VanderMeer"
-  ],
+  "authors": ["Jeff VanderMeer"],
   "description": "Area X has been cut off from the rest of the continent for decades. Nature has reclaimed the last vestiges of human civilization. The twelfth expedition arrives expecting the unexpected, and Area X delivers. They discover a massive topographic anomaly and life-forms that surpass understanding. But it's the surprises that came across the border with them, and the secrets the expedition members are keeping from one another that change everything.",
   "pageCount": 208,
   "printType": "BOOK",
