@@ -1,5 +1,8 @@
 name: Update documentation
 
+permissions:
+  contents: write
+
 on:
   push:
   workflow_dispatch:
