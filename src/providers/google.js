@@ -100,7 +100,7 @@ export async function standardize(book, id, isbn) {
     description: book.description,
     pageCount: book.pageCount,
     printType: book.printType,
-    categories,
+    categories: formatCategories(categories),
     thumbnail: getLargestThumbnail(imageLinks),
     link: book.canonicalVolumeLink,
     publisher: book.publisher,
@@ -166,4 +166,18 @@ function removeQueryParameter(url, parameter) {
   const urlObject = new URL(url);
   urlObject.searchParams.delete(parameter);
   return urlObject.toString();
+}
+
+/**
+ * Formats the categories array.
+ * @param {string[]} categories - The array of categories.
+ * @returns {string[]} The formatted categories array.
+ */
+function formatCategories(categories) {
+  if (!categories || categories.length === 0) return [];
+
+  const [firstCategory] = categories;
+  return firstCategory.includes("/")
+    ? [firstCategory.split("/")[0].trim(), ...categories]
+    : categories;
 }

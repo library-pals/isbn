@@ -65,6 +65,7 @@ describe("resolveGoogle", () => {
           "Test Author",
         ],
         "categories": [
+          "Fiction",
           "Fiction / General",
           "Fiction / Fantasy / General",
           "Fiction / Horror",
@@ -149,6 +150,7 @@ describe("resolveGoogle", () => {
           "Test Author",
         ],
         "categories": [
+          "Fiction",
           "Fiction / General",
           "Fiction / Fantasy / General",
           "Fiction / Horror",
@@ -213,7 +215,7 @@ describe("resolveGoogle", () => {
         "authors": [
           "Test Author",
         ],
-        "categories": undefined,
+        "categories": [],
         "description": undefined,
         "isbn": "1234567890",
         "link": undefined,
@@ -253,7 +255,7 @@ describe("resolveGoogle", () => {
         "authors": [
           "Test Author",
         ],
-        "categories": undefined,
+        "categories": [],
         "description": undefined,
         "isbn": "1234567890",
         "link": undefined,

@@ -6,6 +6,7 @@ exports[`End to end Annihilation { name: 'default', providers: [] } 1`] = `
     "Jeff VanderMeer",
   ],
   "categories": [
+    "Fiction",
     "Fiction / General",
     "Fiction / Fantasy / General",
     "Fiction / Horror",
@@ -33,6 +34,7 @@ exports[`End to end Annihilation { name: 'google', providers: [Array] } 1`] = `
     "Jeff VanderMeer",
   ],
   "categories": [
+    "Fiction",
     "Fiction / General",
     "Fiction / Fantasy / General",
     "Fiction / Horror",
@@ -121,6 +123,7 @@ exports[`End to end Fantastic Mr. Fox { name: 'default', providers: [] } 1`] = `
     "Roald Dahl",
   ],
   "categories": [
+    "Juvenile Fiction",
     "Juvenile Fiction / Animals / Foxes",
     "Juvenile Fiction / Fantasy & Magic",
   ],
@@ -142,6 +145,7 @@ exports[`End to end Fantastic Mr. Fox { name: 'google', providers: [Array] } 1`]
     "Roald Dahl",
   ],
   "categories": [
+    "Juvenile Fiction",
     "Juvenile Fiction / Animals / Foxes",
     "Juvenile Fiction / Fantasy & Magic",
   ],
@@ -217,6 +221,7 @@ exports[`End to end Transcendent Kingdom { name: 'default', providers: [] } 1`] 
     "Yaa Gyasi",
   ],
   "categories": [
+    "Fiction",
     "Fiction / Literary",
     "Fiction / Family Life / General",
     "Fiction / Family Life / Siblings",
@@ -241,6 +246,7 @@ exports[`End to end Transcendent Kingdom { name: 'google', providers: [Array] } 
     "Yaa Gyasi",
   ],
   "categories": [
+    "Fiction",
     "Fiction / Literary",
     "Fiction / Family Life / General",
     "Fiction / Family Life / Siblings",
