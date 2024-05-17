@@ -17,7 +17,14 @@ describe("End to end", () => {
           "Jeff VanderMeer",
         ],
         "categories": [
-          "Fiction",
+          "Fiction / General",
+          "Fiction / Fantasy / General",
+          "Fiction / Horror",
+          "Fiction / Literary",
+          "Fiction / Science Fiction / General",
+          "Fiction / Science Fiction / Action & Adventure",
+          "Fiction / Thrillers / Suspense",
+          "Fiction / Dystopian",
         ],
         "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
         "isbn": "9780374104092",
@@ -26,7 +33,7 @@ describe("End to end", () => {
         "printType": "BOOK",
         "publishedDate": "2014-02-04",
         "publisher": "Macmillan",
-        "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "thumbnail": "http://books.google.com/books/publisher/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
         "title": "Annihilation",
       }
     `);
@@ -104,7 +111,14 @@ describe("End to end", () => {
           "Jeff VanderMeer",
         ],
         "categories": [
-          "Fiction",
+          "Fiction / General",
+          "Fiction / Fantasy / General",
+          "Fiction / Horror",
+          "Fiction / Literary",
+          "Fiction / Science Fiction / General",
+          "Fiction / Science Fiction / Action & Adventure",
+          "Fiction / Thrillers / Suspense",
+          "Fiction / Dystopian",
         ],
         "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
         "isbn": "9780374104092",
@@ -113,7 +127,7 @@ describe("End to end", () => {
         "printType": "BOOK",
         "publishedDate": "2014-02-04",
         "publisher": "Macmillan",
-        "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "thumbnail": "http://books.google.com/books/publisher/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
         "title": "Annihilation",
       }
     `);

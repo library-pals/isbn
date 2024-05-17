@@ -6,7 +6,7 @@
  * @property {string} description - The overview of the book.
  * @property {number} pageCount - The number of pages in the book.
  * @property {string} printType - The print type of the book.
- * @property {string[]} categories - The subjects or categories of the book.
+ * @property {string[]} [categories] - The subjects or categories of the book.
  * @property {string} publisher - The publisher of the book.
  * @property {string} publishedDate - The date the book was published.
  * @property {string | undefined} [thumbnail] - The thumbnail image link of the book.
@@ -71,7 +71,7 @@ export type Book = {
     /**
      * - The subjects or categories of the book.
      */
-    categories: string[];
+    categories?: string[];
     /**
      * - The publisher of the book.
      */

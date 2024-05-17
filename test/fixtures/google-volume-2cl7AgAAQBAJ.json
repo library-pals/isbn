@@ -1,0 +1,88 @@
+{
+  "kind": "books#volume",
+  "id": "2cl7AgAAQBAJ",
+  "etag": "QJULCjPXW4U",
+  "selfLink": "https://www.googleapis.com/books/v1/volumes/2cl7AgAAQBAJ",
+  "volumeInfo": {
+    "title": "Annihilation",
+    "subtitle": "A Novel",
+    "authors": ["Jeff VanderMeer"],
+    "publisher": "Macmillan",
+    "publishedDate": "2014-02-04",
+    "description": "<p><b>A MAJOR MOTION PICTURE FROM ALEX GARLAND, STARRING NATALIE PORTMAN AND OSCAR ISAAC</b><br><b><br>The Southern Reach Trilogy begins with <i>Annihilation</i>, the Nebula Award-winning novel that \"reads as if Verne or Wellsian adventurers exploring a mysterious island had warped through into a Kafkaesque nightmare world\" (Kim Stanley Robinson).</b><br><br>Area X has been cut off from the rest of the continent for decades. Nature has reclaimed the last vestiges of human civilization. The first expedition returned with reports of a pristine, Edenic landscape; the second expedition ended in mass suicide; the third expedition in a hail of gunfire as its members turned on one another. The members of the eleventh expedition returned as shadows of their former selves, and within weeks, all had died of cancer. In <i>Annihilation</i>, the first volume of Jeff VanderMeer's Southern Reach trilogy, we join the twelfth expedition.<br><br>The group is made up of four women: an anthropologist; a surveyor; a psychologist, the de facto leader; and our narrator, a biologist. Their mission is to map the terrain, record all observations of their surroundings and of one another, and, above all, avoid being contaminated by Area X itself.<br><br>They arrive expecting the unexpected, and Area X delivers—they discover a massive topographic anomaly and life forms that surpass understanding—but it's the surprises that came across the border with them and the secrets the expedition members are keeping from one another that change everything.</p>",
+    "industryIdentifiers": [
+      {
+        "type": "ISBN_10",
+        "identifier": "0374104093"
+      },
+      {
+        "type": "ISBN_13",
+        "identifier": "9780374104092"
+      }
+    ],
+    "readingModes": {
+      "text": false,
+      "image": false
+    },
+    "pageCount": 195,
+    "printedPageCount": 209,
+    "dimensions": {
+      "height": "19.00 cm",
+      "width": "12.60 cm",
+      "thickness": "1.40 cm"
+    },
+    "printType": "BOOK",
+    "categories": [
+      "Fiction / General",
+      "Fiction / Fantasy / General",
+      "Fiction / Horror",
+      "Fiction / Literary",
+      "Fiction / Science Fiction / General",
+      "Fiction / Science Fiction / Action & Adventure",
+      "Fiction / Thrillers / Suspense",
+      "Fiction / Dystopian"
+    ],
+    "averageRating": 5,
+    "ratingsCount": 1,
+    "maturityRating": "NOT_MATURE",
+    "allowAnonLogging": false,
+    "contentVersion": "0.5.1.0.preview.0",
+    "panelizationSummary": {
+      "containsEpubBubbles": false,
+      "containsImageBubbles": false
+    },
+    "imageLinks": {
+      "smallThumbnail": "http://books.google.com/books/publisher/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&imgtk=AFLRE71Mgge1zRBuI-6VdrZ0nBwIc7_qaM3VWRh1xDkhASE8oOAhX6lR4qKZS0XmwoTtP5U55kdFCsIXyywutHlxtVihaCPnqY0-ePAYdDqnzvSim94eSSKBs_UvHNpOBBCUM0qvPftN&source=gbs_api",
+      "thumbnail": "http://books.google.com/books/publisher/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&imgtk=AFLRE73dduaXO74Sy3FurAvGW-JTkmdCDwPpSohu1bdanxA7n0j3M1xSwbDaOsZFcsxs86a3pOkMSPjypksb-ndjeazWKxTGGHUjyQ0VmILkr1wCh_LzsSqCqOsmgpWUcIMEBOM7SUjK&source=gbs_api",
+      "small": "http://books.google.com/books/publisher/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=2&edge=curl&imgtk=AFLRE70hBjSElEfRFJAcPeyEH9CVvNOLV57-Um3uGU2lmPQVGCtw-ZXQsiYnxbNZfXwy7OS-Sk0dypL0SGZ6cenRNrFUEGlw0Y4Voh1vdG22Fuwpgh9fTTxRmsvaNmToxl1QADPdwtoX&source=gbs_api",
+      "medium": "http://books.google.com/books/publisher/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=3&edge=curl&imgtk=AFLRE73pr2aGME-gWuyNIelzxfmx44gqtahOPJ5KfjySyh0LmdO9YjDtyCy1u5BQrrmA47cliMJrZh9aGBmstRHXb6DQUxCYynQuY4aD6PDvG5iimL6mS8DTGsttftqW9hKBJMwd9uLs&source=gbs_api",
+      "large": "http://books.google.com/books/publisher/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=4&edge=curl&imgtk=AFLRE71SlrAyh_fofnd6TCjeK-QunH4QxYEHdY1mxQ5cWwRTbwhoANnh89iH4N9Rx6mkNtLN81LzxgR5VCQFiSc5hmL-zNSc5z4dp8vVVHb7eiru5aH_d-nmXDZ2QAcgjzzyjkNZLmf0&source=gbs_api",
+      "extraLarge": "http://books.google.com/books/publisher/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=6&edge=curl&imgtk=AFLRE71ggWpt0khRauil3Li3zG9U9qMYCC4YucTcJjhkQy8hk0arGILgpts8R_mCllo8L_KhZpuSSDnp2XYGVHMKfoOZ-Uvy5f4H8qjJkE2HI3TlKglSfurxqawF-qqvciyiYVdAhRcp&source=gbs_api"
+    },
+    "language": "en",
+    "previewLink": "http://books.google.com/books?id=2cl7AgAAQBAJ&hl=&source=gbs_api",
+    "infoLink": "https://play.google.com/store/books/details?id=2cl7AgAAQBAJ&source=gbs_api",
+    "canonicalVolumeLink": "https://play.google.com/store/books/details?id=2cl7AgAAQBAJ"
+  },
+  "saleInfo": {
+    "country": "US",
+    "saleability": "NOT_FOR_SALE",
+    "isEbook": false
+  },
+  "accessInfo": {
+    "country": "US",
+    "viewability": "PARTIAL",
+    "embeddable": true,
+    "publicDomain": false,
+    "textToSpeechPermission": "ALLOWED",
+    "epub": {
+      "isAvailable": false
+    },
+    "pdf": {
+      "isAvailable": false
+    },
+    "webReaderLink": "http://play.google.com/books/reader?id=2cl7AgAAQBAJ&hl=&source=gbs_api",
+    "accessViewStatus": "SAMPLE",
+    "quoteSharingAllowed": false
+  }
+}

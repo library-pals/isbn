@@ -38,7 +38,7 @@ export async function resolveGoogle(isbn, options) {
       throw new Error(`No volume info found for book with isbn: ${isbn}`);
     }
     const book = books.items[0];
-    return standardize(book.volumeInfo, isbn);
+    return await standardize(book.volumeInfo, book.id, isbn);
   } catch (error) {
     throw new Error(error.message);
   }
@@ -86,18 +86,22 @@ export async function resolveGoogle(isbn, options) {
 /**
  * Standardizes a book object by extracting relevant information from the provided book object.
  * @param {GoogleBook} book - The book object to be standardized.
+ * @param {string} id - The book id.
  * @param {string} isbn - The book's ISBN.
- * @returns {Book} The standardized book object.
+ * @returns {Promise<Book>} The standardized book object.
  */
-export function standardize(book, isbn) {
+export async function standardize(book, id, isbn) {
+  const { imageLinks = book.imageLinks, categories = book.categories } =
+    await getVolume(id);
+
   const standardBook = {
     title: book.title,
     authors: book.authors,
     description: book.description,
     pageCount: book.pageCount,
     printType: book.printType,
-    categories: book.categories,
-    thumbnail: getLargestThumbnail(book.imageLinks),
+    categories,
+    thumbnail: getLargestThumbnail(imageLinks),
     link: book.canonicalVolumeLink,
     publisher: book.publisher,
     publishedDate: book.publishedDate,
@@ -105,6 +109,28 @@ export function standardize(book, isbn) {
   };
 
   return standardBook;
+}
+
+/**
+ * Retrieves the volume information for a book.
+ * @param {string} id - The book id.
+ * @returns {Promise<{imageLinks?: ImageLinks, categories?: string[]}>} - A promise that resolves to an array of author names.
+ * @throws {Error} - If there is an error retrieving the author information.
+ */
+export async function getVolume(id) {
+  try {
+    const url = `${GOOGLE_BOOKS_API_BASE}${GOOGLE_BOOKS_API_BOOK}/${id}`;
+    const response = await axios.get(url);
+
+    if (response.status !== 200) {
+      throw new Error(`Unable to get volume ${id}: ${response.status}`);
+    }
+    return {
+      ...response.data.volumeInfo,
+    };
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }
 
 /**
@@ -124,10 +150,20 @@ function getLargestThumbnail(imageLinks) {
 
   if (!imageLinks) return;
 
-  for (const size of sizes) {
-    if (size in imageLinks) {
-      // @ts-ignore
-      return imageLinks[size];
-    }
-  }
+  const size = sizes.find((size) => size in imageLinks);
+
+  // @ts-ignore
+  return removeQueryParameter(imageLinks[size], "imgtk");
+}
+
+/**
+ * Removes a query parameter from a URL.
+ * @param {string} url - The URL.
+ * @param {string} parameter - The query parameter to remove.
+ * @returns {string | undefined} The URL with the query parameter removed.
+ */
+function removeQueryParameter(url, parameter) {
+  const urlObject = new URL(url);
+  urlObject.searchParams.delete(parameter);
+  return urlObject.toString();
 }

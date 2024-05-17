@@ -21,10 +21,231 @@ describe("resolveGoogle", () => {
       ],
     };
 
-    axios.get = jest.fn().mockResolvedValue({
-      status: 200,
-      data: mockResponse,
+    const mockVolumeResponse = {
+      kind: "books#volume",
+      id: "2cl7AgAAQBAJ",
+      volumeInfo: {
+        categories: [
+          "Fiction / General",
+          "Fiction / Fantasy / General",
+          "Fiction / Horror",
+          "Fiction / Literary",
+          "Fiction / Science Fiction / General",
+          "Fiction / Science Fiction / Action & Adventure",
+          "Fiction / Thrillers / Suspense",
+          "Fiction / Dystopian",
+        ],
+        imageLinks: {
+          smallThumbnail: "http://smallthumanil",
+          thumbnail: "http://thumbnail",
+          small: "http://small",
+          medium: "http://medium",
+          large: "http://large",
+          extraLarge: "http://extra-large/",
+        },
+      },
+      saleInfo: {},
+      accessInfo: {},
+    };
+
+    axios.get = jest.fn().mockImplementation((url) => {
+      if (url.includes("isbn")) {
+        return Promise.resolve({ status: 200, data: mockResponse });
+      }
+      return Promise.resolve({
+        status: 200,
+        data: mockVolumeResponse,
+      });
     });
+
+    const book = await resolveGoogle(isbn, {});
+    expect(book).toMatchInlineSnapshot(`
+      {
+        "authors": [
+          "Test Author",
+        ],
+        "categories": [
+          "Fiction / General",
+          "Fiction / Fantasy / General",
+          "Fiction / Horror",
+          "Fiction / Literary",
+          "Fiction / Science Fiction / General",
+          "Fiction / Science Fiction / Action & Adventure",
+          "Fiction / Thrillers / Suspense",
+          "Fiction / Dystopian",
+        ],
+        "description": undefined,
+        "isbn": "1234567890",
+        "link": undefined,
+        "pageCount": undefined,
+        "printType": undefined,
+        "publishedDate": undefined,
+        "publisher": undefined,
+        "thumbnail": "http://extra-large/",
+        "title": "Test Book",
+      }
+    `);
+  });
+
+  it("should resolve book information successfully, use imageLinks from volume", async () => {
+    const mockResponse = {
+      totalItems: 1,
+      items: [
+        {
+          id: "11223344000",
+          volumeInfo: {
+            title: "Test Book",
+            authors: ["Test Author"],
+            imageLinks: {
+              smallThumbnail: "http://smallthumanil",
+              thumbnail: "http://thumbnail",
+            },
+          },
+        },
+      ],
+    };
+
+    const mockVolumeResponse = {
+      kind: "books#volume",
+      id: "2cl7AgAAQBAJ",
+      volumeInfo: {
+        categories: [
+          "Fiction / General",
+          "Fiction / Fantasy / General",
+          "Fiction / Horror",
+          "Fiction / Literary",
+          "Fiction / Science Fiction / General",
+          "Fiction / Science Fiction / Action & Adventure",
+          "Fiction / Thrillers / Suspense",
+          "Fiction / Dystopian",
+        ],
+        imageLinks: {
+          smallThumbnail: "http://smallthumanil",
+          thumbnail: "http://thumbnail",
+          small: "http://small",
+          medium: "http://medium",
+          large: "http://large",
+          extraLarge: "http://extra-large/",
+        },
+      },
+      saleInfo: {},
+      accessInfo: {},
+    };
+
+    axios.get = jest.fn().mockImplementation((url) => {
+      if (url.includes("isbn")) {
+        return Promise.resolve({ status: 200, data: mockResponse });
+      }
+      return Promise.resolve({
+        status: 200,
+        data: mockVolumeResponse,
+      });
+    });
+
+    const book = await resolveGoogle(isbn, {});
+    expect(book).toMatchInlineSnapshot(`
+      {
+        "authors": [
+          "Test Author",
+        ],
+        "categories": [
+          "Fiction / General",
+          "Fiction / Fantasy / General",
+          "Fiction / Horror",
+          "Fiction / Literary",
+          "Fiction / Science Fiction / General",
+          "Fiction / Science Fiction / Action & Adventure",
+          "Fiction / Thrillers / Suspense",
+          "Fiction / Dystopian",
+        ],
+        "description": undefined,
+        "isbn": "1234567890",
+        "link": undefined,
+        "pageCount": undefined,
+        "printType": undefined,
+        "publishedDate": undefined,
+        "publisher": undefined,
+        "thumbnail": "http://extra-large/",
+        "title": "Test Book",
+      }
+    `);
+  });
+
+  it("should resolve book information successfully, use imageLinks from initial query", async () => {
+    const mockResponse = {
+      totalItems: 1,
+      items: [
+        {
+          id: "11223344000",
+          volumeInfo: {
+            title: "Test Book",
+            authors: ["Test Author"],
+            imageLinks: {
+              smallThumbnail: "http://smallthumanil",
+              thumbnail: "http://thumbnail",
+            },
+          },
+        },
+      ],
+    };
+
+    const mockVolumeResponse = {
+      kind: "books#volume",
+      id: "2cl7AgAAQBAJ",
+      volumeInfo: {},
+      saleInfo: {},
+      accessInfo: {},
+    };
+
+    axios.get = jest.fn().mockImplementation((url) => {
+      if (url.includes("isbn")) {
+        return Promise.resolve({ status: 200, data: mockResponse });
+      }
+      return Promise.resolve({
+        status: 200,
+        data: mockVolumeResponse,
+      });
+    });
+
+    const book = await resolveGoogle(isbn, {});
+    expect(book).toMatchInlineSnapshot(`
+      {
+        "authors": [
+          "Test Author",
+        ],
+        "categories": undefined,
+        "description": undefined,
+        "isbn": "1234567890",
+        "link": undefined,
+        "pageCount": undefined,
+        "printType": undefined,
+        "publishedDate": undefined,
+        "publisher": undefined,
+        "thumbnail": "http://thumbnail/",
+        "title": "Test Book",
+      }
+    `);
+  });
+
+  it("should resolve book information successfully, no imageLinks", async () => {
+    const mockResponse = {
+      totalItems: 1,
+      items: [
+        {
+          id: "11223344000",
+          volumeInfo: {
+            title: "Test Book",
+            authors: ["Test Author"],
+          },
+        },
+      ],
+    };
+
+    axios.get = jest
+      .fn()
+      .mockImplementation(() =>
+        Promise.resolve({ status: 200, data: mockResponse })
+      );
 
     const book = await resolveGoogle(isbn, {});
     expect(book).toMatchInlineSnapshot(`
@@ -46,18 +267,31 @@ describe("resolveGoogle", () => {
     `);
   });
 
-  it("should throw an error if no books are found", async () => {
+  it("should throw an error if volume fails", async () => {
     const mockResponse = {
-      totalItems: 0,
+      totalItems: 1,
+      items: [
+        {
+          id: "11223344000",
+          volumeInfo: {
+            title: "Test Book",
+            authors: ["Test Author"],
+          },
+        },
+      ],
     };
 
-    axios.get = jest.fn().mockResolvedValue({
-      status: 200,
-      data: mockResponse,
+    axios.get = jest.fn().mockImplementation((url) => {
+      if (url.includes("isbn")) {
+        return Promise.resolve({ status: 200, data: mockResponse });
+      }
+      return Promise.resolve({
+        status: 404,
+      });
     });
 
     await expect(resolveGoogle(isbn, {})).rejects.toThrow(
-      `No books found with isbn: ${isbn}`
+      `Unable to get volume 11223344000: 404`
     );
   });
 
