@@ -6,7 +6,14 @@ exports[`End to end Annihilation { name: 'default', providers: [] } 1`] = `
     "Jeff VanderMeer",
   ],
   "categories": [
-    "Fiction",
+    "Fiction / General",
+    "Fiction / Fantasy / General",
+    "Fiction / Horror",
+    "Fiction / Literary",
+    "Fiction / Science Fiction / General",
+    "Fiction / Science Fiction / Action & Adventure",
+    "Fiction / Thrillers / Suspense",
+    "Fiction / Dystopian",
   ],
   "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
   "isbn": "9780374104092",
@@ -15,7 +22,7 @@ exports[`End to end Annihilation { name: 'default', providers: [] } 1`] = `
   "printType": "BOOK",
   "publishedDate": "2014-02-04",
   "publisher": "Macmillan",
-  "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+  "thumbnail": "http://books.google.com/books/publisher/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
   "title": "Annihilation",
 }
 `;
@@ -26,7 +33,14 @@ exports[`End to end Annihilation { name: 'google', providers: [Array] } 1`] = `
     "Jeff VanderMeer",
   ],
   "categories": [
-    "Fiction",
+    "Fiction / General",
+    "Fiction / Fantasy / General",
+    "Fiction / Horror",
+    "Fiction / Literary",
+    "Fiction / Science Fiction / General",
+    "Fiction / Science Fiction / Action & Adventure",
+    "Fiction / Thrillers / Suspense",
+    "Fiction / Dystopian",
   ],
   "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
   "isbn": "9780374104092",
@@ -35,7 +49,7 @@ exports[`End to end Annihilation { name: 'google', providers: [Array] } 1`] = `
   "printType": "BOOK",
   "publishedDate": "2014-02-04",
   "publisher": "Macmillan",
-  "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+  "thumbnail": "http://books.google.com/books/publisher/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
   "title": "Annihilation",
 }
 `;
@@ -107,7 +121,8 @@ exports[`End to end Fantastic Mr. Fox { name: 'default', providers: [] } 1`] = `
     "Roald Dahl",
   ],
   "categories": [
-    "Juvenile Fiction",
+    "Juvenile Fiction / Animals / Foxes",
+    "Juvenile Fiction / Fantasy & Magic",
   ],
   "description": "In this book you will find: Boggis an enormously fat man, a chicken farmer and a mean man. Bunce, a pot bellied dwarf, a duck-and-goose farmer and a nasty man. Bean, a thin man, a turkey-and-apple farmer and a beastly man. Badger, the most respectable and well-behaved animal in the district. Rat, a rude creature and a drunkard, and also a Mrs. Fox and her four children.",
   "isbn": "9780140328721",
@@ -116,7 +131,7 @@ exports[`End to end Fantastic Mr. Fox { name: 'default', providers: [] } 1`] = `
   "printType": "BOOK",
   "publishedDate": "1988",
   "publisher": "Puffin",
-  "thumbnail": "http://books.google.com/books/content?id=DlQbmJc5WlQC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+  "thumbnail": "http://books.google.com/books/content?id=DlQbmJc5WlQC&printsec=frontcover&img=1&zoom=6&source=gbs_api",
   "title": "Fantastic Mr. Fox",
 }
 `;
@@ -127,7 +142,8 @@ exports[`End to end Fantastic Mr. Fox { name: 'google', providers: [Array] } 1`]
     "Roald Dahl",
   ],
   "categories": [
-    "Juvenile Fiction",
+    "Juvenile Fiction / Animals / Foxes",
+    "Juvenile Fiction / Fantasy & Magic",
   ],
   "description": "In this book you will find: Boggis an enormously fat man, a chicken farmer and a mean man. Bunce, a pot bellied dwarf, a duck-and-goose farmer and a nasty man. Bean, a thin man, a turkey-and-apple farmer and a beastly man. Badger, the most respectable and well-behaved animal in the district. Rat, a rude creature and a drunkard, and also a Mrs. Fox and her four children.",
   "isbn": "9780140328721",
@@ -136,7 +152,7 @@ exports[`End to end Fantastic Mr. Fox { name: 'google', providers: [Array] } 1`]
   "printType": "BOOK",
   "publishedDate": "1988",
   "publisher": "Puffin",
-  "thumbnail": "http://books.google.com/books/content?id=DlQbmJc5WlQC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+  "thumbnail": "http://books.google.com/books/content?id=DlQbmJc5WlQC&printsec=frontcover&img=1&zoom=6&source=gbs_api",
   "title": "Fantastic Mr. Fox",
 }
 `;
@@ -200,7 +216,13 @@ exports[`End to end Transcendent Kingdom { name: 'default', providers: [] } 1`] 
   "authors": [
     "Yaa Gyasi",
   ],
-  "categories": undefined,
+  "categories": [
+    "Fiction / Literary",
+    "Fiction / Family Life / General",
+    "Fiction / Family Life / Siblings",
+    "Fiction / African American & Black / General",
+    "Fiction / Cultural Heritage",
+  ],
   "description": "Yaa Gyasi's stunning follow-up to her acclaimed national bestseller Homegoing is a powerful, raw, intimate, deeply layered novel about a Ghanaian family in Alabama. Gifty is a fifth year candidate in neuroscience at Stanford University's School of Medicine studying reward-seeking behaviour in mice and the neural circuits of depression and addiction. Her brother, Nana, was a gifted high school athlete who died of a heroin overdose after a knee injury left him hooked on OxyContin. Her suicidal mother is living in her bed. Gifty is determined to discover the scientific basis for the suffering she sees all around her. But even as she turns to hard science to unlock the mystery of her family's loss, she finds herself hungering for her childhood faith, and grappling with the evangelical church in which she was raised, whose promise of salvation remains as tantalizing as it is elusive. Transcendent Kingdom is a deeply moving portrait of a family of Ghanaian immigrants ravaged by depression and addiction and grief--a novel about faith, science, religion, love. Exquisitely written and emotionally searing, this is an exceptionally powerful follow-up to Gyasi's phenomenal debut.",
   "isbn": "9780385695176",
   "link": "https://books.google.com/books/about/Transcendent_Kingdom.html?hl=&id=gr4pywEACAAJ",
@@ -218,7 +240,13 @@ exports[`End to end Transcendent Kingdom { name: 'google', providers: [Array] } 
   "authors": [
     "Yaa Gyasi",
   ],
-  "categories": undefined,
+  "categories": [
+    "Fiction / Literary",
+    "Fiction / Family Life / General",
+    "Fiction / Family Life / Siblings",
+    "Fiction / African American & Black / General",
+    "Fiction / Cultural Heritage",
+  ],
   "description": "Yaa Gyasi's stunning follow-up to her acclaimed national bestseller Homegoing is a powerful, raw, intimate, deeply layered novel about a Ghanaian family in Alabama. Gifty is a fifth year candidate in neuroscience at Stanford University's School of Medicine studying reward-seeking behaviour in mice and the neural circuits of depression and addiction. Her brother, Nana, was a gifted high school athlete who died of a heroin overdose after a knee injury left him hooked on OxyContin. Her suicidal mother is living in her bed. Gifty is determined to discover the scientific basis for the suffering she sees all around her. But even as she turns to hard science to unlock the mystery of her family's loss, she finds herself hungering for her childhood faith, and grappling with the evangelical church in which she was raised, whose promise of salvation remains as tantalizing as it is elusive. Transcendent Kingdom is a deeply moving portrait of a family of Ghanaian immigrants ravaged by depression and addiction and grief--a novel about faith, science, religion, love. Exquisitely written and emotionally searing, this is an exceptionally powerful follow-up to Gyasi's phenomenal debut.",
   "isbn": "9780385695176",
   "link": "https://books.google.com/books/about/Transcendent_Kingdom.html?hl=&id=gr4pywEACAAJ",
