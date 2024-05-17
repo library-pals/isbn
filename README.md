@@ -60,7 +60,31 @@ information.
 <!-- google 9780374104092 -->
 
 ```json
-
+{
+  "title": "Annihilation",
+  "authors": [
+    "Jeff VanderMeer"
+  ],
+  "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
+  "pageCount": 209,
+  "printType": "BOOK",
+  "categories": [
+    "Fiction",
+    "Fiction / General",
+    "Fiction / Fantasy / General",
+    "Fiction / Horror",
+    "Fiction / Literary",
+    "Fiction / Science Fiction / General",
+    "Fiction / Science Fiction / Action & Adventure",
+    "Fiction / Thrillers / Suspense",
+    "Fiction / Dystopian"
+  ],
+  "thumbnail": "http://books.google.com/books/publisher/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
+  "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
+  "publisher": "Macmillan",
+  "publishedDate": "2014-02-04",
+  "isbn": "9780374104092"
+}
 ```
 
 #### Response: OpenLibrary
@@ -68,7 +92,64 @@ information.
 <!-- openlibrary 9780374104092 -->
 
 ```json
-
+{
+  "title": "Annihilation",
+  "authors": [
+    "Jeff VanderMeer"
+  ],
+  "description": "Area X has been cut off from the rest of the continent for decades. Nature has reclaimed the last vestiges of human civilization. The twelfth expedition arrives expecting the unexpected, and Area X delivers. They discover a massive topographic anomaly and life-forms that surpass understanding. But it's the surprises that came across the border with them, and the secrets the expedition members are keeping from one another that change everything.",
+  "pageCount": 208,
+  "printType": "BOOK",
+  "categories": [
+    "Nebula Award Winner",
+    "award:nebula_award=novel",
+    "award:nebula_award=2015",
+    "Discoveries in geography",
+    "Fiction",
+    "Scientists",
+    "Science-Fiction",
+    "Suspense fiction",
+    "Paranormal fiction",
+    "Women scientists",
+    "Science fiction",
+    "Fantasy fiction",
+    "Mystery fiction",
+    "Adventure fiction",
+    "Exploration",
+    "Amerikanisches Englisch",
+    "Fiction, science fiction, action & adventure",
+    "Fiction, suspense",
+    "Action & Adventure",
+    "Dystopian",
+    "Fantasy",
+    "Extrasensory perception",
+    "Literary",
+    "Suspense",
+    "Thrillers",
+    "General",
+    "Pollution",
+    "horror",
+    "body horror",
+    "alien invasion",
+    "nyt:trade-fiction-paperback=2018-03-18",
+    "New York Times bestseller",
+    "Explorers",
+    "Secrecy",
+    "Scientific expeditions",
+    "Psychic ability",
+    "Fiction, thrillers, suspense",
+    "Discoveries in geography--fiction",
+    "Scientists--fiction",
+    "Women scientists--fiction",
+    "Ps3572.a4284 a84 2014",
+    "813/.54"
+  ],
+  "thumbnail": "https://covers.openlibrary.org/b/id/10520611-L.jpg",
+  "link": "https://openlibrary.org/books/OL31444108M",
+  "publisher": "Farrar, Straus and Giroux",
+  "publishedDate": "2014",
+  "isbn": "9780374104092"
+}
 ```
 
 ### Setting backend providers
