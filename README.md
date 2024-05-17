@@ -55,20 +55,20 @@ Response follows the same schema, but some fields could depend on the service
 that was used to find the book. In general, Google Books API returns more
 information.
 
+#### Response: Google
+
+<!-- google 9780374104092 -->
+
 ```json
-{
-  "title": "Annihilation",
-  "authors": ["Jeff VanderMeer"],
-  "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
-  "pageCount": 209,
-  "printType": "BOOK",
-  "categories": ["Fiction"],
-  "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
-  "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
-  "publisher": "Macmillan",
-  "publishedDate": "2014-02-04",
-  "isbn": "9780374104092"
-}
+
+```
+
+#### Response: OpenLibrary
+
+<!-- openlibrary 9780374104092 -->
+
+```json
+
 ```
 
 ### Setting backend providers
