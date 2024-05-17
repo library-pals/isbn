@@ -10,7 +10,7 @@ const GOOGLE_BOOKS_API_BASE = "https://www.googleapis.com";
 const OPENLIBRARY_API_BASE = "https://openlibrary.org";
 const ISBNDB_API_BASE = "https://api2.isbndb.com";
 
-import openLibraryMock from "./fixtures/open-library-isbn-9780374104092.json";
+import openLibraryMock from "./fixtures/open-library-isbn-9780140328721.json";
 import googleMock from "./fixtures/google-9780374104092.json";
 
 process.env.ISBNDB_API_KEY = "key-1234";
@@ -206,7 +206,7 @@ describe("ISBN Resolver API", () => {
       axios.get.mockRejectedValue({ status: 500 });
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed]`
+        `[Error: All providers failed]`,
       );
     });
 
@@ -259,7 +259,7 @@ describe("ISBN Resolver API", () => {
             setTimeout(() => {
               resolve({ status: 200, data: mockResponseGoogle });
             }, 10_000);
-          })
+          }),
       );
 
       const book = await isbn.resolve(MOCK_ISBN, { timeout: 15_000 });
