@@ -1,9 +1,13 @@
-import { readFile, writeFile } from "fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import Isbn from "../../src/index.js";
 
+/**
+ * Updates examples in a markdown file by fetching book data using ISBN identifiers.
+ * @returns {Promise<void>} A promise that resolves when the examples are updated.
+ */
 async function updateExamples() {
   const markdownFilePath = "./README.md";
-  const readme = await readFile(markdownFilePath, "utf-8");
+  const readme = await readFile(markdownFilePath, "utf8");
   let updatedReadme = readme;
 
   // Use regex to match HTML comments
