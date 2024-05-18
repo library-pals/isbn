@@ -45,6 +45,7 @@ describe("ISBN Resolver API", () => {
           ],
           "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
           "isbn": "9780374104092",
+          "language": "en",
           "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
           "pageCount": 209,
           "printType": "BOOK",
@@ -82,6 +83,7 @@ describe("ISBN Resolver API", () => {
           "categories": [],
           "description": "",
           "isbn": "9780374104092",
+          "language": "en",
           "link": "https://openlibrary.org/books/OL7353617M",
           "pageCount": 96,
           "printType": "BOOK",
@@ -147,6 +149,7 @@ describe("ISBN Resolver API", () => {
           "categories": undefined,
           "description": undefined,
           "isbn": "9780374104092",
+          "language": undefined,
           "pageCount": 174,
           "printType": "BOOK",
           "publishedDate": "1992-12-13",
@@ -206,7 +209,7 @@ describe("ISBN Resolver API", () => {
       axios.get.mockRejectedValue({ status: 500 });
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed]`,
+        `[Error: All providers failed]`
       );
     });
 
@@ -239,6 +242,7 @@ describe("ISBN Resolver API", () => {
           ],
           "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
           "isbn": "9780374104092",
+          "language": "en",
           "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
           "pageCount": 209,
           "printType": "BOOK",
