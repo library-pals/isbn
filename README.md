@@ -81,6 +81,7 @@ information.
   "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
   "publisher": "Macmillan",
   "publishedDate": "2014-02-04",
+  "language": "en",
   "isbn": "9780374104092"
 }
 ```
@@ -144,6 +145,7 @@ information.
   "link": "https://openlibrary.org/books/OL31444108M",
   "publisher": "Farrar, Straus and Giroux",
   "publishedDate": "2014",
+  "language": "en",
   "isbn": "9780374104092"
 }
 ```

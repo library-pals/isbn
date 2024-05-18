@@ -105,6 +105,7 @@ export async function standardize(book, id, isbn) {
     link: book.canonicalVolumeLink,
     publisher: book.publisher,
     publishedDate: book.publishedDate,
+    language: book.language,
     isbn,
   };
 

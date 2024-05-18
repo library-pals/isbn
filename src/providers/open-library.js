@@ -120,6 +120,7 @@ export async function standardize(book, isbn) {
       : `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_BOOK}/${isbn}`,
     publisher: book.publishers?.join(", "),
     publishedDate: book.publish_date,
+    language: formatLanguage(book.languages),
     isbn,
   };
 
@@ -203,4 +204,39 @@ export async function getWorks(book) {
   } catch (error) {
     throw new Error(error.message);
   }
+}
+
+/**
+ * Formats the language codes from Open Library API to their corresponding ISO 639-1 codes.
+ * @param {Language[]} languages - An array of language codes from Open Library API.
+ * @returns {string | undefined} - A new language map object with ISO 639-1 codes as keys and language codes as values.
+ */
+function formatLanguage(languages) {
+  if (!languages || languages.length === 0) {
+    return;
+  }
+  /**
+   * Mapping of Open Library language codes to their corresponding language names.
+   * https://openlibrary.org/languages.json
+   * @type {{ [key: string]: string } } - A new language map object with ISO 639-1 codes as keys and language codes as values.
+   */
+  const newLanguageMap = {
+    "/languages/eng": "en",
+    "/languages/spa": "es",
+    "/languages/fre": "fr",
+    "/languages/ger": "de",
+    "/languages/rus": "ru",
+    "/languages/ita": "it",
+    "/languages/chi": "zh",
+    "/languages/jpn": "ja",
+    "/languages/por": "pt",
+    "/languages/ara": "ar",
+    "/languages/heb": "he",
+    "/languages/kor": "ko",
+    "/languages/pol": "pl",
+    "/languages/dut": "nl",
+    "/languages/lat": "la",
+  };
+
+  return newLanguageMap[languages[0].key] || undefined;
 }

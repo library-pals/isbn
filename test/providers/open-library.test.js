@@ -79,6 +79,7 @@ describe("resolveOpenLibrary", () => {
 
       Aided by a friendly Badger, the animals bring the stolen food back and Mrs. Fox prepares a great celebratory banquet attended by the other starving animals and their families. Mr. Fox invites all the animals to live with him underground and says that he will provide food for them daily thanks to his underground passages. All the animals live happily and safely, while the farmers remain waiting outside in vain for Mr. Fox to show up.",
         "isbn": "9780374104092",
+        "language": "en",
         "link": "https://openlibrary.org/books/OL7353617M",
         "pageCount": 96,
         "printType": "BOOK",
@@ -96,6 +97,7 @@ describe("resolveOpenLibrary", () => {
       publish_date: "October 1, 1988",
       covers: [8_739_161],
       number_of_pages: 96,
+      languages: [{ key: "/languages/made-up-language" }],
     };
     axios.get = jest.fn().mockImplementation((url) => {
       if (url.includes("/isbn")) {
@@ -110,6 +112,7 @@ describe("resolveOpenLibrary", () => {
         "categories": [],
         "description": "",
         "isbn": "9780374104092",
+        "language": undefined,
         "link": "https://openlibrary.org/isbn/9780374104092",
         "pageCount": 96,
         "printType": "BOOK",
