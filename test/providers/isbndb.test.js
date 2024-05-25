@@ -40,6 +40,7 @@ describe("resolveIsbnDb", () => {
         "authors": [
           "Test Author",
         ],
+        "bookProvider": "ISBNdb",
         "categories": [
           "Test subject",
         ],

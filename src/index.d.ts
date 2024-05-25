@@ -12,6 +12,7 @@
  * @property {string | undefined} [language] - The language of the book.
  * @property {string | undefined} [thumbnail] - The thumbnail image link of the book.
  * @property {string} [link] - The link of the book.
+ * @property {string} bookProvider - The provider of the book information.
  */
 /**
  * @typedef {import('./provider-resolvers.js').Providers} Providers
@@ -93,6 +94,10 @@ export type Book = {
      * - The link of the book.
      */
     link?: string;
+    /**
+     * - The provider of the book information.
+     */
+    bookProvider: string;
 };
 export type Providers = import('./provider-resolvers.js').Providers;
 export type AxiosRequestConfig = import('axios').AxiosRequestConfig;

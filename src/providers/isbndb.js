@@ -127,5 +127,6 @@ function standardize(book, isbn) {
     publishedDate: book.date_published,
     language: book.language,
     isbn,
+    bookProvider: "ISBNdb",
   };
 }
