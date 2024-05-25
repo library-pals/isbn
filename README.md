@@ -82,7 +82,8 @@ information.
   "publisher": "Macmillan",
   "publishedDate": "2014-02-04",
   "language": "en",
-  "isbn": "9780374104092"
+  "isbn": "9780374104092",
+  "bookProvider": "Google Books"
 }
 ```
 
@@ -146,7 +147,8 @@ information.
   "publisher": "Farrar, Straus and Giroux",
   "publishedDate": "2014",
   "language": "en",
-  "isbn": "9780374104092"
+  "isbn": "9780374104092",
+  "bookProvider": "Open Library"
 }
 ```
 
