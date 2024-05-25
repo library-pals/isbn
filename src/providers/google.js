@@ -107,6 +107,7 @@ export async function standardize(book, id, isbn) {
     publishedDate: book.publishedDate,
     language: book.language,
     isbn,
+    bookProvider: "Google Books",
   };
 
   return standardBook;

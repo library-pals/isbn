@@ -40,6 +40,7 @@ describe("ISBN Resolver API", () => {
           "authors": [
             "Jeff VanderMeer",
           ],
+          "bookProvider": "Google Books",
           "categories": [
             "Fiction",
           ],
@@ -80,6 +81,7 @@ describe("ISBN Resolver API", () => {
       expect(book).toMatchInlineSnapshot(`
         {
           "authors": [],
+          "bookProvider": "Open Library",
           "categories": [],
           "description": "",
           "isbn": "9780374104092",
@@ -146,6 +148,7 @@ describe("ISBN Resolver API", () => {
           "authors": [
             "Aswin Pranam",
           ],
+          "bookProvider": "ISBNdb",
           "categories": undefined,
           "description": undefined,
           "isbn": "9780374104092",
@@ -237,6 +240,7 @@ describe("ISBN Resolver API", () => {
           "authors": [
             "Jeff VanderMeer",
           ],
+          "bookProvider": "Google Books",
           "categories": [
             "Fiction",
           ],

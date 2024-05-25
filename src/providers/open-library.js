@@ -122,6 +122,7 @@ export async function standardize(book, isbn) {
     publishedDate: book.publish_date,
     language: formatLanguage(book.languages),
     isbn,
+    bookProvider: "Open Library",
   };
 
   return standardBook;

@@ -64,6 +64,7 @@ describe("resolveGoogle", () => {
         "authors": [
           "Test Author",
         ],
+        "bookProvider": "Google Books",
         "categories": [
           "Fiction",
           "Fiction / General",
@@ -150,6 +151,7 @@ describe("resolveGoogle", () => {
         "authors": [
           "Test Author",
         ],
+        "bookProvider": "Google Books",
         "categories": [
           "Fiction",
           "Fiction / General",
@@ -217,6 +219,7 @@ describe("resolveGoogle", () => {
         "authors": [
           "Test Author",
         ],
+        "bookProvider": "Google Books",
         "categories": [],
         "description": undefined,
         "isbn": "1234567890",
@@ -258,6 +261,7 @@ describe("resolveGoogle", () => {
         "authors": [
           "Test Author",
         ],
+        "bookProvider": "Google Books",
         "categories": [],
         "description": undefined,
         "isbn": "1234567890",
