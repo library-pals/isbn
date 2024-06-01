@@ -49,7 +49,7 @@ export async function standardize(book, isbn) {
   const standardBook = {
     title: book.name,
     authors: book.author.map((author) => author.name),
-    description: book.description,
+    description: formatDescription(book.description),
     printType: book.bookFormat,
     categories: [],
     thumbnail: book.image,
@@ -87,3 +87,19 @@ export async function standardize(book, isbn) {
  * @property {object} offers - The offers for the audiobook.
  * @property {object} workExample - The work example for the audiobook.
  */
+
+/**
+ * Formats the description by removing HTML tags and contents inside them.
+ * @param {string} description - The description to be formatted.
+ * @returns {string} The formatted description.
+ */
+function formatDescription(description) {
+  if (!description) return "";
+  // Remove bold tags and contents
+  description = description.replaceAll(/<b>.*?<\/b>/g, "");
+  // Remove all other html elements
+  description = description.replaceAll(/<.*?>/g, "");
+  // Remove extra spaces
+  description = description.replaceAll(/\s{2,}/g, " ");
+  return description.trim();
+}
