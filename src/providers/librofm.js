@@ -20,20 +20,7 @@ export async function resolveLibroFm(isbn) {
     if (response.status !== 200) {
       throw new Error(`Unable to get ${url}: ${response.status}`);
     }
-
-    // Use a regular expression to extract the JSON
-    const regex = /<script type="application\/ld\+json">(.*?)<\/script>/s;
-    const match = response.data.match(regex);
-    if (!match) {
-      throw new Error(`No information found for ${url}`);
-    }
-
-    /**
-     * @type {Audiobook}
-     */
-    const jsonData = JSON.parse(match[1]);
-
-    return standardize(jsonData, isbn);
+    return standardize(response.data, isbn, url);
   } catch (error) {
     throw new Error(error.message);
   }
@@ -41,11 +28,23 @@ export async function resolveLibroFm(isbn) {
 
 /**
  * Standardizes a book object by extracting relevant information from the provided book object.
- * @param {Audiobook} book - The book object to be standardized.
+ * @param {string} data - The data to be standardized.
  * @param {string} isbn - The book's ISBN.
+ * @param {string} url - The URL of the book.
  * @returns {Promise<Book>} The standardized book object.
  */
-export async function standardize(book, isbn) {
+export async function standardize(data, isbn, url) {
+  // Use a regular expression to extract the JSON
+  const regex = /<script type="application\/ld\+json">(.*?)<\/script>/s;
+  const match = data.match(regex);
+  if (!match) {
+    throw new Error(`No information found for ${url}`);
+  }
+
+  /**
+   * @type {Audiobook}
+   */
+  const book = JSON.parse(match[1]);
   const standardBook = {
     title: book.name,
     authors: book.author.map((author) => author.name),
@@ -53,7 +52,7 @@ export async function standardize(book, isbn) {
     printType: book.bookFormat.includes("Audiobook")
       ? "audiobook"
       : book.bookFormat,
-    categories: [],
+    categories: extractGenres(data),
     thumbnail: book.image,
     link: book.url,
     publisher: book.publisher,
@@ -104,4 +103,26 @@ function formatDescription(description) {
   // Remove extra spaces
   description = description.replaceAll(/\s{2,}/g, " ");
   return description.trim();
+}
+
+/**
+ * Extracts the genres from the given text.
+ * @param {string} text - The text to extract genres from.
+ * @returns {string[]} The extracted genres.
+ */
+function extractGenres(text) {
+  const regex = /<div class="audiobook-genres">\s*([\S\s]*?)\s*<\/div>/;
+  const match = text.match(regex);
+  if (!match) {
+    return [];
+  }
+
+  const linkRegex = /<a href="\/genres\/[^"]*">(.*?)<\/a>/g;
+  const genres = [];
+  let linkMatch;
+  while ((linkMatch = linkRegex.exec(match[1])) !== null) {
+    genres.push(linkMatch[1]);
+  }
+
+  return genres;
 }
