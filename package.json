@@ -26,7 +26,8 @@
     "google",
     "openlibrary",
     "api",
-    "isbndb"
+    "isbndb",
+    "librofm"
   ],
   "author": "Katy DeCorah <@katydecorah>",
   "license": "AGPL-3.0-or-later",
