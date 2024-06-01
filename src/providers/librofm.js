@@ -18,14 +18,14 @@ export async function resolveLibroFm(isbn) {
   const response = await axios.get(url);
   try {
     if (response.status !== 200) {
-      throw new Error(`Unable to get volume ${url}: ${response.status}`);
+      throw new Error(`Unable to get ${url}: ${response.status}`);
     }
 
     // Use a regular expression to extract the JSON
     const regex = /<script type="application\/ld\+json">(.*?)<\/script>/s;
     const match = response.data.match(regex);
     if (!match) {
-      throw new Error(`No information found for ${isbn}`);
+      throw new Error(`No information found for ${url}`);
     }
 
     /**
