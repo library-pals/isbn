@@ -50,7 +50,9 @@ export async function standardize(book, isbn) {
     title: book.name,
     authors: book.author.map((author) => author.name),
     description: formatDescription(book.description),
-    printType: book.bookFormat,
+    printType: book.bookFormat.includes("Audiobook")
+      ? "audiobook"
+      : book.bookFormat,
     categories: [],
     thumbnail: book.image,
     link: book.url,

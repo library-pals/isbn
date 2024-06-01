@@ -10,7 +10,7 @@ describe("librofm", () => {
     it("works", async () => {
       const mockResponse = await readFile(
         "./test/fixtures/librofm-9781797176888.html",
-        "utf8"
+        "utf8",
       );
       axios.get = jest.fn().mockResolvedValue({
         status: 200,
@@ -28,7 +28,7 @@ describe("librofm", () => {
           "isbn": "9781797176888",
           "language": "en",
           "link": "https://libro.fm/audiobooks/9781797176888",
-          "printType": "AudiobookFormat",
+          "printType": "audiobook",
           "publishedDate": "2024-05-07",
           "publisher": "Simon & Schuster Audio",
           "thumbnail": "https://covers.libro.fm/9781797176888_1120.jpg",
@@ -46,7 +46,7 @@ describe("librofm", () => {
       });
 
       await expect(resolveLibroFm("1234567890", {})).rejects.toThrow(
-        `Unable to get https://libro.fm/audiobooks/1234567890: 404`
+        `Unable to get https://libro.fm/audiobooks/1234567890: 404`,
       );
     });
 
@@ -56,7 +56,7 @@ describe("librofm", () => {
         data: "<html></html>",
       });
       await expect(resolveLibroFm("1234567890")).rejects.toThrow(
-        "No information found for https://libro.fm/audiobooks/1234567890"
+        "No information found for https://libro.fm/audiobooks/1234567890",
       );
     });
   });
@@ -91,7 +91,45 @@ describe("standardize", () => {
       title: "Example Book",
       authors: ["Author Name"],
       description: "This is an example book.",
-      printType: "Audiobook",
+      printType: "audiobook",
+      categories: [],
+      thumbnail: "http://example.com/image.jpg",
+      link: "http://example.com",
+      publisher: "Example Publisher",
+      publishedDate: "2022-01-01",
+      language: "English",
+      isbn: "1234567890",
+      bookProvider: "Libro.fm",
+    });
+  });
+
+  it("should standardize a book object with missing properties", async () => {
+    const book = {
+      url: "http://example.com",
+      bookFormat: "Some other format",
+      name: "Example Book",
+      description: "",
+      isbn: "1234567890",
+      image: "http://example.com/image.jpg",
+      abridged: "No",
+      author: [{ name: "Author Name" }],
+      readBy: [{ name: "Reader Name" }],
+      publisher: "Example Publisher",
+      datePublished: "2022-01-01",
+      inLanguage: "English",
+      duration: "1h",
+      regionsAllowed: ["US"],
+      offers: {},
+      workExample: {},
+    };
+
+    const standardizedBook = await standardize(book, "1234567890");
+
+    expect(standardizedBook).toEqual({
+      title: "Example Book",
+      authors: ["Author Name"],
+      description: "",
+      printType: "Some other format",
       categories: [],
       thumbnail: "http://example.com/image.jpg",
       link: "http://example.com",
