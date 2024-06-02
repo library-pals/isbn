@@ -141,6 +141,7 @@ describe("ISBN Resolver API", () => {
           "google",
           "openlibrary",
           "isbndb",
+          "librofm",
         ]
       `);
       expect(book).toMatchInlineSnapshot(`
@@ -193,7 +194,8 @@ describe("ISBN Resolver API", () => {
         [Error: All providers failed
         google: No books found with isbn: 9780374104092
         openlibrary: No books found with ISBN: 9780374104092
-        isbndb: No books found with ISBN: 9780374104092]
+        isbndb: No books found with ISBN: 9780374104092
+        librofm: Cannot read properties of undefined (reading 'status')]
       `);
     });
 
@@ -204,7 +206,8 @@ describe("ISBN Resolver API", () => {
         [Error: All providers failed
         google: Network Error
         openlibrary: Network Error
-        isbndb: Network Error]
+        isbndb: Network Error
+        librofm: Network Error]
       `);
     });
 
@@ -277,6 +280,7 @@ describe("ISBN Provider API", () => {
         "google",
         "openlibrary",
         "isbndb",
+        "librofm",
       ]
     `);
   });
@@ -290,6 +294,7 @@ describe("ISBN Provider API", () => {
         "google",
         "openlibrary",
         "isbndb",
+        "librofm",
       ]
     `);
   });
@@ -303,6 +308,7 @@ describe("ISBN Provider API", () => {
         "google",
         "openlibrary",
         "isbndb",
+        "librofm",
       ]
     `);
   });

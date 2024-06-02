@@ -54,4 +54,15 @@ describe("End to end", () => {
       10_000,
     );
   });
+
+  describe("The Ministry of Time (audiobook)", () => {
+    it.each([{ name: "default", providers: ["librofm"] }])(
+      "%s",
+      async ({ providers }) => {
+        isbn.provider(providers);
+        await expect(isbn.resolve("9781797176888")).resolves.toMatchSnapshot();
+      },
+      10_000,
+    );
+  });
 });

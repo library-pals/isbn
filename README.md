@@ -7,6 +7,7 @@ following providers:
 - [Open Library Books API](https://openlibrary.org/dev/docs/api/books)
 - [ISBNdb API](https://isbndb.com/apidocs/v2) using API key in the environment
   variable `ISBNDB_API_KEY`
+- [Libro.fm](https://libro.fm/explore)
 
 ## Acknowledgements
 
