@@ -66,7 +66,7 @@ information.
   "authors": ["Jeff VanderMeer"],
   "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
   "pageCount": 209,
-  "format": "BOOK",
+  "format": "book",
   "categories": [
     "Fiction",
     "Fiction / General",
