@@ -99,7 +99,7 @@ export async function standardize(book, id, isbn) {
     authors: book.authors,
     description: book.description,
     pageCount: book.pageCount,
-    printType: book.printType,
+    format: book.printType,
     categories: formatCategories(categories),
     thumbnail: getLargestThumbnail(imageLinks),
     link: book.canonicalVolumeLink,

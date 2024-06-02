@@ -49,7 +49,7 @@ export async function standardize(data, isbn, url) {
     title: book.name,
     authors: book.author.map((author) => author.name),
     description: formatDescription(book.description),
-    printType: book.bookFormat.includes("Audiobook")
+    format: book.bookFormat.includes("Audiobook")
       ? "audiobook"
       : book.bookFormat,
     categories: extractGenres(data),
