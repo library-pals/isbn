@@ -120,7 +120,7 @@ function standardize(book, isbn) {
     authors: book.authors,
     description: book.overview,
     pageCount: book.pages,
-    printType: "BOOK",
+    format: "book",
     categories: book.subjects,
     thumbnail: book.image,
     publisher: book.publisher,

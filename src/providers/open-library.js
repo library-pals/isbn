@@ -112,7 +112,7 @@ export async function standardize(book, isbn) {
     authors,
     description,
     pageCount: book.number_of_pages,
-    printType: "BOOK",
+    format: "book",
     categories: subjects,
     thumbnail: `https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`,
     link: book.key

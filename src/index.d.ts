@@ -5,7 +5,7 @@
  * @property {string[]} authors - The authors of the book.
  * @property {string} description - The overview of the book.
  * @property {number} [pageCount] - The number of pages in the book.
- * @property {string} printType - The print type of the book.
+ * @property {string} format - The format of the book.
  * @property {string[]} categories - The subjects or categories of the book.
  * @property {string} publisher - The publisher of the book.
  * @property {string} publishedDate - The date the book was published.
@@ -68,9 +68,9 @@ export type Book = {
      */
     pageCount?: number;
     /**
-     * - The print type of the book.
+     * - The format of the book.
      */
-    printType: string;
+    format: string;
     /**
      * - The subjects or categories of the book.
      */
