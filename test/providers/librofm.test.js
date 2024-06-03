@@ -1,4 +1,8 @@
-import { resolveLibroFm, standardize } from "../../src/providers/librofm.js";
+import {
+  resolveLibroFm,
+  standardize,
+  formatDescription,
+} from "../../src/providers/librofm.js";
 import axios from "axios";
 import { jest } from "@jest/globals";
 import { readFile } from "node:fs/promises";
@@ -10,7 +14,7 @@ describe("librofm", () => {
     it("works", async () => {
       const mockResponse = await readFile(
         "./test/fixtures/librofm-9781797176888.html",
-        "utf8"
+        "utf8",
       );
       axios.get = jest.fn().mockResolvedValue({
         status: 200,
@@ -42,6 +46,39 @@ describe("librofm", () => {
       `);
     });
 
+    it("works another sample", async () => {
+      const mockResponse = await readFile(
+        "./test/fixtures/librofm-9781250752864.html",
+        "utf8",
+      );
+      axios.get = jest.fn().mockResolvedValue({
+        status: 200,
+        data: mockResponse,
+      });
+      const book = await resolveLibroFm("9781250752864");
+      expect(book).toMatchInlineSnapshot(`
+        {
+          "authors": [
+            "Raven Leilani",
+          ],
+          "bookProvider": "Libro.fm",
+          "categories": [
+            "Fiction",
+            "Fiction - Literary",
+          ],
+          "description": "No one wants what no one wants. And how do we even know what we want? How do we know we’re ready to take it? Edie is stumbling her way through her twenties—sharing a subpar apartment in Bushwick, clocking in and out of her admin job, making a series of inappropriate sexual choices. She is also haltingly, fitfully giving heat and air to the art that simmers inside her. And then she meets Eric, a digital archivist with a family in New Jersey, including an autopsist wife who has agreed to an open marriage—with rules. As if navigating the constantly shifting landscapes of contemporary sexual manners and racial politics weren’t hard enough, Edie finds herself unemployed and invited into Eric’s home—though not by Eric. She becomes a hesitant ally to his wife and a de facto role model to his adopted daughter. Edie may be the only Black woman young Akila knows. Irresistibly unruly and strikingly beautiful, razor-sharp and slyly comic, sexually charged and utterly absorbing, Raven Leilani’s Luster is a portrait of a young woman trying to make sense of her life—her hunger, her anger—in a tumultuous era. It is also a haunting, aching description of how hard it is to believe in your own talent, and the unexpected influences that bring us into ourselves along the way. "Ariel Blake narrates, expertly inhabiting Edie’s knowing and analytical tone, and revelling in the writer’s winding sentences and caustic one-liners." “Exacting, hilarious, and deadly . . . A writer of exhilarating freedom and daring.” —Zadie Smith, Harper’s Bazaar "So delicious that it feels illicit . . . Raven Leilani’s first novel reads like summer: sentences like ice that crackle or melt into a languorous drip; plot suddenly, wildly flying forward like a bike down a hill." —Jazmine Hughes, The New York Times Book Review “An irreverent intergenerational tale of race and class that’s blisteringly smart and fan-yourself sexy.” —Michelle Hart, O: The Oprah Magazine",
+          "format": "audiobook",
+          "isbn": "9781250752864",
+          "language": "en",
+          "link": "https://libro.fm/audiobooks/9781250752864",
+          "publishedDate": "2020-08-04",
+          "publisher": "Macmillan Audio",
+          "thumbnail": "https://covers.libro.fm/9781250752864_1120.jpg",
+          "title": "Luster",
+        }
+      `);
+    });
+
     it("should throw an error if the response status is not 200", async () => {
       const mockResponse = {};
 
@@ -51,7 +88,7 @@ describe("librofm", () => {
       });
 
       await expect(resolveLibroFm("1234567890", {})).rejects.toThrow(
-        `Unable to get https://libro.fm/audiobooks/1234567890: 404`
+        `Unable to get https://libro.fm/audiobooks/1234567890: 404`,
       );
     });
 
@@ -61,7 +98,7 @@ describe("librofm", () => {
         data: "<html></html>",
       });
       await expect(resolveLibroFm("1234567890")).rejects.toThrow(
-        "No information found for https://libro.fm/audiobooks/1234567890"
+        "No information found for https://libro.fm/audiobooks/1234567890",
       );
     });
   });
@@ -110,7 +147,7 @@ describe("standardize", () => {
     const standardizedBook = await standardize(
       data,
       "1234567890",
-      "http://example.com"
+      "http://example.com",
     );
 
     expect(standardizedBook).toMatchInlineSnapshot(`
@@ -182,5 +219,16 @@ describe("standardize", () => {
         "title": "The Ministry of Time",
       }
     `);
+  });
+});
+
+describe("formatDescription", () => {
+  it("should format the description", () => {
+    const description =
+      '<p><b>"There is a universal appeal to [Narrator Ariel] Blake\'s performance as Edie, a protagonist who may be her own worst antagonist. Blake\'s delivery has an immensely human, relatable quality that makes the listener want the best for Edie as she struggles to make her way in the world." -- <i>AudioFile Magazine,</i> Earphones Award winner <br><br></b><b>AN INSTANT <i>NEW YORK TIMES</i> BESTSELLER</b><br><b>A <i>NEW YORK TIMES </i>NOTABLE BOOK OF 2020</b><br><b>NATIONAL INDIE BESTSELLER</b><br><b><i>LOS ANGELES TIMES</i> BESTSELLER</b><br><b><i>WASHINGTON POST </i>BESTSELLER</b><br><br><i>No one wants what no one wants.</i><br>And how do we even know what we want? How do we know we’re ready to take it?<br><br>Edie is stumbling her way through her twenties<b>—</b>sharing a subpar apartment in Bushwick, clocking in and out of her admin job, making a series of inappropriate sexual choices. She is also haltingly, fitfully giving heat and air to the art that simmers inside her. And then she meets Eric, a digital archivist with a family in New Jersey, including an autopsist wife who has agreed to an open marriage<b>—</b>with <i>rules</i>.<br><br>As if navigating the constantly shifting landscapes of contemporary sexual manners and racial politics weren’t hard enough, Edie finds herself unemployed and invited into Eric’s home—though not by Eric. She becomes a hesitant ally to his wife and a de facto role model to his adopted daughter. Edie may be the only Black woman young Akila knows.<br><br>Irresistibly unruly and strikingly beautiful, razor-sharp and slyly comic, sexually charged and utterly absorbing, Raven Leilani’s <i>Luster </i>is a portrait of a young woman trying to make sense of her life—her hunger, her anger—in a tumultuous era. It is also a haunting, aching description of how hard it is to believe in your own talent, and the unexpected influences that bring us into ourselves along the way.<br><br><b>A Macmillan Audio production from Farrar, Straus and Giroux</b><br><br>"Ariel Blake narrates, expertly inhabiting Edie’s knowing and analytical tone, and revelling in the writer’s winding sentences and caustic one-liners." <b>--<i>The Guardian</i></b><br><br>“Exacting, hilarious, and deadly . . . A writer of exhilarating freedom and daring.” —Zadie Smith, <i>Harper’s Bazaar</i><br><br>"So delicious that it feels illicit . . . Raven Leilani’s first novel reads like summer: sentences like ice that crackle or melt into a languorous drip; plot suddenly, wildly flying forward like a bike down a hill." —Jazmine Hughes, <i>The New York Times Book Review</i><br><br>“An irreverent intergenerational tale of race and class that’s blisteringly smart and fan-yourself sexy.” —Michelle Hart<i>, O: The Oprah Magazine</i></p>';
+    const formattedDescription = formatDescription(description);
+    expect(formattedDescription).toMatchInlineSnapshot(
+      `"No one wants what no one wants. And how do we even know what we want? How do we know we’re ready to take it? Edie is stumbling her way through her twenties—sharing a subpar apartment in Bushwick, clocking in and out of her admin job, making a series of inappropriate sexual choices. She is also haltingly, fitfully giving heat and air to the art that simmers inside her. And then she meets Eric, a digital archivist with a family in New Jersey, including an autopsist wife who has agreed to an open marriage—with rules. As if navigating the constantly shifting landscapes of contemporary sexual manners and racial politics weren’t hard enough, Edie finds herself unemployed and invited into Eric’s home—though not by Eric. She becomes a hesitant ally to his wife and a de facto role model to his adopted daughter. Edie may be the only Black woman young Akila knows. Irresistibly unruly and strikingly beautiful, razor-sharp and slyly comic, sexually charged and utterly absorbing, Raven Leilani’s Luster is a portrait of a young woman trying to make sense of her life—her hunger, her anger—in a tumultuous era. It is also a haunting, aching description of how hard it is to believe in your own talent, and the unexpected influences that bring us into ourselves along the way. "Ariel Blake narrates, expertly inhabiting Edie’s knowing and analytical tone, and revelling in the writer’s winding sentences and caustic one-liners." “Exacting, hilarious, and deadly . . . A writer of exhilarating freedom and daring.” —Zadie Smith, Harper’s Bazaar "So delicious that it feels illicit . . . Raven Leilani’s first novel reads like summer: sentences like ice that crackle or melt into a languorous drip; plot suddenly, wildly flying forward like a bike down a hill." —Jazmine Hughes, The New York Times Book Review “An irreverent intergenerational tale of race and class that’s blisteringly smart and fan-yourself sexy.” —Michelle Hart, O: The Oprah Magazine"`,
+    );
   });
 });
