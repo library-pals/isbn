@@ -1,7 +1,5 @@
 import { LIBROFM_API_BASE, LIBROFM_API_BOOK } from "../provider-resolvers.js";
 import axios from "axios";
-import xss from "xss";
-import { stripHtml } from "string-strip-html";
 
 /**
  * @typedef {import('../index.js').Book} Book
@@ -98,15 +96,14 @@ export async function standardize(data, isbn, url) {
  */
 export function formatDescription(description) {
   if (!description) return "";
-  description = xss(description);
   // Replace <br> with a space
   description = description.replaceAll("<br>", " ");
   // Replace <b>—</b> with a dash
   description = description.replaceAll("<b>—</b>", "—");
   // Remove bold tags and contents
   description = description.replaceAll(/<b>.*?<\/b>/g, "");
-  // Remove all other html elements
-  description = stripHtml(description).result;
+  // Strip HTML tags
+  description = stripHtmlTags(description);
   // Trim
   description = description.trim();
   // Remove extra spaces
@@ -134,4 +131,28 @@ function extractGenres(text) {
   }
 
   return genres;
+}
+
+/**
+ * Encodes HTML special characters to prevent XSS attacks.
+ * @param {string} string - The string to encode.
+ * @returns {string} - The encoded string.
+ */
+function encodeHTML(string) {
+  return string
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('" ', "” ")
+    .replaceAll(' "', "“ ")
+    .replaceAll("'", "&#39;");
+}
+
+/**
+ * Removes HTML tags from a string and encodes it to prevent XSS attacks.
+ * @param {string} string - The string from which to remove HTML tags.
+ * @returns {string} - The sanitized string without HTML tags.
+ */
+function stripHtmlTags(string) {
+  return encodeHTML(string.replaceAll(/<\/?[^>]+(>|$)/g, ""));
 }
