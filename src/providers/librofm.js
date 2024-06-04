@@ -1,5 +1,6 @@
 import { LIBROFM_API_BASE, LIBROFM_API_BOOK } from "../provider-resolvers.js";
 import axios from "axios";
+import xss from "xss";
 
 /**
  * @typedef {import('../index.js').Book} Book
@@ -96,6 +97,7 @@ export async function standardize(data, isbn, url) {
  */
 export function formatDescription(description) {
   if (!description) return "";
+  description = xss(description);
   // Replace <br> with a space
   description = description.replaceAll("<br>", " ");
   // Replace <b>—</b> with a dash
@@ -103,7 +105,7 @@ export function formatDescription(description) {
   // Remove bold tags and contents
   description = description.replaceAll(/<b>.*?<\/b>/g, "");
   // Remove all other html elements
-  description = description.replaceAll(/<.*?>/g, "");
+  description = description.replaceAll(/<[^>]*>/g, "");
   // Trim
   description = description.trim();
   // Remove extra spaces
