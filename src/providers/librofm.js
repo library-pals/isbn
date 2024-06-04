@@ -154,11 +154,5 @@ function encodeHTML(string) {
  * @returns {string} - The sanitized string without HTML tags.
  */
 function stripHtmlTags(string) {
-  // Remove HTML tags using a regular expression
-  const strippedString = string.replaceAll(/<\/?[^>]+(>|$)/g, "");
-
-  // Encode the remaining string to prevent XSS attacks
-  const sanitizedString = encodeHTML(strippedString);
-
-  return sanitizedString;
+  return encodeHTML(string.replaceAll(/<\/?[^>]+(>|$)/g, ""));
 }
