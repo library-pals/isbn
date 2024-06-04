@@ -67,9 +67,9 @@ describe("ISBN Resolver API", () => {
       const mockResponseOpenLibrary = openLibraryMock;
 
       axios.get.mockImplementation((url) => {
-        if (url.includes(GOOGLE_BOOKS_API_BASE)) {
+        if (url.startsWith(GOOGLE_BOOKS_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseGoogle });
-        } else if (url.includes(OPENLIBRARY_API_BASE)) {
+        } else if (url.startsWith(OPENLIBRARY_API_BASE)) {
           return Promise.resolve({
             status: 200,
             data: mockResponseOpenLibrary,
@@ -123,14 +123,14 @@ describe("ISBN Resolver API", () => {
       };
 
       axios.get.mockImplementation((url) => {
-        if (url.includes(GOOGLE_BOOKS_API_BASE)) {
+        if (url.startsWith(GOOGLE_BOOKS_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseGoogle });
-        } else if (url.includes(OPENLIBRARY_API_BASE)) {
+        } else if (url.startsWith(OPENLIBRARY_API_BASE)) {
           return Promise.resolve({
             status: 200,
             data: mockResponseOpenLibrary,
           });
-        } else if (url.includes(ISBNDB_API_BASE)) {
+        } else if (url.startsWith(ISBNDB_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseIsbnDb });
         }
       });
@@ -175,14 +175,14 @@ describe("ISBN Resolver API", () => {
       const mockResponseIsbnDb = {};
 
       axios.get.mockImplementation((url) => {
-        if (url.includes(GOOGLE_BOOKS_API_BASE)) {
+        if (url.startsWith(GOOGLE_BOOKS_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseGoogle });
-        } else if (url.includes(OPENLIBRARY_API_BASE)) {
+        } else if (url.startsWith(OPENLIBRARY_API_BASE)) {
           return Promise.resolve({
             status: 200,
             data: mockResponseOpenLibrary,
           });
-        } else if (url.includes(ISBNDB_API_BASE)) {
+        } else if (url.startsWith(ISBNDB_API_BASE)) {
           return Promise.resolve({
             status: 200,
             data: mockResponseIsbnDb,
@@ -215,7 +215,7 @@ describe("ISBN Resolver API", () => {
       axios.get.mockRejectedValue({ status: 500 });
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed]`
+        `[Error: All providers failed]`,
       );
     });
 
@@ -225,9 +225,9 @@ describe("ISBN Resolver API", () => {
       const mockResponseOpenLibrary = {};
 
       axios.get.mockImplementation((url) => {
-        if (url.includes(GOOGLE_BOOKS_API_BASE)) {
+        if (url.startsWith(GOOGLE_BOOKS_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseGoogle });
-        } else if (url.includes(OPENLIBRARY_API_BASE)) {
+        } else if (url.startsWith(OPENLIBRARY_API_BASE)) {
           return Promise.resolve({
             status: 200,
             data: mockResponseOpenLibrary,
