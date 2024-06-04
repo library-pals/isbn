@@ -44,7 +44,8 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "axios": "^1.6.8"
+    "axios": "^1.6.8",
+    "xss": "^1.0.15"
   },
   "bugs": {
     "url": "https://github.com/library-pals/isbn/issues"
