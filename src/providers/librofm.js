@@ -94,15 +94,21 @@ export async function standardize(data, isbn, url) {
  * @param {string} description - The description to be formatted.
  * @returns {string} The formatted description.
  */
-function formatDescription(description) {
+export function formatDescription(description) {
   if (!description) return "";
+  // Replace <br> with a space
+  description = description.replaceAll("<br>", " ");
+  // Replace <b>—</b> with a dash
+  description = description.replaceAll("<b>—</b>", "—");
   // Remove bold tags and contents
   description = description.replaceAll(/<b>.*?<\/b>/g, "");
   // Remove all other html elements
   description = description.replaceAll(/<.*?>/g, "");
+  // Trim
+  description = description.trim();
   // Remove extra spaces
   description = description.replaceAll(/\s{2,}/g, " ");
-  return description.trim();
+  return description;
 }
 
 /**
