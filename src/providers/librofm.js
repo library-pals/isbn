@@ -1,6 +1,7 @@
 import { LIBROFM_API_BASE, LIBROFM_API_BOOK } from "../provider-resolvers.js";
 import axios from "axios";
 import xss from "xss";
+import { stripHtml } from "string-strip-html";
 
 /**
  * @typedef {import('../index.js').Book} Book
@@ -105,7 +106,7 @@ export function formatDescription(description) {
   // Remove bold tags and contents
   description = description.replaceAll(/<b>.*?<\/b>/g, "");
   // Remove all other html elements
-  description = description.replaceAll(/<[^>]*>/g, "");
+  description = stripHtml(description).result;
   // Trim
   description = description.trim();
   // Remove extra spaces
