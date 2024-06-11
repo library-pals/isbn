@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
     "checkJs": true,
-    "customConditions": ["development"],
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "exactOptionalPropertyTypes": true,
     "lib": ["es2022"],
-    "module": "node16",
+    "module": "NodeNext",
     "strict": true,
     "target": "es2022",
-    "useUnknownInCatchVariables": false
+    "useUnknownInCatchVariables": false,
+    "moduleResolution": "NodeNext"
   },
   "include": ["src/**/*.js"],
   "exclude": ["**/*.d.ts"]
