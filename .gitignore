@@ -1,6 +1,2 @@
 node_modules
 coverage
-*.d.ts.map
-*.d.ts
-
-!src/index.d.ts

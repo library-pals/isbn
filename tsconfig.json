@@ -1,17 +1,10 @@
 {
+  "include": ["src/**/*"],
   "compilerOptions": {
-    "checkJs": true,
+    "allowJs": true,
     "declaration": true,
-    "declarationMap": true,
     "emitDeclarationOnly": true,
-    "exactOptionalPropertyTypes": true,
-    "lib": ["es2022"],
-    "module": "NodeNext",
-    "strict": true,
-    "target": "es2022",
-    "useUnknownInCatchVariables": false,
-    "moduleResolution": "NodeNext"
-  },
-  "include": ["src/**/*.js"],
-  "exclude": ["**/*.d.ts"]
+    "outDir": "dist",
+    "declarationMap": true
+  }
 }
