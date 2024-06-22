@@ -28,5 +28,5 @@ export const PROVIDER_RESOLVERS: {
     [x: string]: typeof resolveGoogle;
 };
 export type Providers = string[];
-export type AxiosRequestConfig = import('axios').AxiosRequestConfig;
+export type AxiosRequestConfig = import("axios").AxiosRequestConfig;
 import { resolveGoogle } from "./providers/google.js";

@@ -252,7 +252,7 @@ describe("resolveGoogle", () => {
     axios.get = jest
       .fn()
       .mockImplementation(() =>
-        Promise.resolve({ status: 200, data: mockResponse })
+        Promise.resolve({ status: 200, data: mockResponse }),
       );
 
     const book = await resolveGoogle(isbn, {});
@@ -301,7 +301,7 @@ describe("resolveGoogle", () => {
     });
 
     await expect(resolveGoogle(isbn, {})).rejects.toThrow(
-      `Unable to get volume 11223344000: 404`
+      `Unable to get volume 11223344000: 404`,
     );
   });
 
@@ -317,7 +317,7 @@ describe("resolveGoogle", () => {
     });
 
     await expect(resolveGoogle(isbn, {})).rejects.toThrow(
-      `Wrong response code: 404`
+      `Wrong response code: 404`,
     );
   });
 
@@ -333,7 +333,7 @@ describe("resolveGoogle", () => {
     });
 
     await expect(resolveGoogle(isbn, {})).rejects.toThrow(
-      `No volume info found for book with isbn: ${isbn}`
+      `No volume info found for book with isbn: ${isbn}`,
     );
   });
 });
