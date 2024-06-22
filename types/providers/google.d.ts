@@ -65,8 +65,8 @@ export function getVolume(id: string): Promise<{
     imageLinks?: ImageLinks;
     categories?: string[];
 }>;
-export type Book = import('../index.js').Book;
-export type AxiosRequestConfig = import('axios').AxiosRequestConfig;
+export type Book = import("../index.js").Book;
+export type AxiosRequestConfig = import("axios").AxiosRequestConfig;
 export type ImageLinks = {
     /**
      * - extraLarge

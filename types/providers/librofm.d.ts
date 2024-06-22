@@ -46,8 +46,8 @@ export function standardize(data: string, isbn: string, url: string): Promise<Bo
  * @returns {string} The formatted description.
  */
 export function formatDescription(description: string): string;
-export type Book = import('../index.js').Book;
-export type AxiosRequestConfig = import('axios').AxiosRequestConfig;
+export type Book = import("../index.js").Book;
+export type AxiosRequestConfig = import("axios").AxiosRequestConfig;
 export type Person = {
     /**
      * - The name of the person.

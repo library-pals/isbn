@@ -22,7 +22,7 @@ export default class Isbn {
     /**
      * @type {Providers}
      */
-    _providers: import("./provider-resolvers.js").Providers;
+    _providers: Providers;
     PROVIDER_NAMES: {
         GOOGLE: string;
         OPENLIBRARY: string;
@@ -99,5 +99,5 @@ export type Book = {
      */
     bookProvider: string;
 };
-export type Providers = import('./provider-resolvers.js').Providers;
-export type AxiosRequestConfig = import('axios').AxiosRequestConfig;
+export type Providers = import("./provider-resolvers.js").Providers;
+export type AxiosRequestConfig = import("axios").AxiosRequestConfig;

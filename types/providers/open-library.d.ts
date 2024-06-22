@@ -95,8 +95,8 @@ export function getWorks(book: OpenLibraryBook): Promise<{
         key: string;
     }[];
 }>;
-export type Book = import('../index.js').Book;
-export type AxiosRequestConfig = import('axios').AxiosRequestConfig;
+export type Book = import("../index.js").Book;
+export type AxiosRequestConfig = import("axios").AxiosRequestConfig;
 export type Author = {
     /**
      * - The key of the author.
