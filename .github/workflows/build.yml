@@ -26,7 +26,7 @@ jobs:
           git pull
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add dist
+          git add types
           if git diff --staged --quiet; then
             echo "::notice::No changes to commit"
           else
