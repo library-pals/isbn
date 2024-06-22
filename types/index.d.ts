@@ -101,4 +101,3 @@ export type Book = {
 };
 export type Providers = import('./provider-resolvers.js').Providers;
 export type AxiosRequestConfig = import('axios').AxiosRequestConfig;
-//# sourceMappingURL=index.d.ts.map
