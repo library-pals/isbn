@@ -5,8 +5,6 @@ following providers:
 
 - [Google Books API](https://developers.google.com/books/)
 - [Open Library Books API](https://openlibrary.org/dev/docs/api/books)
-- [ISBNdb API](https://isbndb.com/apidocs/v2) using API key in the environment
-  variable `ISBNDB_API_KEY`
 - [Libro.fm](https://libro.fm/explore)
 
 ## Acknowledgements
@@ -210,5 +208,4 @@ try {
 
 See also
 [Google Books API Terms of Service](https://developers.google.com/books/terms),
-[Open Library Licensing](https://openlibrary.org/developers/licensing),
-[ISBNdb Terms and Conditions](https://isbndb.com/terms-and-conditions).
+[Open Library Licensing](https://openlibrary.org/developers/licensing)

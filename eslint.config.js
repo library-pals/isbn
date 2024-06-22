@@ -24,17 +24,7 @@ export default [
       "jsdoc/check-values": "error",
       "unicorn/no-null": "off",
       "unicorn/template-indent": "off",
-      "unicorn/prevent-abbreviations": [
-        "error",
-        {
-          allowList: {
-            isbndb: true,
-            IsbnDb: true,
-            resolveIsbnDb: true,
-            mockResponseIsbnDb: true,
-          },
-        },
-      ],
+      "unicorn/prevent-abbreviations": ["error"],
     },
   },
   {

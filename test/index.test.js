@@ -8,12 +8,9 @@ jest.mock("axios");
 const MOCK_ISBN = "9780374104092";
 const GOOGLE_BOOKS_API_BASE = "https://www.googleapis.com";
 const OPENLIBRARY_API_BASE = "https://openlibrary.org";
-const ISBNDB_API_BASE = "https://api2.isbndb.com";
 
 import openLibraryMock from "./fixtures/open-library-isbn-9780140328721.json";
 import googleMock from "./fixtures/google-9780374104092.json";
-
-process.env.ISBNDB_API_KEY = "key-1234";
 
 describe("ISBN Resolver API", () => {
   let isbn;
@@ -97,73 +94,6 @@ describe("ISBN Resolver API", () => {
       `);
     });
 
-    it("should resolve a valid ISBN with ISBNdb", async () => {
-      const mockResponseGoogle = {
-        kind: "books#volumes",
-        totalItems: 0,
-      };
-
-      const mockResponseOpenLibrary = {};
-
-      const mockResponseIsbnDb = {
-        book: {
-          publisher: "Turtle Bay Books",
-          image: "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
-          title_long: "Book Title",
-          edition: "1",
-          pages: 174,
-          date_published: "1992-12-13",
-          authors: ["Aswin Pranam"],
-          title: "Book Title",
-          isbn13: "9781484233023",
-          msrp: "1.23",
-          binding: "Paperback",
-          isbn: "1484233026",
-        },
-      };
-
-      axios.get.mockImplementation((url) => {
-        if (url.includes(GOOGLE_BOOKS_API_BASE)) {
-          return Promise.resolve({ status: 200, data: mockResponseGoogle });
-        } else if (url.includes(OPENLIBRARY_API_BASE)) {
-          return Promise.resolve({
-            status: 200,
-            data: mockResponseOpenLibrary,
-          });
-        } else if (url.includes(ISBNDB_API_BASE)) {
-          return Promise.resolve({ status: 200, data: mockResponseIsbnDb });
-        }
-      });
-
-      const book = await isbn.resolve(MOCK_ISBN);
-      expect(isbn._providers).toMatchInlineSnapshot(`
-        [
-          "google",
-          "openlibrary",
-          "isbndb",
-          "librofm",
-        ]
-      `);
-      expect(book).toMatchInlineSnapshot(`
-        {
-          "authors": [
-            "Aswin Pranam",
-          ],
-          "bookProvider": "ISBNdb",
-          "categories": undefined,
-          "description": undefined,
-          "format": "book",
-          "isbn": "9780374104092",
-          "language": undefined,
-          "pageCount": 174,
-          "publishedDate": "1992-12-13",
-          "publisher": "Turtle Bay Books",
-          "thumbnail": "https://images.isbndb.com/covers/30/23/9781484233023.jpg",
-          "title": "Book Title",
-        }
-      `);
-    });
-
     it("should return an error if no book is found", async () => {
       const mockResponseGoogle = {
         kind: "books#volumes",
@@ -172,8 +102,6 @@ describe("ISBN Resolver API", () => {
 
       const mockResponseOpenLibrary = {};
 
-      const mockResponseIsbnDb = {};
-
       axios.get.mockImplementation((url) => {
         if (url.includes(GOOGLE_BOOKS_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseGoogle });
@@ -182,11 +110,6 @@ describe("ISBN Resolver API", () => {
             status: 200,
             data: mockResponseOpenLibrary,
           });
-        } else if (url.includes(ISBNDB_API_BASE)) {
-          return Promise.resolve({
-            status: 200,
-            data: mockResponseIsbnDb,
-          });
         }
       });
 
@@ -194,7 +117,6 @@ describe("ISBN Resolver API", () => {
         [Error: All providers failed
         google: No books found with isbn: 9780374104092
         openlibrary: No books found with ISBN: 9780374104092
-        isbndb: No books found with ISBN: 9780374104092
         librofm: Cannot read properties of undefined (reading 'status')]
       `);
     });
@@ -206,7 +128,6 @@ describe("ISBN Resolver API", () => {
         [Error: All providers failed
         google: Network Error
         openlibrary: Network Error
-        isbndb: Network Error
         librofm: Network Error]
       `);
     });
@@ -215,7 +136,7 @@ describe("ISBN Resolver API", () => {
       axios.get.mockRejectedValue({ status: 500 });
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed]`
+        `[Error: All providers failed]`,
       );
     });
 
@@ -279,7 +200,6 @@ describe("ISBN Provider API", () => {
       [
         "google",
         "openlibrary",
-        "isbndb",
         "librofm",
       ]
     `);
@@ -293,7 +213,6 @@ describe("ISBN Provider API", () => {
       [
         "google",
         "openlibrary",
-        "isbndb",
         "librofm",
       ]
     `);
@@ -307,7 +226,6 @@ describe("ISBN Provider API", () => {
       [
         "google",
         "openlibrary",
-        "isbndb",
         "librofm",
       ]
     `);
