@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: "20.x"
       - run: npm ci
-      - run: rm -rf dist/*
+      - run: rm -rf types/*
       - run: npm run build
       - name: Commit files
         run: |
