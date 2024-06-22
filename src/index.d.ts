@@ -26,7 +26,6 @@ export default class Isbn {
     PROVIDER_NAMES: {
         GOOGLE: string;
         OPENLIBRARY: string;
-        ISBNDB: string;
         LIBROFM: string;
     };
     /**
