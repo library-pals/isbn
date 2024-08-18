@@ -62,7 +62,7 @@ information.
 {
   "title": "Annihilation",
   "authors": ["Jeff VanderMeer"],
-  "description": "Describes the 12th expedition to “Area X,” a region cut off from the continent for decades, by a group of intrepid women scientists who try to ignore the high mortality rates of those on the previous 11 missions. Original. 75,000 first printing.",
+  "description": "Area X has claimed the lives of members of eleven expeditions. The twelfth expedition consisting of four women hopes to map the terrain and collect specimens; to record all their observations, scientific and otherwise, of their surroundings and of one another; and, above all, to avoid being contaminated by Area X itself.",
   "pageCount": 209,
   "format": "book",
   "categories": [
