@@ -5,6 +5,7 @@
   "exports": "./src/index.js",
   "types": "./types/index.d.ts",
   "type": "module",
+  "main": "src/index.js",
   "engines": {
     "node": ">=20.0.0"
   },
