@@ -32,9 +32,9 @@
   "author": "Katy DeCorah <@katydecorah>",
   "license": "AGPL-3.0-or-later",
   "devDependencies": {
-    "@eslint/js": "^9.9.0",
-    "eslint": "^9.9.0",
-    "eslint-plugin-jest": "^28.8.0",
+    "@eslint/js": "^9.9.1",
+    "eslint": "^9.9.1",
+    "eslint-plugin-jest": "^28.8.2",
     "eslint-plugin-jsdoc": "^50.2.2",
     "eslint-plugin-unicorn": "^55.0.0",
     "globals": "^15.9.0",
@@ -44,7 +44,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "axios": "^1.7.4"
+    "axios": "^1.7.7"
   },
   "bugs": {
     "url": "https://github.com/library-pals/isbn/issues"
