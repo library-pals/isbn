@@ -143,11 +143,11 @@ export async function getVolume(id) {
 function getLargestThumbnail(imageLinks) {
   const sizes = [
     "extraLarge",
+    "smallThumbnail",
     "large",
     "medium",
     "small",
     "thumbnail",
-    "smallThumbnail",
   ];
 
   if (!imageLinks) return;
