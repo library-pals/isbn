@@ -273,7 +273,7 @@ exports[`End to end Transcendent Kingdom { name: 'default', providers: [] } 1`] 
   "pageCount": 288,
   "publishedDate": "2020-09-15",
   "publisher": "Bond Street Books",
-  "thumbnail": "http://books.google.com/books/content?id=gr4pywEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+  "thumbnail": "http://books.google.com/books/content?id=gr4pywEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
   "title": "Transcendent Kingdom",
 }
 `;
@@ -300,7 +300,7 @@ exports[`End to end Transcendent Kingdom { name: 'google', providers: [Array] } 
   "pageCount": 288,
   "publishedDate": "2020-09-15",
   "publisher": "Bond Street Books",
-  "thumbnail": "http://books.google.com/books/content?id=gr4pywEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+  "thumbnail": "http://books.google.com/books/content?id=gr4pywEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
   "title": "Transcendent Kingdom",
 }
 `;

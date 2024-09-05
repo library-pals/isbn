@@ -49,7 +49,7 @@ describe("ISBN Resolver API", () => {
           "pageCount": 209,
           "publishedDate": "2014-02-04",
           "publisher": "Macmillan",
-          "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
           "title": "Annihilation",
         }
       `);
@@ -136,7 +136,7 @@ describe("ISBN Resolver API", () => {
       axios.get.mockRejectedValue({ status: 500 });
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed]`,
+        `[Error: All providers failed]`
       );
     });
 
@@ -176,7 +176,7 @@ describe("ISBN Resolver API", () => {
           "pageCount": 209,
           "publishedDate": "2014-02-04",
           "publisher": "Macmillan",
-          "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
           "title": "Annihilation",
         }
       `);
