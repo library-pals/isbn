@@ -2,7 +2,12 @@
   "name": "@library-pals/isbn",
   "version": "1.4.0",
   "description": "Find books by ISBN",
-  "exports": "./src/index.js",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
   "types": "./types/index.d.ts",
   "type": "module",
   "main": "src/index.js",
