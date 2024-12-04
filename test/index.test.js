@@ -136,7 +136,7 @@ describe("ISBN Resolver API", () => {
       axios.get.mockRejectedValue({ status: 500 });
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed]`
+        `[Error: All providers failed]`,
       );
     });
 
