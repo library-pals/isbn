@@ -36,10 +36,7 @@ describe("resolveOpenLibrary", () => {
         "authors": [],
         "bookProvider": "Open Library",
         "categories": [],
-        "description": {
-          "type": "/type/text",
-          "value": "A work of fantasy, I Who Have Never Known Men is the haunting and unforgettable account of a near future on a barren earth where women are kept in underground cages guarded by uniformed groups of men. It is narrated by the youngest of the women, the only one with no memory of what the world was like before the cages, who must teach herself, without books or sexual contact, the essential human emotions of longing, loving, learning, companionship, and dying.",
-        },
+        "description": "A work of fantasy, I Who Have Never Known Men is the haunting and unforgettable account of a near future on a barren earth where women are kept in underground cages guarded by uniformed groups of men. It is narrated by the youngest of the women, the only one with no memory of what the world was like before the cages, who must teach herself, without books or sexual contact, the essential human emotions of longing, loving, learning, companionship, and dying.",
         "format": "book",
         "isbn": "9781888363432",
         "language": "en",
