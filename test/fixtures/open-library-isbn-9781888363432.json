@@ -1,0 +1,88 @@
+{
+  "publishers": [
+    "Seven Stories Press"
+  ],
+  "number_of_pages": 206,
+  "subtitle": "a novel",
+  "covers": [
+    936140
+  ],
+  "lc_classifications": [
+    "PQ2668.A65 M6513 1997",
+    "PQ2668.A65M6513 1997"
+  ],
+  "key": "/books/OL998749M",
+  "authors": [
+    {
+      "key": "/authors/OL29463A"
+    }
+  ],
+  "publish_places": [
+    "New York"
+  ],
+  "work_title": [
+    "Moi qui n'ai pas connu les hommes."
+  ],
+  "languages": [
+    {
+      "key": "/languages/eng"
+    }
+  ],
+  "pagination": "206 p. ;",
+  "source_records": [
+    "marc:marc_loc_2016/BooksAll.2016.part25.utf8:102645450:900",
+    "bwb:9781888363432",
+    "marc:marc_columbia/Columbia-extract-20221130-004.mrc:615940360:1437",
+    "promise:bwb_daily_pallets_2024-08-09:W9-BGP-507"
+  ],
+  "title": "I who have never known men",
+  "dewey_decimal_class": [
+    "843/.914"
+  ],
+  "identifiers": {
+    "librarything": [
+      "231445"
+    ],
+    "goodreads": [
+      "4557734"
+    ]
+  },
+  "edition_name": "A Seven Stories Press 1st ed.",
+  "lccn": [
+    "96037526"
+  ],
+  "isbn_10": [
+    "1888363436"
+  ],
+  "publish_date": "1997",
+  "publish_country": "nyu",
+  "by_statement": "Jacqueline Harpman ; translated from the French by Ros Schwartz.",
+  "oclc_numbers": [
+    "35910069"
+  ],
+  "works": [
+    {
+      "key": "/works/OL102360W"
+    }
+  ],
+  "type": {
+    "key": "/type/edition"
+  },
+  "description": {
+    "type": "/type/text",
+    "value": "A work of fantasy, I Who Have Never Known Men is the haunting and unforgettable account of a near future on a barren earth where women are kept in underground cages guarded by uniformed groups of men. It is narrated by the youngest of the women, the only one with no memory of what the world was like before the cages, who must teach herself, without books or sexual contact, the essential human emotions of longing, loving, learning, companionship, and dying."
+  },
+  "local_id": [
+    "urn:bwbsku:W9-BGP-507"
+  ],
+  "latest_revision": 10,
+  "revision": 10,
+  "created": {
+    "type": "/type/datetime",
+    "value": "2008-04-01T03:28:50.625462"
+  },
+  "last_modified": {
+    "type": "/type/datetime",
+    "value": "2024-08-11T01:25:22.455092"
+  }
+}
