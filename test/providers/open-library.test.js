@@ -4,7 +4,7 @@ import {
   getWorks,
 } from "../../src/providers/open-library.js";
 import axios from "axios";
-import { jest } from "@jest/globals";
+import { afterEach, jest } from "@jest/globals";
 
 import openLibraryMock from "../fixtures/open-library-isbn-9780140328721.json";
 import openLibraryWorksMock from "../fixtures/open-library-works-OL45804W.json";
@@ -139,7 +139,7 @@ describe("resolveOpenLibrary", () => {
     });
 
     await expect(resolveOpenLibrary(isbn, {})).rejects.toThrow(
-      `No books found with ISBN: ${isbn}`,
+      `No books found with ISBN: ${isbn}`
     );
   });
 
@@ -152,7 +152,7 @@ describe("resolveOpenLibrary", () => {
     });
 
     await expect(resolveOpenLibrary(isbn, {})).rejects.toThrow(
-      "Wrong response code: 404",
+      "Wrong response code: 404"
     );
   });
 });
@@ -194,7 +194,7 @@ describe("getAuthors", () => {
     axios.get.mockResolvedValueOnce({ status: 404 });
 
     await expect(getAuthors(rawAuthors)).rejects.toThrow(
-      "Unable to get author /authors/OL1A: 404",
+      "Unable to get author /authors/OL1A: 404"
     );
   });
 });
@@ -271,13 +271,17 @@ describe("getWorks", () => {
     axios.get.mockResolvedValueOnce({ status: 404 });
 
     await expect(getWorks({ works })).rejects.toThrow(
-      "Unable to get /works/OL1A: 404",
+      "Unable to get /works/OL1A: 404"
     );
   });
 });
 
 describe("additional test cases", () => {
   const isbn = "9781888363432";
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   it("should resolve book information successfully", async () => {
     const mockResponse = openLibraryMock2;
@@ -319,10 +323,12 @@ describe("additional test cases", () => {
   });
 
   it("should resolve book information successfully, empty description", async () => {
-    let mockResponse = openLibraryMock2;
-    mockResponse.description = {
-      type: "/type/text",
-      value: undefined,
+    let mockResponse = {
+      ...openLibraryMock2,
+      description: {
+        type: "/type/text",
+        value: undefined,
+      },
     };
 
     axios.get = jest.fn().mockImplementation((url) => {
