@@ -136,15 +136,12 @@ export async function standardize(book, isbn) {
 function handleDescription(description) {
   if (typeof description === "string") {
     return description;
-  } else if (
-    typeof description === "object" &&
+  }
+  return typeof description === "object" &&
     description !== null &&
     "value" in description
-  ) {
-    return description.value;
-  } else {
-    return "";
-  }
+    ? description.value
+    : "";
 }
 
 /**
