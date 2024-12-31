@@ -4,7 +4,7 @@ import {
   getWorks,
 } from "../../src/providers/open-library.js";
 import axios from "axios";
-import { afterEach, jest } from "@jest/globals";
+import { jest } from "@jest/globals";
 
 import openLibraryMock from "../fixtures/open-library-isbn-9780140328721.json";
 import openLibraryWorksMock from "../fixtures/open-library-works-OL45804W.json";
@@ -278,10 +278,6 @@ describe("getWorks", () => {
 
 describe("additional test cases", () => {
   const isbn = "9781888363432";
-
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
 
   it("should resolve book information successfully", async () => {
     const mockResponse = openLibraryMock2;
