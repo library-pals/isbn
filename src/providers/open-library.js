@@ -110,7 +110,7 @@ export async function standardize(book, isbn) {
   const standardBook = {
     title: book.title,
     authors,
-    description,
+    description: handleDescription(description),
     pageCount: book.number_of_pages,
     format: "book",
     categories: subjects,
@@ -126,6 +126,18 @@ export async function standardize(book, isbn) {
   };
 
   return standardBook;
+}
+
+/**
+ * Handles the description of the book.
+ * @param {string|object} description - The description of the book.
+ * @returns {string} - The processed description.
+ */
+function handleDescription(description) {
+  if (typeof description === "string") {
+    return description;
+  }
+  return description.value;
 }
 
 /**

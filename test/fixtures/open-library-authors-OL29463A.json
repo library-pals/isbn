@@ -1,0 +1,26 @@
+{
+  "death_date": "2012",
+  "source_records": ["ia:entouteimpuniter0000harp"],
+  "key": "/authors/OL29463A",
+  "birth_date": "1929",
+  "type": {
+    "key": "/type/author"
+  },
+  "name": "Jacqueline Harpman",
+  "personal_name": "Jacqueline Harpman",
+  "remote_ids": {
+    "viaf": "85386639",
+    "wikidata": "Q371922",
+    "isni": "0000000109215233"
+  },
+  "latest_revision": 5,
+  "revision": 5,
+  "created": {
+    "type": "/type/datetime",
+    "value": "2008-04-01T03:28:50.625462"
+  },
+  "last_modified": {
+    "type": "/type/datetime",
+    "value": "2022-08-24T09:05:39.721289"
+  }
+}
