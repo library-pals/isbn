@@ -139,7 +139,7 @@ describe("resolveOpenLibrary", () => {
     });
 
     await expect(resolveOpenLibrary(isbn, {})).rejects.toThrow(
-      `No books found with ISBN: ${isbn}`
+      `No books found with ISBN: ${isbn}`,
     );
   });
 
@@ -152,7 +152,7 @@ describe("resolveOpenLibrary", () => {
     });
 
     await expect(resolveOpenLibrary(isbn, {})).rejects.toThrow(
-      "Wrong response code: 404"
+      "Wrong response code: 404",
     );
   });
 });
@@ -194,7 +194,7 @@ describe("getAuthors", () => {
     axios.get.mockResolvedValueOnce({ status: 404 });
 
     await expect(getAuthors(rawAuthors)).rejects.toThrow(
-      "Unable to get author /authors/OL1A: 404"
+      "Unable to get author /authors/OL1A: 404",
     );
   });
 });
@@ -271,7 +271,7 @@ describe("getWorks", () => {
     axios.get.mockResolvedValueOnce({ status: 404 });
 
     await expect(getWorks({ works })).rejects.toThrow(
-      "Unable to get /works/OL1A: 404"
+      "Unable to get /works/OL1A: 404",
     );
   });
 });
