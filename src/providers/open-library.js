@@ -137,11 +137,7 @@ function handleDescription(description) {
   if (typeof description === "string") {
     return description;
   }
-  return typeof description === "object" &&
-    description !== null &&
-    "value" in description
-    ? description.value
-    : "";
+  return description.value;
 }
 
 /**
