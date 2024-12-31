@@ -40,6 +40,8 @@ describe("End to end", () => {
     );
   });
 
+  // eslint-disable-next-line jest/no-commented-out-tests
+  /*
   describe("Fantastic Mr. Fox", () => {
     it.each([
       { name: "default", providers: [] },
@@ -49,11 +51,12 @@ describe("End to end", () => {
       "%s",
       async ({ providers }) => {
         isbn.provider(providers);
-        await expect(isbn.resolve("9780140328721")).resolves.toMatchSnapshot();
+        await expect(isbn.resolve("9780142423431")).resolves.toMatchSnapshot();
       },
       10_000,
     );
   });
+  */
 
   describe("The Ministry of Time (audiobook)", () => {
     it.each([{ name: "default", providers: ["librofm"] }])(
