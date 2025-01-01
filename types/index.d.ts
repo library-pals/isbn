@@ -13,6 +13,7 @@
  * @property {string | undefined} [thumbnail] - The thumbnail image link of the book.
  * @property {string} [link] - The link of the book.
  * @property {string} bookProvider - The provider of the book information.
+ * @property {string} [duration] - The duration of the audiobook.
  */
 /**
  * @typedef {import('./provider-resolvers.js').Providers} Providers
@@ -98,6 +99,10 @@ export type Book = {
      * - The provider of the book information.
      */
     bookProvider: string;
+    /**
+     * - The duration of the audiobook.
+     */
+    duration?: string;
 };
 export type Providers = import("./provider-resolvers.js").Providers;
 export type AxiosRequestConfig = import("axios").AxiosRequestConfig;
