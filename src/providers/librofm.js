@@ -60,6 +60,7 @@ export async function standardize(data, isbn, url) {
     language: book.inLanguage,
     isbn,
     bookProvider: "Libro.fm",
+    duration: book.duration,
   };
 
   return standardBook;
