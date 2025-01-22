@@ -3,6 +3,7 @@ examples
 test
 .gitignore
 .prettierrc
+.prettierignore
 eslint.config.js
 jest.config.js
 .github
