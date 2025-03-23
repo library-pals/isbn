@@ -25,8 +25,12 @@ export namespace PROVIDER_NAMES {
  */
 export const DEFAULT_PROVIDERS: Providers;
 export const PROVIDER_RESOLVERS: {
-    [x: string]: typeof resolveGoogle;
+    [PROVIDER_NAMES.GOOGLE]: typeof resolveGoogle;
+    [PROVIDER_NAMES.OPENLIBRARY]: typeof resolveOpenLibrary;
+    [PROVIDER_NAMES.LIBROFM]: typeof resolveLibroFm;
 };
 export type Providers = string[];
 export type AxiosRequestConfig = import("axios").AxiosRequestConfig;
 import { resolveGoogle } from "./providers/google.js";
+import { resolveOpenLibrary } from "./providers/open-library.js";
+import { resolveLibroFm } from "./providers/librofm.js";
