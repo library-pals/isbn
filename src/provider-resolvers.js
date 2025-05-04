@@ -13,7 +13,7 @@ import { resolveLibroFm } from "./providers/librofm.js";
  * @property {number} timeout - The timeout value in milliseconds.
  */
 export const defaultOptions = {
-  timeout: 5000,
+  timeout: 15_000,
 };
 
 export const GOOGLE_BOOKS_API_BASE = "https://www.googleapis.com";
