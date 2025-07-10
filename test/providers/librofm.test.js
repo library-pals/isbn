@@ -100,7 +100,7 @@ describe("librofm", () => {
         data: "<html></html>",
       });
       await expect(resolveLibroFm("1234567890")).rejects.toThrow(
-        "No information found for https://libro.fm/audiobooks/1234567890",
+        "Incomplete response from https://libro.fm/audiobooks/1234567890 - server may still be processing (202 status)",
       );
     });
   });
