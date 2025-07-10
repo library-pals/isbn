@@ -135,9 +135,10 @@ describe("ISBN Resolver API", () => {
     it("should return an error if external endpoints return a HTTP error", async () => {
       axios.get.mockRejectedValue({ status: 500 });
 
-      await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed]`,
-      );
+      await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(`
+        [Error: All providers failed
+        librofm: Cannot read properties of undefined (reading 'includes')]
+      `);
     });
 
     it("should invoke providers in order specified", async () => {

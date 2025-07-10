@@ -15,7 +15,7 @@ import axios from "axios";
  * @param {string} isbn - The ISBN of the book.
  * @param {AxiosRequestConfig} options - Additional options for the API request.
  * @returns {Promise<Book>} The book information retrieved from the API.
- * @throws {Error} If the API response code is not 200, or if no books are found with the provided ISBN, or if no volume information is found for the book.
+ * @throws {Error} If the API response code is not 200 or 202, or if no books are found with the provided ISBN, or if no volume information is found for the book.
  */
 export async function resolveLibroFm(isbn, options) {
   const requestOptions = {
@@ -25,14 +25,60 @@ export async function resolveLibroFm(isbn, options) {
 
   const url = `${LIBROFM_API_BASE}${LIBROFM_API_BOOK}/${isbn}`;
 
-  const response = await axios.get(url, requestOptions);
-  try {
-    if (response.status !== 200) {
-      throw new Error(`Unable to get ${url}: ${response.status}`);
+  let retries = 0;
+  const maxRetries = 3;
+
+  while (retries <= maxRetries) {
+    try {
+      const response = await axios.get(url, requestOptions);
+
+      if (response.status !== 200 && response.status !== 202) {
+        throw new Error(`Unable to get ${url}: ${response.status}`);
+      }
+
+      // If we get a 202, the content might not be fully rendered yet
+      // Try to standardize it, but retry if it fails
+      if (response.status === 202 && retries < maxRetries) {
+        try {
+          return standardize(response.data, isbn, url);
+        } catch (error) {
+          if (
+            error.message.includes("Incomplete response") ||
+            error.message.includes("No information found")
+          ) {
+            console.warn(
+              `Retry ${retries + 1}/${maxRetries} for ${url} - got 202 with incomplete data`,
+            );
+            retries++;
+            if (retries <= maxRetries) {
+              // Wait before retry (exponential backoff)
+              await new Promise((resolve) =>
+                setTimeout(resolve, 1000 * retries),
+              );
+              continue;
+            }
+          }
+          throw error;
+        }
+      }
+
+      return standardize(response.data, isbn, url);
+    } catch (error) {
+      if (retries >= maxRetries) {
+        throw new Error(error.message);
+      }
+      // For non-202 errors, don't retry
+      if (
+        !error.message.includes("Incomplete response") &&
+        !error.message.includes("No information found")
+      ) {
+        throw new Error(error.message);
+      }
+      retries++;
+      if (retries <= maxRetries) {
+        await new Promise((resolve) => setTimeout(resolve, 1000 * retries));
+      }
     }
-    return standardize(response.data, isbn, url);
-  } catch (error) {
-    throw new Error(error.message);
   }
 }
 
@@ -48,6 +94,23 @@ export async function standardize(data, isbn, url) {
   const regex = /<script type="application\/ld\+json">(.*?)<\/script>/s;
   const match = data.match(regex);
   if (!match) {
+    // Log some debug info for CI troubleshooting
+    console.warn(
+      `No JSON-LD found for ${url}. Response length: ${data.length}`,
+    );
+    console.warn(`Response starts with: ${data.slice(0, 500)}`);
+
+    // Check if this might be a 202 response with incomplete data
+    if (
+      data.length < 1000 ||
+      data.includes("202") ||
+      data.includes("Accepted")
+    ) {
+      throw new Error(
+        `Incomplete response from ${url} - server may still be processing (202 status)`,
+      );
+    }
+
     throw new Error(`No information found for ${url}`);
   }
 

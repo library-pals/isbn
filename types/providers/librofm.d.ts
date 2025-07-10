@@ -7,7 +7,7 @@
  * @param {string} isbn - The ISBN of the book.
  * @param {AxiosRequestConfig} options - Additional options for the API request.
  * @returns {Promise<Book>} The book information retrieved from the API.
- * @throws {Error} If the API response code is not 200, or if no books are found with the provided ISBN, or if no volume information is found for the book.
+ * @throws {Error} If the API response code is not 200 or 202, or if no books are found with the provided ISBN, or if no volume information is found for the book.
  */
 export function resolveLibroFm(isbn: string, options: AxiosRequestConfig): Promise<Book>;
 /**
