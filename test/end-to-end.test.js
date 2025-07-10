@@ -64,22 +64,49 @@ describe("End to end", () => {
       "Accept-Language": "en-US,en;q=0.9",
       "Accept-Encoding": "gzip, deflate, br",
       "Cache-Control": "no-cache",
+      Pragma: "no-cache",
       Connection: "keep-alive",
       "Upgrade-Insecure-Requests": "1",
       "Sec-Fetch-Dest": "document",
       "Sec-Fetch-Mode": "navigate",
       "Sec-Fetch-Site": "none",
       "Sec-Fetch-User": "?1",
+      DNT: "1",
+      "Sec-GPC": "1",
     };
     it.each([{ name: "default", providers: ["librofm"] }])(
       "%s",
       async ({ providers }) => {
         isbn.provider(providers);
-        await expect(
-          isbn.resolve("9781797176888", { headers: browserHeaders }),
-        ).resolves.toMatchSnapshot();
+
+        // Add a small delay before the request to avoid rate limiting
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        let result;
+        let retries = 0;
+        const maxRetries = 3;
+
+        while (retries < maxRetries) {
+          try {
+            result = await isbn.resolve("9781797176888", {
+              headers: browserHeaders,
+              timeout: 30_000, // Increase timeout
+              maxRedirects: 5, // Allow redirects
+            });
+            break; // Success, exit loop
+          } catch (error) {
+            retries++;
+            if (retries >= maxRetries) {
+              throw error; // Re-throw if we've exhausted retries
+            }
+            // Wait before retry
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+          }
+        }
+
+        expect(result).toMatchSnapshot();
       },
-      15_000,
+      60_000, // Increased timeout for the test with retries
     );
   });
 });
