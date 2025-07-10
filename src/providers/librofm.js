@@ -1,4 +1,8 @@
-import { LIBROFM_API_BASE, LIBROFM_API_BOOK } from "../provider-resolvers.js";
+import {
+  LIBROFM_API_BASE,
+  LIBROFM_API_BOOK,
+  defaultOptions,
+} from "../provider-resolvers.js";
 import axios from "axios";
 
 /**
@@ -9,13 +13,19 @@ import axios from "axios";
 /**
  * Resolves book information from Libro.fm using the provided ISBN.
  * @param {string} isbn - The ISBN of the book.
+ * @param {AxiosRequestConfig} options - Additional options for the API request.
  * @returns {Promise<Book>} The book information retrieved from the API.
  * @throws {Error} If the API response code is not 200, or if no books are found with the provided ISBN, or if no volume information is found for the book.
  */
-export async function resolveLibroFm(isbn) {
+export async function resolveLibroFm(isbn, options) {
+  const requestOptions = {
+    ...defaultOptions,
+    ...options,
+  };
+
   const url = `${LIBROFM_API_BASE}${LIBROFM_API_BOOK}/${isbn}`;
 
-  const response = await axios.get(url);
+  const response = await axios.get(url, requestOptions);
   try {
     if (response.status !== 200) {
       throw new Error(`Unable to get ${url}: ${response.status}`);

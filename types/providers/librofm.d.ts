@@ -5,10 +5,11 @@
 /**
  * Resolves book information from Libro.fm using the provided ISBN.
  * @param {string} isbn - The ISBN of the book.
+ * @param {AxiosRequestConfig} options - Additional options for the API request.
  * @returns {Promise<Book>} The book information retrieved from the API.
  * @throws {Error} If the API response code is not 200, or if no books are found with the provided ISBN, or if no volume information is found for the book.
  */
-export function resolveLibroFm(isbn: string): Promise<Book>;
+export function resolveLibroFm(isbn: string, options: AxiosRequestConfig): Promise<Book>;
 /**
  * Standardizes a book object by extracting relevant information from the provided book object.
  * @param {string} data - The data to be standardized.
