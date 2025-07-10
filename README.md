@@ -34,7 +34,7 @@ try {
 }
 ```
 
-### Setting a timeout
+### Setting request options
 
 ```javascript
 import Isbn from "@library-pals/isbn";
