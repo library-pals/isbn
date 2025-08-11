@@ -6,6 +6,7 @@
  * Default options for the provider resolvers.
  * @type {AxiosRequestConfig}
  * @property {number} timeout - The timeout value in milliseconds.
+ * @property {object} headers - Default headers for requests.
  */
 export const defaultOptions: AxiosRequestConfig;
 export const GOOGLE_BOOKS_API_BASE: "https://www.googleapis.com";

@@ -11,9 +11,13 @@ import { resolveLibroFm } from "./providers/librofm.js";
  * Default options for the provider resolvers.
  * @type {AxiosRequestConfig}
  * @property {number} timeout - The timeout value in milliseconds.
+ * @property {object} headers - Default headers for requests.
  */
 export const defaultOptions = {
   timeout: 15_000,
+  headers: {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+  }
 };
 
 export const GOOGLE_BOOKS_API_BASE = "https://www.googleapis.com";
