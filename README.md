@@ -176,7 +176,7 @@ import Isbn from "@library-pals/isbn";
 try {
   const isbn = new Isbn();
   // This request will search ONLY in the Google Books API
-  isbn.provider( "google"]);
+  isbn.provider(["google"]);
   const book = await isbn.resolve("9780374104092");
   console.log("Book isbn:" + input + " found %j", book);
 } catch (err) {
