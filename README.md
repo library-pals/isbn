@@ -69,12 +69,14 @@ information.
     "Fiction",
     "Fiction / General",
     "Fiction / Fantasy / General",
-    "Fiction / Horror",
+    "Fiction / Horror / General",
     "Fiction / Literary",
     "Fiction / Science Fiction / General",
     "Fiction / Science Fiction / Action & Adventure",
+    "Fiction / Science Fiction / Apocalyptic & Post-Apocalyptic",
     "Fiction / Thrillers / Suspense",
-    "Fiction / Dystopian"
+    "Fiction / Dystopian",
+    "Fiction / Nature & the Environment"
   ],
   "thumbnail": "http://books.google.com/books/publisher/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
   "link": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ",
