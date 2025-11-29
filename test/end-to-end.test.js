@@ -34,7 +34,7 @@ describe("End to end", () => {
       "%s",
       async ({ providers }) => {
         isbn.provider(providers);
-        await expect(isbn.resolve("9780385695176")).resolves.toMatchSnapshot();
+        await expect(isbn.resolve("9780593215302")).resolves.toMatchSnapshot();
       },
       15_000,
     );
