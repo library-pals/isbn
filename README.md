@@ -48,6 +48,25 @@ try {
 }
 ```
 
+### Using a Google Books API key
+
+The Google Books API has a shared anonymous quota that can be exhausted. To
+avoid `429` errors, pass your API key via `params`:
+
+```javascript
+import Isbn from "@library-pals/isbn";
+
+try {
+  const isbn = new Isbn();
+  const book = await isbn.resolve("9780374104092", {
+    params: { key: process.env.GOOGLE_BOOKS_API_KEY },
+  });
+  console.log("Book found %j", book);
+} catch (err) {
+  console.log("Book not found", err);
+}
+```
+
 ### Response
 
 Response follows the same schema, but some fields could depend on the service
@@ -211,3 +230,26 @@ try {
 See also
 [Google Books API Terms of Service](https://developers.google.com/books/terms),
 [Open Library Licensing](https://openlibrary.org/developers/licensing)
+
+## Development
+
+### Running tests
+
+Unit tests run without any API keys:
+
+```bash
+npm test
+```
+
+The end-to-end tests call the real Google Books API, which requires an API key
+to avoid `429` quota errors. Set `GOOGLE_BOOKS_API_KEY` before running:
+
+```bash
+GOOGLE_BOOKS_API_KEY=your_key npm test
+```
+
+To update snapshots after expected output changes:
+
+```bash
+GOOGLE_BOOKS_API_KEY=your_key npm test -- -u
+```

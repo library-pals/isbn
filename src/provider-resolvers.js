@@ -21,6 +21,7 @@ export const GOOGLE_BOOKS_API_BOOK = "/books/v1/volumes";
 
 export const OPENLIBRARY_API_BASE = "https://openlibrary.org";
 export const OPENLIBRARY_API_BOOK = "/isbn";
+export const OPENLIBRARY_API_SEARCH = "/search.json";
 
 export const LIBROFM_API_BASE = "https://libro.fm";
 export const LIBROFM_API_BOOK = "/audiobooks";

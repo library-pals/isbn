@@ -1,4 +1,8 @@
-import { resolveGoogle } from "../../src/providers/google.js";
+import {
+  resolveGoogle,
+  standardize,
+  getVolume,
+} from "../../src/providers/google.js";
 import axios from "axios";
 import { jest } from "@jest/globals";
 
@@ -334,6 +338,36 @@ describe("resolveGoogle", () => {
 
     await expect(resolveGoogle(isbn, {})).rejects.toThrow(
       `No volume info found for book with isbn: ${isbn}`,
+    );
+  });
+});
+
+describe("standardize", () => {
+  it("should use default options when none provided", async () => {
+    axios.get = jest.fn().mockResolvedValue({
+      status: 200,
+      data: { volumeInfo: {} },
+    });
+    const book = await standardize({ title: "Test" }, "abc123", "1234567890");
+    expect(book.title).toBe("Test");
+    expect(axios.get).toHaveBeenCalledWith(
+      expect.stringContaining("abc123"),
+      {},
+    );
+  });
+});
+
+describe("getVolume", () => {
+  it("should use default options when none provided", async () => {
+    axios.get = jest.fn().mockResolvedValue({
+      status: 200,
+      data: { volumeInfo: { categories: ["Fiction"] } },
+    });
+    const result = await getVolume("abc123");
+    expect(result.categories).toEqual(["Fiction"]);
+    expect(axios.get).toHaveBeenCalledWith(
+      expect.stringContaining("abc123"),
+      {},
     );
   });
 });
