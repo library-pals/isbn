@@ -149,7 +149,7 @@ describe("standardize", () => {
     const standardizedBook = await standardize(
       data,
       "1234567890",
-      "http://example.com",
+      "https://example.com",
     );
 
     expect(standardizedBook).toMatchInlineSnapshot(`

@@ -31,7 +31,7 @@ export default class Isbn {
   /**
    * @type {Providers}
    */
-  _providers = DEFAULT_PROVIDERS;
+  #providers = DEFAULT_PROVIDERS;
 
   constructor() {
     this.PROVIDER_NAMES = PROVIDER_NAMES;
@@ -62,7 +62,7 @@ export default class Isbn {
       );
     }
 
-    this._providers = [...new Set(providers)];
+    this.#providers = [...new Set(providers)];
     return this;
   }
 
@@ -75,7 +75,7 @@ export default class Isbn {
    */
   async resolve(isbn, options = {}) {
     const messages = [];
-    for (const provider of this._providers) {
+    for (const provider of this.#providers) {
       try {
         return await PROVIDER_RESOLVERS[provider](isbn, options);
       } catch (error) {

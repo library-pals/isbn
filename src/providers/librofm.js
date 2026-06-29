@@ -32,7 +32,7 @@ export async function resolveLibroFm(isbn, options) {
     }
     return standardize(response.data, isbn, url);
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 

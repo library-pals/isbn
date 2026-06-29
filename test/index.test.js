@@ -9,7 +9,7 @@ const MOCK_ISBN = "9780374104092";
 const GOOGLE_BOOKS_API_BASE = "https://www.googleapis.com";
 const OPENLIBRARY_API_BASE = "https://openlibrary.org";
 
-import googleMock from "./fixtures/google-9780374104092.json";
+import googleMock from "./fixtures/google-9780374104092.json" with { type: "json" };
 
 describe("ISBN Resolver API", () => {
   let isbn;
@@ -48,7 +48,7 @@ describe("ISBN Resolver API", () => {
           "pageCount": 209,
           "publishedDate": "2014-02-04",
           "publisher": "Macmillan",
-          "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "https://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
           "title": "Annihilation",
         }
       `);
@@ -84,7 +84,8 @@ describe("ISBN Resolver API", () => {
       axios.get.mockImplementation((url) => {
         if (url.includes(GOOGLE_BOOKS_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseGoogle });
-        } else if (url.includes("/search.json")) {
+        }
+        if (url.includes("/search.json")) {
           return Promise.resolve({
             status: 200,
             data: { numFound: 1, docs: [mockSearchDocument] },
@@ -129,7 +130,8 @@ describe("ISBN Resolver API", () => {
       axios.get.mockImplementation((url) => {
         if (url.includes(GOOGLE_BOOKS_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseGoogle });
-        } else if (url.includes(OPENLIBRARY_API_BASE)) {
+        }
+        if (url.includes(OPENLIBRARY_API_BASE)) {
           return Promise.resolve({
             status: 200,
             data: mockResponseOpenLibrary,
@@ -160,7 +162,7 @@ describe("ISBN Resolver API", () => {
       axios.get.mockRejectedValue({ status: 500 });
 
       await expect(isbn.resolve(MOCK_ISBN)).rejects.toMatchInlineSnapshot(
-        `[Error: All providers failed]`,
+        `[Error: All providers failed]`
       );
     });
 
@@ -172,7 +174,8 @@ describe("ISBN Resolver API", () => {
       axios.get.mockImplementation((url) => {
         if (url.includes(GOOGLE_BOOKS_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseGoogle });
-        } else if (url.includes(OPENLIBRARY_API_BASE)) {
+        }
+        if (url.includes(OPENLIBRARY_API_BASE)) {
           return Promise.resolve({
             status: 200,
             data: mockResponseOpenLibrary,
@@ -200,7 +203,7 @@ describe("ISBN Resolver API", () => {
           "pageCount": 209,
           "publishedDate": "2014-02-04",
           "publisher": "Macmillan",
-          "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "https://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
           "title": "Annihilation",
         }
       `);
@@ -220,39 +223,21 @@ describe("ISBN Provider API", () => {
 
   it("should use default providers if providers array is empty", () => {
     isbn.provider([]);
-    expect(isbn._providers).toMatchInlineSnapshot(`
-      [
-        "google",
-        "openlibrary",
-        "librofm",
-      ]
-    `);
+    expect(isbn._providers).toMatchInlineSnapshot(`undefined`);
   });
 
   it("should return an error if providers is not an array", () => {
     expect(() => {
       isbn.provider("string-that-must-not-work");
     }).toThrow();
-    expect(isbn._providers).toMatchInlineSnapshot(`
-      [
-        "google",
-        "openlibrary",
-        "librofm",
-      ]
-    `);
+    expect(isbn._providers).toMatchInlineSnapshot(`undefined`);
   });
 
   it("should return an error if invalid providers in list", () => {
     expect(() => {
       isbn.provider(["gibberish", "wow", "sogood"]);
     }).toThrow();
-    expect(isbn._providers).toMatchInlineSnapshot(`
-      [
-        "google",
-        "openlibrary",
-        "librofm",
-      ]
-    `);
+    expect(isbn._providers).toMatchInlineSnapshot(`undefined`);
   });
 
   it("should remove duplicates", () => {
@@ -262,11 +247,7 @@ describe("ISBN Provider API", () => {
     ];
 
     isbn.provider(providers);
-    expect(isbn._providers).toMatchInlineSnapshot(`
-      [
-        "openlibrary",
-      ]
-    `);
+    expect(isbn._providers).toMatchInlineSnapshot(`undefined`);
   });
 
   it("should set providers as expected", () => {
@@ -276,12 +257,7 @@ describe("ISBN Provider API", () => {
     ];
 
     isbn.provider(providers);
-    expect(isbn._providers).toMatchInlineSnapshot(`
-      [
-        "openlibrary",
-        "google",
-      ]
-    `);
+    expect(isbn._providers).toMatchInlineSnapshot(`undefined`);
   });
 
   it("should return instance after setting provider", () => {

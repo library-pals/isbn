@@ -40,7 +40,7 @@ export async function resolveGoogle(isbn, options) {
     const book = books.items[0];
     return await standardize(book.volumeInfo, book.id, isbn, requestOptions);
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 
@@ -133,7 +133,7 @@ export async function getVolume(id, options = {}) {
       ...response.data.volumeInfo,
     };
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message, { cause: error });
   }
 }
 
@@ -143,6 +143,8 @@ export async function getVolume(id, options = {}) {
  * @returns {string|undefined} The URL of the largest thumbnail, or undefined if not found.
  */
 function getLargestThumbnail(imageLinks) {
+  if (!imageLinks) return;
+
   const sizes = [
     "extraLarge",
     "smallThumbnail",
@@ -152,9 +154,7 @@ function getLargestThumbnail(imageLinks) {
     "thumbnail",
   ];
 
-  if (!imageLinks) return;
-
-  const size = sizes.find((size) => size in imageLinks);
+  const size = sizes.find((size) => Object.hasOwn(imageLinks, size));
 
   // @ts-ignore
   return removeQueryParameter(imageLinks[size], "imgtk");
@@ -169,7 +169,7 @@ function getLargestThumbnail(imageLinks) {
 function removeQueryParameter(url, parameter) {
   const urlObject = new URL(url);
   urlObject.searchParams.delete(parameter);
-  return urlObject.toString();
+  return urlObject.href;
 }
 
 /**
@@ -182,6 +182,6 @@ function formatCategories(categories) {
 
   const [firstCategory] = categories;
   return firstCategory.includes("/")
-    ? [firstCategory.split("/")[0].trim(), ...categories]
+    ? [firstCategory.split("/", 1)[0].trim(), ...categories]
     : categories;
 }
