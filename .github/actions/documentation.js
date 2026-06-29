@@ -32,7 +32,7 @@ async function updateExamples() {
           new RegExp(
             `(<!--\\s*${comment}\\s*-->)([\\s\\S]*?)(\`\`\`json[\\s\\S]*?\`\`\`)`,
           ),
-          `$1\n\n${markdown}`,
+          (_, commentMatch) => `${commentMatch}\n\n${markdown}`,
         );
       } catch (error) {
         console.error(`Failed to fetch data for ${comment}:`, error);

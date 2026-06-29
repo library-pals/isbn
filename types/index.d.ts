@@ -20,10 +20,6 @@
  * @typedef {import('axios').AxiosRequestConfig} AxiosRequestConfig
  */
 export default class Isbn {
-    /**
-     * @type {Providers}
-     */
-    _providers: Providers;
     PROVIDER_NAMES: {
         GOOGLE: string;
         OPENLIBRARY: string;
@@ -45,6 +41,7 @@ export default class Isbn {
      * @throws {Error} - If an error occurs while resolving the book information.
      */
     resolve(isbn: string, options?: AxiosRequestConfig): Promise<Book>;
+    #private;
 }
 export type Book = {
     /**

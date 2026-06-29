@@ -2,9 +2,7 @@ import Isbn from "../src/index.js";
 
 const resolveOptions = {
   timeout: 30_000,
-  ...(process.env.GOOGLE_BOOKS_API_KEY
-    ? { params: { key: process.env.GOOGLE_BOOKS_API_KEY } }
-    : {}),
+  ...(process.env.GOOGLE_BOOKS_API_KEY && { params: { key: process.env.GOOGLE_BOOKS_API_KEY } }),
 };
 
 describe("End to end", () => {

@@ -41,12 +41,12 @@
           "containsImageBubbles": false
         },
         "imageLinks": {
-          "smallThumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
-          "thumbnail": "http://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+          "smallThumbnail": "https://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "thumbnail": "https://books.google.com/books/content?id=2cl7AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
         },
         "language": "en",
-        "previewLink": "http://books.google.com/books?id=2cl7AgAAQBAJ&printsec=frontcover&dq=isbn:9780374104092&hl=&cd=1&source=gbs_api",
-        "infoLink": "http://books.google.com/books?id=2cl7AgAAQBAJ&dq=isbn:9780374104092&hl=&source=gbs_api",
+        "previewLink": "https://books.google.com/books?id=2cl7AgAAQBAJ&printsec=frontcover&dq=isbn:9780374104092&hl=&cd=1&source=gbs_api",
+        "infoLink": "https://books.google.com/books?id=2cl7AgAAQBAJ&dq=isbn:9780374104092&hl=&source=gbs_api",
         "canonicalVolumeLink": "https://books.google.com/books/about/Annihilation.html?hl=&id=2cl7AgAAQBAJ"
       },
       "saleInfo": {
@@ -66,7 +66,7 @@
         "pdf": {
           "isAvailable": false
         },
-        "webReaderLink": "http://play.google.com/books/reader?id=2cl7AgAAQBAJ&hl=&source=gbs_api",
+        "webReaderLink": "https://play.google.com/books/reader?id=2cl7AgAAQBAJ&hl=&source=gbs_api",
         "accessViewStatus": "SAMPLE",
         "quoteSharingAllowed": false
       },
