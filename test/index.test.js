@@ -9,7 +9,6 @@ const MOCK_ISBN = "9780374104092";
 const GOOGLE_BOOKS_API_BASE = "https://www.googleapis.com";
 const OPENLIBRARY_API_BASE = "https://openlibrary.org";
 
-import openLibraryMock from "./fixtures/open-library-isbn-9780140328721.json";
 import googleMock from "./fixtures/google-9780374104092.json";
 
 describe("ISBN Resolver API", () => {
@@ -61,25 +60,50 @@ describe("ISBN Resolver API", () => {
         totalItems: 0,
       };
 
-      const mockResponseOpenLibrary = openLibraryMock;
+      const mockSearchDocument = {
+        title: "Fantastic Mr Fox",
+        author_name: ["Roald Dahl"],
+        number_of_pages_median: 96,
+        subject: ["Animals", "Fiction"],
+        cover_i: 6_498_519,
+        key: "/works/OL45804W",
+        editions: {
+          docs: [
+            {
+              key: "/books/OL7353617M",
+              title: "Fantastic Mr. Fox",
+              cover_i: 8_739_161,
+              language: ["eng"],
+              publisher: ["Puffin"],
+              publish_date: ["October 1, 1988"],
+            },
+          ],
+        },
+      };
 
       axios.get.mockImplementation((url) => {
         if (url.includes(GOOGLE_BOOKS_API_BASE)) {
           return Promise.resolve({ status: 200, data: mockResponseGoogle });
-        } else if (url.includes(OPENLIBRARY_API_BASE)) {
+        } else if (url.includes("/search.json")) {
           return Promise.resolve({
             status: 200,
-            data: mockResponseOpenLibrary,
+            data: { numFound: 1, docs: [mockSearchDocument] },
           });
         }
+        return Promise.resolve({ status: 200, data: {} });
       });
 
       const book = await isbn.resolve(MOCK_ISBN);
       expect(book).toMatchInlineSnapshot(`
         {
-          "authors": [],
+          "authors": [
+            "Roald Dahl",
+          ],
           "bookProvider": "Open Library",
-          "categories": [],
+          "categories": [
+            "Animals",
+            "Fiction",
+          ],
           "description": "",
           "format": "book",
           "isbn": "9780374104092",

@@ -2,7 +2,7 @@ import axios from "axios";
 import {
   defaultOptions,
   OPENLIBRARY_API_BASE,
-  OPENLIBRARY_API_BOOK,
+  OPENLIBRARY_API_SEARCH,
 } from "../provider-resolvers.js";
 
 /**
@@ -10,8 +10,24 @@ import {
  * @typedef {import('axios').AxiosRequestConfig} AxiosRequestConfig
  */
 
+const SEARCH_FIELDS = [
+  "title",
+  "author_name",
+  "number_of_pages_median",
+  "subject",
+  "cover_i",
+  "key",
+  "editions",
+  "editions.key",
+  "editions.title",
+  "editions.cover_i",
+  "editions.publisher",
+  "editions.publish_date",
+  "editions.language",
+].join(",");
+
 /**
- * Resolves a book from the Open Library API using the provided ISBN.
+ * Resolves a book from the Open Library Search API using the provided ISBN.
  * @param {string} isbn - The ISBN of the book.
  * @param {AxiosRequestConfig} options - Additional options for the request.
  * @returns {Promise<Book>} A promise that resolves to the standardized book object.
@@ -22,234 +38,128 @@ export async function resolveOpenLibrary(isbn, options) {
     ...defaultOptions,
     ...options,
   };
-  const url = `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_BOOK}/${isbn}.json`;
+  const url = `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_SEARCH}`;
 
   try {
-    const response = await axios.get(url, requestOptions);
+    const response = await axios.get(url, {
+      timeout: requestOptions.timeout,
+      params: { isbn, fields: SEARCH_FIELDS, limit: 1 },
+    });
     if (response.status !== 200) {
       throw new Error(`Wrong response code: ${response.status}`);
     }
-    const book = response.data;
-    if (!book || Object.keys(book).length === 0) {
+    const { docs } = response.data;
+    if (!docs || docs.length === 0) {
       throw new Error(`No books found with ISBN: ${isbn}`);
     }
-    return await standardize(book, isbn);
+    const document = docs[0];
+    const description = document.key
+      ? await getDescription(document.key, requestOptions.timeout)
+      : "";
+    return standardize(document, isbn, description);
   } catch (error) {
     throw new Error(error.message);
   }
 }
 
 /**
- * @typedef {object} Author
- * @property {string} key - The key of the author.
+ * @typedef {object} OpenLibraryEdition
+ * @property {string} key - Edition key.
+ * @property {string} [title] - Edition title.
+ * @property {number} [cover_i] - Edition cover image ID.
+ * @property {string[]} [publisher] - Publishers.
+ * @property {string[]} [publish_date] - Publish dates.
+ * @property {string[]} [language] - ISO 639-2 language codes.
  */
 
 /**
- * @typedef {object} Language
- * @property {string} key - The key of the language.
+ * @typedef {object} OpenLibrarySearchDoc
+ * @property {string} title - Work title.
+ * @property {string[]} [author_name] - Author names.
+ * @property {number} [number_of_pages_median] - Median page count.
+ * @property {string[]} [subject] - Subjects/categories.
+ * @property {number} [cover_i] - Work cover image ID.
+ * @property {string} key - Work key.
+ * @property {{docs: OpenLibraryEdition[]}} [editions] - Matched edition data.
  */
 
 /**
- * @typedef {object} Type
- * @property {string} key - The key of the type.
+ * Standardizes a search result doc into a Book object.
+ * @param {OpenLibrarySearchDoc} document - The search result doc.
+ * @param {string} isbn - The book's ISBN.
+ * @param {string} [description] - The book's description.
+ * @returns {Book} The standardized book object.
  */
-
-/**
- * @typedef {object} FirstSentence
- * @property {string} type - The type of the first sentence.
- * @property {string} value - The value of the first sentence.
- */
-
-/**
- * @typedef {object} Work
- * @property {string} key - The key of the work.
- */
-
-/**
- * @typedef {object} DateTime
- * @property {string} type - The type of the datetime.
- * @property {string} value - The value of the datetime.
- */
-
-/**
- * @typedef {object} OpenLibraryBook
- * @property {object} identifiers - The identifiers of the book.
- * @property {string} title - The title of the book.
- * @property {Author[]} authors - The authors of the book.
- * @property {string} publish_date - The publish date of the book.
- * @property {string[]} publishers - The publishers of the book.
- * @property {number[]} covers - The covers of the book.
- * @property {string[]} contributions - The contributions to the book.
- * @property {Language[]} languages - The languages of the book.
- * @property {string[]} source_records - The source records of the book.
- * @property {string[]} local_id - The local IDs of the book.
- * @property {Type} type - The type of the book.
- * @property {FirstSentence} first_sentence - The first sentence of the book.
- * @property {string} key - The key of the book.
- * @property {number} number_of_pages - The number of pages in the book.
- * @property {Work[]} works - The works related to the book.
- * @property {object} classifications - The classifications of the book.
- * @property {string} ocaid - The Open Content Alliance ID of the book.
- * @property {string[]} isbn_10 - The ISBN-10 of the book.
- * @property {string[]} isbn_13 - The ISBN-13 of the book.
- * @property {number} latest_revision - The latest revision of the book.
- * @property {number} revision - The revision of the book.
- * @property {DateTime} created - The creation datetime of the book.
- * @property {DateTime} last_modified - The last modified datetime of the book.
- */
-
-/**
- * Standardizes a book object by extracting relevant information from the provided book object.
- * @param {OpenLibraryBook} book - The book object to be standardized.
- * @param {string} isbn - The book's isbn.
- * @returns {Promise<Book>} - The standardized book object.
- */
-export async function standardize(book, isbn) {
-  const { description, subjects, rawAuthors } = await getWorks(book);
-  const authors = await getAuthors(rawAuthors);
-  const standardBook = {
-    title: book.title,
-    authors,
-    description: handleDescription(description),
-    pageCount: book.number_of_pages,
+export function standardize(document, isbn, description = "") {
+  const edition = document.editions?.docs?.[0];
+  const coverId = edition?.cover_i || document.cover_i;
+  return {
+    title: edition?.title || document.title,
+    authors: document.author_name || [],
+    description,
+    pageCount: document.number_of_pages_median,
     format: "book",
-    categories: subjects,
-    thumbnail: `https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`,
-    link: book.key
-      ? `${OPENLIBRARY_API_BASE}${book.key}`
-      : `${OPENLIBRARY_API_BASE}${OPENLIBRARY_API_BOOK}/${isbn}`,
-    publisher: book.publishers?.join(", "),
-    publishedDate: book.publish_date,
-    language: formatLanguage(book.languages),
+    categories: document.subject || [],
+    thumbnail: coverId
+      ? `https://covers.openlibrary.org/b/id/${coverId}-L.jpg`
+      : undefined,
+    link: edition?.key
+      ? `${OPENLIBRARY_API_BASE}${edition.key}`
+      : document.key
+        ? `${OPENLIBRARY_API_BASE}${document.key}`
+        : `${OPENLIBRARY_API_BASE}/isbn/${isbn}`,
+    publisher: edition?.publisher?.[0],
+    publishedDate: edition?.publish_date?.[0],
+    language: formatLanguage(edition?.language),
     isbn,
     bookProvider: "Open Library",
   };
-
-  return standardBook;
 }
 
 /**
- * Handles the description of the book.
- * @param {string|object} description - The description of the book.
- * @returns {string} - The processed description.
+ * Fetches the description for a work from the Open Library works endpoint.
+ * @param {string} workKey - The work key (e.g. "/works/OL45804W").
+ * @param {number} [timeout] - Request timeout in milliseconds.
+ * @returns {Promise<string>} The description, or an empty string if unavailable.
  */
-function handleDescription(description) {
-  if (typeof description === "string") {
-    return description;
-  }
-  return description.value;
-}
-
-/**
- * Retrieves the author names from OpenLibrary.
- * @param {{key: string}[]} rawAuthors - List of author keys.
- * @returns {Promise<string[]>} - List of author names.
- */
-export async function getAuthors(rawAuthors) {
-  const promises = rawAuthors
-    .filter((author) => author && author.key)
-    .map((author) =>
-      axios
-        .get(`https://openlibrary.org/${author.key}.json`)
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(
-              `Unable to get author ${author.key}: ${response.status}`,
-            );
-          }
-          return response.data && response.data.name;
-        }),
-    );
-
+export async function getDescription(workKey, timeout) {
   try {
-    return await Promise.all(promises);
-  } catch (error) {
-    throw new Error(error.message);
+    const response = await axios.get(`${OPENLIBRARY_API_BASE}${workKey}.json`, {
+      timeout,
+    });
+    if (response.status !== 200) return "";
+    const { description } = response.data;
+    if (!description) return "";
+    if (typeof description === "string") return description;
+    return description.value || "";
+  } catch {
+    return "";
   }
 }
 
 /**
- * @typedef {object} OpenLibraryResponse
- * @property {string} description - The description of the book.
- * @property {string[]} subjects - The subjects of the book.
- * @property {{author: {key: string}}[]} authors - The authors of the book.
- */
-
-/**
- * Retrieves the description of the book from OpenLibrary.
- * @param {OpenLibraryBook} book - The book object from OpenLibrary.
- * @returns {Promise<{description: string, subjects: string[], rawAuthors: {key: string}[]}>} - Description of the book.
- */
-export async function getWorks(book) {
-  const defaultResponse = {
-    description: "",
-    subjects: [],
-    rawAuthors: [],
-  };
-
-  if (!book.works) {
-    return defaultResponse;
-  }
-
-  const [work] = book.works;
-
-  if (!work || !work.key) {
-    return defaultResponse;
-  }
-
-  try {
-    const response = await axios.get(
-      `https://openlibrary.org/${work.key}.json`,
-    );
-
-    if (response.status !== 200) {
-      throw new Error(`Unable to get ${work.key}: ${response.status}`);
-    }
-
-    /** @type {OpenLibraryResponse} */
-    const data = response.data;
-
-    return {
-      description: data.description || "",
-      subjects: data.subjects || [],
-      rawAuthors: data.authors?.map((a) => a.author) || [],
-    };
-  } catch (error) {
-    throw new Error(error.message);
-  }
-}
-
-/**
- * Formats the language codes from Open Library API to their corresponding ISO 639-1 codes.
- * @param {Language[]} languages - An array of language codes from Open Library API.
- * @returns {string | undefined} - A new language map object with ISO 639-1 codes as keys and language codes as values.
+ * Formats ISO 639-2 language codes to ISO 639-1.
+ * @param {string[]} [languages] - Array of ISO 639-2 language codes.
+ * @returns {string | undefined} ISO 639-1 code, or undefined if not mapped.
  */
 function formatLanguage(languages) {
-  if (!languages || languages.length === 0) {
-    return;
-  }
-  /**
-   * Mapping of Open Library language codes to their corresponding language names.
-   * https://openlibrary.org/languages.json
-   * @type {{ [key: string]: string } } - A new language map object with ISO 639-1 codes as keys and language codes as values.
-   */
-  const newLanguageMap = {
-    "/languages/eng": "en",
-    "/languages/spa": "es",
-    "/languages/fre": "fr",
-    "/languages/ger": "de",
-    "/languages/rus": "ru",
-    "/languages/ita": "it",
-    "/languages/chi": "zh",
-    "/languages/jpn": "ja",
-    "/languages/por": "pt",
-    "/languages/ara": "ar",
-    "/languages/heb": "he",
-    "/languages/kor": "ko",
-    "/languages/pol": "pl",
-    "/languages/dut": "nl",
-    "/languages/lat": "la",
+  if (!languages || languages.length === 0) return;
+  const languageMap = {
+    eng: "en",
+    spa: "es",
+    fre: "fr",
+    ger: "de",
+    rus: "ru",
+    ita: "it",
+    chi: "zh",
+    jpn: "ja",
+    por: "pt",
+    ara: "ar",
+    heb: "he",
+    kor: "ko",
+    pol: "pl",
+    dut: "nl",
+    lat: "la",
   };
-
-  return newLanguageMap[languages[0].key] || undefined;
+  return languageMap[languages[0]] || undefined;
 }
