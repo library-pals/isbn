@@ -105,9 +105,9 @@ export function standardize(document, isbn, description = "") {
       : undefined,
     link: edition?.key
       ? `${OPENLIBRARY_API_BASE}${edition.key}`
-      : document.key
-        ? `${OPENLIBRARY_API_BASE}${document.key}`
-        : `${OPENLIBRARY_API_BASE}/isbn/${isbn}`,
+      : (document.key
+          ? `${OPENLIBRARY_API_BASE}${document.key}`
+          : `${OPENLIBRARY_API_BASE}/isbn/${isbn}`),
     publisher: edition?.publisher?.[0],
     publishedDate: edition?.publish_date?.[0],
     language: formatLanguage(edition?.language),
