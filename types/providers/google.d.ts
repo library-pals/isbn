@@ -52,16 +52,18 @@ export function resolveGoogle(isbn: string, options: AxiosRequestConfig): Promis
  * @param {GoogleBook} book - The book object to be standardized.
  * @param {string} id - The book id.
  * @param {string} isbn - The book's ISBN.
+ * @param {AxiosRequestConfig} [options] - Additional options for the API request.
  * @returns {Promise<Book>} The standardized book object.
  */
-export function standardize(book: GoogleBook, id: string, isbn: string): Promise<Book>;
+export function standardize(book: GoogleBook, id: string, isbn: string, options?: AxiosRequestConfig): Promise<Book>;
 /**
  * Retrieves the volume information for a book.
  * @param {string} id - The book id.
+ * @param {AxiosRequestConfig} [options] - Additional options for the API request.
  * @returns {Promise<{imageLinks?: ImageLinks, categories?: string[]}>} - A promise that resolves to an array of author names.
  * @throws {Error} - If there is an error retrieving the author information.
  */
-export function getVolume(id: string): Promise<{
+export function getVolume(id: string, options?: AxiosRequestConfig): Promise<{
     imageLinks?: ImageLinks;
     categories?: string[];
 }>;

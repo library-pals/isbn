@@ -38,7 +38,7 @@ export async function resolveGoogle(isbn, options) {
       throw new Error(`No volume info found for book with isbn: ${isbn}`);
     }
     const book = books.items[0];
-    return await standardize(book.volumeInfo, book.id, isbn);
+    return await standardize(book.volumeInfo, book.id, isbn, requestOptions);
   } catch (error) {
     throw new Error(error.message);
   }
@@ -88,11 +88,12 @@ export async function resolveGoogle(isbn, options) {
  * @param {GoogleBook} book - The book object to be standardized.
  * @param {string} id - The book id.
  * @param {string} isbn - The book's ISBN.
+ * @param {AxiosRequestConfig} [options] - Additional options for the API request.
  * @returns {Promise<Book>} The standardized book object.
  */
-export async function standardize(book, id, isbn) {
+export async function standardize(book, id, isbn, options = {}) {
   const { imageLinks = book.imageLinks, categories = book.categories } =
-    await getVolume(id);
+    await getVolume(id, options);
 
   const standardBook = {
     title: book.title,
@@ -116,13 +117,14 @@ export async function standardize(book, id, isbn) {
 /**
  * Retrieves the volume information for a book.
  * @param {string} id - The book id.
+ * @param {AxiosRequestConfig} [options] - Additional options for the API request.
  * @returns {Promise<{imageLinks?: ImageLinks, categories?: string[]}>} - A promise that resolves to an array of author names.
  * @throws {Error} - If there is an error retrieving the author information.
  */
-export async function getVolume(id) {
+export async function getVolume(id, options = {}) {
   try {
     const url = `${GOOGLE_BOOKS_API_BASE}${GOOGLE_BOOKS_API_BOOK}/${id}`;
-    const response = await axios.get(url);
+    const response = await axios.get(url, options);
 
     if (response.status !== 200) {
       throw new Error(`Unable to get volume ${id}: ${response.status}`);

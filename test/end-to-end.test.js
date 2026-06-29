@@ -1,5 +1,12 @@
 import Isbn from "../src/index.js";
 
+const resolveOptions = {
+  timeout: 30_000,
+  ...(process.env.GOOGLE_BOOKS_API_KEY
+    ? { params: { key: process.env.GOOGLE_BOOKS_API_KEY } }
+    : {}),
+};
+
 describe("End to end", () => {
   let isbn;
   beforeEach(() => {
@@ -19,9 +26,11 @@ describe("End to end", () => {
       "%s",
       async ({ providers }) => {
         isbn.provider(providers);
-        await expect(isbn.resolve("9780374104092")).resolves.toMatchSnapshot();
+        await expect(
+          isbn.resolve("9780374104092", resolveOptions),
+        ).resolves.toMatchSnapshot();
       },
-      15_000,
+      30_000,
     );
   });
 
@@ -34,9 +43,11 @@ describe("End to end", () => {
       "%s",
       async ({ providers }) => {
         isbn.provider(providers);
-        await expect(isbn.resolve("9780593215302")).resolves.toMatchSnapshot();
+        await expect(
+          isbn.resolve("9780593215302", resolveOptions),
+        ).resolves.toMatchSnapshot();
       },
-      15_000,
+      30_000,
     );
   });
 
@@ -49,9 +60,11 @@ describe("End to end", () => {
       "%s",
       async ({ providers }) => {
         isbn.provider(providers);
-        await expect(isbn.resolve("9780142423431")).resolves.toMatchSnapshot();
+        await expect(
+          isbn.resolve("9780142423431", resolveOptions),
+        ).resolves.toMatchSnapshot();
       },
-      15_000,
+      30_000,
     );
   });
 
