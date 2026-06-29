@@ -162,10 +162,10 @@ information.
     "Ps3572.a4284 a84 2014",
     "813/.54"
   ],
-  "thumbnail": "https://covers.openlibrary.org/b/id/10520611-L.jpg",
-  "link": "https://openlibrary.org/books/OL31444108M",
-  "publisher": "Farrar, Straus and Giroux",
-  "publishedDate": "2014",
+  "thumbnail": "https://covers.openlibrary.org/b/id/12900600-L.jpg",
+  "link": "https://openlibrary.org/books/OL25841044M",
+  "publisher": "Farrar, Strauss and Giroux",
+  "publishedDate": "February 2, 2014",
   "language": "en",
   "isbn": "9780374104092",
   "bookProvider": "Open Library"
