@@ -1,51 +1,3 @@
-/**
- * @typedef {object} Book
- * @property {string} isbn - The ISBN of the book.
- * @property {string} title - The title of the book.
- * @property {string[]} authors - The authors of the book.
- * @property {string} description - The overview of the book.
- * @property {number} [pageCount] - The number of pages in the book.
- * @property {string} format - The format of the book.
- * @property {string[]} categories - The subjects or categories of the book.
- * @property {string} publisher - The publisher of the book.
- * @property {string} publishedDate - The date the book was published.
- * @property {string | undefined} [language] - The language of the book.
- * @property {string | undefined} [thumbnail] - The thumbnail image link of the book.
- * @property {string} [link] - The link of the book.
- * @property {string} bookProvider - The provider of the book information.
- * @property {string} [duration] - The duration of the audiobook.
- */
-/**
- * @typedef {import('./provider-resolvers.js').Providers} Providers
- * @typedef {import('axios').AxiosRequestConfig} AxiosRequestConfig
- */
-export default class Isbn {
-    /**
-     * @type {Providers}
-     */
-    providers: Providers;
-    PROVIDER_NAMES: {
-        GOOGLE: string;
-        OPENLIBRARY: string;
-        LIBROFM: string;
-    };
-    /**
-     * Sets the providers for the ISBN lookup.
-     * @param {string[]} providers - An array of provider names.
-     * @returns {object} - The current instance of the ISBN lookup.
-     * @throws {TypeError} - If `providers` is not an array.
-     * @throws {Error} - If any of the provided providers are not supported.
-     */
-    provider(providers: string[]): object;
-    /**
-     * Resolves the book information for the given ISBN.
-     * @param {string} isbn - The ISBN of the book.
-     * @param {AxiosRequestConfig} options - The options for the request.
-     * @returns {Promise<Book>} - A Promise that resolves to the book information.
-     * @throws {Error} - If an error occurs while resolving the book information.
-     */
-    resolve(isbn: string, options?: AxiosRequestConfig): Promise<Book>;
-}
 export type Book = {
     /**
      * - The ISBN of the book.
@@ -66,7 +18,7 @@ export type Book = {
     /**
      * - The number of pages in the book.
      */
-    pageCount?: number | undefined;
+    pageCount?: number;
     /**
      * - The format of the book.
      */
@@ -94,7 +46,7 @@ export type Book = {
     /**
      * - The link of the book.
      */
-    link?: string | undefined;
+    link?: string;
     /**
      * - The provider of the book information.
      */
@@ -102,8 +54,57 @@ export type Book = {
     /**
      * - The duration of the audiobook.
      */
-    duration?: string | undefined;
+    duration?: string;
 };
-export type Providers = import("./provider-resolvers.js").Providers;
-export type AxiosRequestConfig = import("axios").AxiosRequestConfig;
+export type Providers = import('./provider-resolvers.js').Providers;
+export type AxiosRequestConfig = import('axios').AxiosRequestConfig;
+/**
+ * @typedef {object} Book
+ * @property {string} isbn - The ISBN of the book.
+ * @property {string} title - The title of the book.
+ * @property {string[]} authors - The authors of the book.
+ * @property {string} description - The overview of the book.
+ * @property {number} [pageCount] - The number of pages in the book.
+ * @property {string} format - The format of the book.
+ * @property {string[]} categories - The subjects or categories of the book.
+ * @property {string} publisher - The publisher of the book.
+ * @property {string} publishedDate - The date the book was published.
+ * @property {string | undefined} [language] - The language of the book.
+ * @property {string | undefined} [thumbnail] - The thumbnail image link of the book.
+ * @property {string} [link] - The link of the book.
+ * @property {string} bookProvider - The provider of the book information.
+ * @property {string} [duration] - The duration of the audiobook.
+ */
+/**
+ * @typedef {import('./provider-resolvers.js').Providers} Providers
+ * @typedef {import('axios').AxiosRequestConfig} AxiosRequestConfig
+ */
+export default class Isbn {
+    PROVIDER_NAMES: {
+        GOOGLE: string;
+        OPENLIBRARY: string;
+        LIBROFM: string;
+    };
+    /**
+     * @type {Providers}
+     */
+    providers: Providers;
+    constructor();
+    /**
+     * Sets the providers for the ISBN lookup.
+     * @param {string[]} providers - An array of provider names.
+     * @returns {object} - The current instance of the ISBN lookup.
+     * @throws {TypeError} - If `providers` is not an array.
+     * @throws {Error} - If any of the provided providers are not supported.
+     */
+    provider(providers: string[]): object;
+    /**
+     * Resolves the book information for the given ISBN.
+     * @param {string} isbn - The ISBN of the book.
+     * @param {AxiosRequestConfig} options - The options for the request.
+     * @returns {Promise<Book>} - A Promise that resolves to the book information.
+     * @throws {Error} - If an error occurs while resolving the book information.
+     */
+    resolve(isbn: string, options?: AxiosRequestConfig): Promise<Book>;
+}
 //# sourceMappingURL=index.d.ts.map
